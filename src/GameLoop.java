@@ -23,6 +23,7 @@ class GameLoop extends AnimationTimer {
 	private PlayerChar e;
 	private ArrayList<String> input;
 
+	//d
 
 	GameLoop(ArrayList<String> inInput, GraphicsContext inGC, PlayerChar inE) {
 		input = inInput;
