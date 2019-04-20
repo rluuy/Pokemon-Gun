@@ -116,7 +116,7 @@ class GameLoop extends AnimationTimer {
 			}
 
 	
-
+			// code for Animating the Player Char on Screen
 			of(Direction.cachedValues).filter(v -> input.contains(v.name())).findFirst().ifPresent(dir -> {
 				t2 = System.nanoTime();
 				diff = t2 - t1; //check time elapsed, reset t1 if gets too late
