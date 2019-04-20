@@ -1,4 +1,6 @@
+
 import java.io.File;
+
 import java.nio.file.Paths;
 import java.util.ArrayList;
 
@@ -10,6 +12,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
+
 
 public final class Main extends Application {
 

@@ -59,7 +59,7 @@ public class Movement {
 
 	public void moveDown() {
 		posY = posY + ySpeed;
-		totalPosY = totalPosY - ySpeed;
+		totalPosY = totalPosY + ySpeed;
 	}
 	
 }
