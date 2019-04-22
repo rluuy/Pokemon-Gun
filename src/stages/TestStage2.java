@@ -1,4 +1,4 @@
-package Stages;
+package stages;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
@@ -29,6 +29,8 @@ public class TestStage2 {
 	int tileLength = 48;
 	int tileWidth = 48;
 
+	
+	
 	public void generateTiles(GraphicsContext gc) {
 		
 
