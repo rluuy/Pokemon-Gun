@@ -163,6 +163,7 @@ class GameLoop extends AnimationTimer {
 				bullet.update();
 				
 			}
+			
 
 	
 //		if (isBattle) {
