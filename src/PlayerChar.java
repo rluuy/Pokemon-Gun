@@ -1,12 +1,15 @@
 
 
 import javafx.scene.canvas.GraphicsContext;
+
 import javafx.scene.image.Image;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class PlayerChar extends Movement{
+	private List<Bullet> firedBullets = new ArrayList<Bullet>();
 	Direction DOWN = Direction.DOWN;
 	Image emerald_down_rest;
 	Image emerald_down_1;
@@ -55,10 +58,17 @@ public class PlayerChar extends Movement{
 		emerald_up_2 = new Image("file:images/emerald_up_2.png");
 
 	}
+	
+	public void fire(){
+			System.out.println("FIRE");
+	       Bullet bullet = new Bullet(posX, posY);
+	       firedBullets.add(bullet);
+	       bullet.launchBullet(direction); //this should be calculated by which direction the player is facing.
+	   }
 
-	public void moveLogic(GraphicsContext gc, ArrayList<String> input, long t1, long t2, long diff, long interval) {
-
-
+	public List<Bullet> getFireBullets() {
+		return firedBullets;
 	}
+
 
 }

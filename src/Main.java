@@ -32,26 +32,32 @@ public final class Main extends Application {
 			Scene scene = new Scene(root);
 			primaryStage.setScene(scene);
 			primaryStage.setTitle("Final Project");
+			PlayerChar p = new PlayerChar(50, 50, 10 , 0.43);
 
 			Canvas canvas = new Canvas(720, 480);
 			root.getChildren().add(canvas);
 
-			ArrayList<String> input = new ArrayList<>(); //I suppose gets input through ArrayList... is this necessary?
+			ArrayList<String> input = new ArrayList<>(); 
 
 			scene.setOnKeyPressed(e -> {
 				String code = e.getCode().toString();
 				if (!input.contains(code)) // only add once... prevent duplicates
 					input.add(code);
+			
+				
 			});
-
+			
 			scene.setOnKeyReleased(e -> {
 				String code = e.getCode().toString();
 				input.remove(code);
 			});
+			
+
+			    
 
 
 			GraphicsContext gc = canvas.getGraphicsContext2D(); 
-			PlayerChar p = new PlayerChar(50, 50, 10 , 0.43);
+
 
 			GameLoop gl = new GameLoop(input, gc, p);
 			gl.start();

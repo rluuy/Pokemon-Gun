@@ -19,6 +19,7 @@ public class Stage3{
 		}; //tileMap - may move on to text reading method instead
 
 		Image regTile = new Image("file:images/reg_tile_scaled.png");
+		
 		Image grassTile = new Image("file:images/reg_tile_scaled.png");
 		Image flowerTile = new Image("file:images/grass_tile.png");
 

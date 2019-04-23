@@ -1,5 +1,7 @@
 import javafx.animation.AnimationTimer;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
+import javafx.scene.paint.Color;
 import stages.Stage1;
 import stages.Stage2;
 import stages.Stage3;
@@ -13,6 +15,7 @@ import stages.TestStage;
 import stages.TestStage2;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 import static java.util.stream.Stream.of;
@@ -39,10 +42,12 @@ class GameLoop extends AnimationTimer {
 		gc = inGC;
 		e = inE;
 		
+
+		
 	}
 
 	public void handle(long currentNanoTime) { //code of start, handle called by .start()	
-		System.out.println("y = " + e.posY + " x =  " + e.posX);
+		//System.out.println("y = " + e.posY + " x =  " + e.posX);
 		if (!isBattle) { 
 			if (e.totalPosX < 720) { // Stage 1-1 (Going Left and Right)
 				Stage1 s1 = new Stage1();
@@ -133,9 +138,32 @@ class GameLoop extends AnimationTimer {
 				e.direction = dir;
 
 			});
+	
 
 			if (input.size() == 0) gc.drawImage(e.direction.image.apply(e), e.posX, e.posY, e.width, e.height);
-		}
+			
+			if (input.contains("SPACE")) {
+				gc.drawImage(e.direction.image.apply(e), e.posX, e.posY, e.width, e.height);
+				e.fire();
+			}
+			
+			List<Bullet> projectiles = e.getFireBullets();
+			for (int i = 0; i < projectiles.size(); i++) {
+				Projectile p = (Projectile) projectiles.get(i);
+				if (p.isVisible() == true) {
+					p.update();
+				} else {
+					projectiles.remove(i);
+				}
+			}
+			for (Bullet bullet: projectiles) {
+				Image pokeball = new Image("file:images/pokeball.png");
+				gc.drawImage(pokeball, e.posX, e.posY);
+				
+				bullet.update();
+				
+			}
+
 	
 //		if (isBattle) {
 //
@@ -152,4 +180,4 @@ class GameLoop extends AnimationTimer {
 //		}
 //	}
 
-}
+	}}

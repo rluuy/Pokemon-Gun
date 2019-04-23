@@ -15,7 +15,7 @@ public class Stage1 {
 			{0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0},
 			{0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0},
 			{0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0},
-			{0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 7, 0, 0},
 			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 	}; //tileMap - may move on to text reading method instead
 
@@ -49,8 +49,8 @@ public class Stage1 {
 				//	gc.drawImage(grassTile, j * tileWidth, i * tileLength);
 				}
 				if (tileMap[i][j] == 7) {
-				//	gc.setFill(Color.AQUAMARINE);
-				//	gc.fillRect(j * tileLength, i * tileWidth, tileLength, tileWidth);
+					gc.setFill(Color.AQUAMARINE);
+					gc.fillRect(j * tileLength, i * tileWidth, tileLength, tileWidth);
 				//	gc.drawImage(flowerTile, j * tileWidth, i * tileLength);
 				}
 			}
