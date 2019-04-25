@@ -44,7 +44,7 @@ public final class Main extends Application {
 				if (!input.contains(code)) // only add once... prevent duplicates
 					input.add(code);
 			
-				
+			 	
 			});
 			
 			scene.setOnKeyReleased(e -> {

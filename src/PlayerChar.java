@@ -60,10 +60,10 @@ public class PlayerChar extends Movement{
 	}
 	
 	public void fire(){
-			System.out.println("FIRE");
 	       Bullet bullet = new Bullet(posX, posY);
-	       firedBullets.add(bullet);
-	       bullet.launchBullet(direction); //this should be calculated by which direction the player is facing.
+	       if (firedBullets.size()  == 0) {
+	    	   firedBullets.add(bullet);
+	       }
 	   }
 
 	public List<Bullet> getFireBullets() {

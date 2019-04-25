@@ -12,20 +12,11 @@ public class Bullet extends Projectile{
 
     public void launchBullet(Direction direction){
         this.direction=direction;
-
-    }
-
-    public int  getX() {
-    	return x;
-    }
-    
-    public int getY() {
-    	return y;
-    }
-    public void moveInDirection() {
-    	
         
 
-        //move the bullet with speed in the set direction. Same as you already have but without the while loop.
+    }
+
+    public void moveInDirection() {
+    	
     }
 }

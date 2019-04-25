@@ -17,6 +17,9 @@ import stages.TestStage2;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.concurrent.TimeUnit;
+
+import javax.lang.model.element.ElementKind;
 
 import static java.util.stream.Stream.of;
 
@@ -125,7 +128,6 @@ class GameLoop extends AnimationTimer {
 			of(Direction.cachedValues).filter(v -> input.contains(v.name())).findFirst().ifPresent(dir -> {
 				t2 = System.nanoTime();
 				diff = t2 - t1; //check time elapsed, reset t1 if gets too late
-				// System.out.println(diff);
 				t2 = System.nanoTime();
 				diff = t2 - t1;
 
@@ -138,7 +140,6 @@ class GameLoop extends AnimationTimer {
 				e.direction = dir;
 
 			});
-	
 
 			if (input.size() == 0) gc.drawImage(e.direction.image.apply(e), e.posX, e.posY, e.width, e.height);
 			
@@ -147,38 +148,25 @@ class GameLoop extends AnimationTimer {
 				e.fire();
 			}
 			
+			
+			
 			List<Bullet> projectiles = e.getFireBullets();
 			for (int i = 0; i < projectiles.size(); i++) {
-				Projectile p = (Projectile) projectiles.get(i);
-				if (p.isVisible() == true) {
-					p.update();
-				} else {
-					projectiles.remove(i);
-				}
-			}
-			for (Bullet bullet: projectiles) {
 				Image pokeball = new Image("file:images/pokeball.png");
-				gc.drawImage(pokeball, e.posX, e.posY);
-				
-				bullet.update();
-				
+				projectiles.get(i).update(e.direction);
+				if (projectiles.get(i).getX() > 720 || projectiles.get(i).getY() > 480 || projectiles.get(i).getY() < 0 || projectiles.get(i).getX() < 0 ) {
+					projectiles.remove(i);
+					return;
+				} else {
+					 gc.drawImage(pokeball, projectiles.get(i).getX(), projectiles.get(i).getY());
+					
+
+				}
+
+
 			}
 			
+}
 
-	
-//		if (isBattle) {
-//
-//			if (!b.isBattleStart) { // Do we really need isBattle and isBattleStart???
-//				b.startTimer();
-//				b.setIsBattleStart(true);
-//			}
-//
-//			if (input.contains("Z")) b.setIsReadyForTG2(true);
-//
-//			//System.out.println(isBattle);
-//			b.updateBattle(gc);
-//			isBattle = b.checkBattleOver();
-//		}
-//	}
 
-	}}
+	}

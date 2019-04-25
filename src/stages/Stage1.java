@@ -7,16 +7,16 @@ import javafx.scene.paint.Color;
 public class Stage1 {
 
 	int[][] tileMap = {
-			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-			{0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0},
-			{0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0},
-			{0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0},
-			{0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0},
-			{0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0},
-			{0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0},
-			{0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0},
-			{0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 7, 0, 0},
-			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7},
+			{7, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 7},
+			{7, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 7},
+			{7, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 7},
+			{7, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 7},
+			{0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 7, 0, 0, 0, 7},
+			{7, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 7},
+			{7, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 7},
+			{7, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 7},
+			{7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7},
 	}; //tileMap - may move on to text reading method instead
 
 	Image regTile = new Image("file:images/reg_tile_scaled.png");
@@ -34,7 +34,7 @@ public class Stage1 {
 
 		for (int i = 0; i < mapLength; i++) { 
 			for (int j = 0; j < mapWidth; j++) {
-				//gc.fillRect(j * tileLength, i * tileWidth, 48, 48);
+				gc.fillRect(j * tileLength, i * tileWidth, 48, 48);
 			
 				if (tileMap[i][j] == 0) {
 					gc.setFill(Color.YELLOW);
@@ -49,9 +49,9 @@ public class Stage1 {
 				//	gc.drawImage(grassTile, j * tileWidth, i * tileLength);
 				}
 				if (tileMap[i][j] == 7) {
-					gc.setFill(Color.AQUAMARINE);
-					gc.fillRect(j * tileLength, i * tileWidth, tileLength, tileWidth);
-				//	gc.drawImage(flowerTile, j * tileWidth, i * tileLength);
+				//	gc.setFill(Color.AQUAMARINE);
+					//gc.fillRect(j * tileLength, i * tileWidth, tileLength, tileWidth);
+					gc.drawImage(flowerTile, j * tileWidth, i * tileLength);
 				}
 			}
 		}

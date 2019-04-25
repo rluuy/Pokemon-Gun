@@ -1,7 +1,7 @@
 
 public class Projectile {
 
-	private int x, y, speedX;
+	private int x, y, speedX, speedY;
 	private boolean visible;
 	
 	public Projectile() {
@@ -11,16 +11,23 @@ public class Projectile {
 	public Projectile(int startX, int startY){
 		x = startX;
 		y = startY;
-		speedX = 7;
+		speedX = 30;
+		speedY = 20;
 		visible = true;
 	}
 	
-	public void update() {
-		x += speedX;
-		if (x > 800) {
-		   visible = false;
+	public void update(Direction direction) {
+		if (direction.toString() == "DOWN") {
+			y += speedY;
+		} else 	if (direction.toString() == "UP") {
+			y -= speedY;
+		} else 	if (direction.toString() == "RIGHT") {
+			x += speedX;
+		} else 	if (direction.toString() == "LEFT") {
+			x -= speedX;
+			}
 	}
-	}
+	
 	
 	public int getX() {
 		return x;
