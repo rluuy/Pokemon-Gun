@@ -1,22 +1,26 @@
 package stages;
 
+import java.util.ArrayList;
+
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 
 public class Stage1 {
+	private ArrayList<Rectangle> obstalces = new ArrayList<Rectangle>() ;
 
 	int[][] tileMap = {
-			{7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7},
-			{7, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 7},
-			{7, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 7},
-			{7, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 7},
-			{7, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 7},
-			{0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 7, 0, 0, 0, 7},
-			{7, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 7},
-			{7, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 7},
-			{7, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 7},
-			{7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 	}; //tileMap - may move on to text reading method instead
 
 	Image regTile = new Image("file:images/reg_tile_scaled.png");
@@ -26,7 +30,9 @@ public class Stage1 {
 	int tileLength = 48;
 	int tileWidth = 48;
 
+
 	public void generateTiles(GraphicsContext gc) {
+		
 
 		int mapLength = tileMap.length;
 		int mapWidth = tileMap[0].length;
@@ -37,14 +43,12 @@ public class Stage1 {
 				gc.fillRect(j * tileLength, i * tileWidth, 48, 48);
 			
 				if (tileMap[i][j] == 0) {
-					gc.setFill(Color.YELLOW);
-					gc.fillRect(j * tileLength, i * tileWidth, tileLength, tileWidth);
-
-				//	gc.drawImage(regTile, j * tileWidth, i * tileLength);
+					gc.drawImage(regTile, j * tileWidth, i * tileLength);
 				}
 				if (tileMap[i][j] == 1) {
 					gc.setFill(Color.RED);
 					gc.fillRect(j * tileLength, i * tileWidth, tileLength, tileWidth);
+					obstalces.add( new Rectangle(j * tileLength, i * tileWidth, tileLength, tileWidth));
 
 				//	gc.drawImage(grassTile, j * tileWidth, i * tileLength);
 				}
@@ -52,9 +56,13 @@ public class Stage1 {
 				//	gc.setFill(Color.AQUAMARINE);
 					//gc.fillRect(j * tileLength, i * tileWidth, tileLength, tileWidth);
 					gc.drawImage(flowerTile, j * tileWidth, i * tileLength);
+					obstalces.add( new Rectangle(j * tileLength, i * tileWidth, tileLength, tileWidth));
 				}
 			}
 		}
 	}
+	public ArrayList<Rectangle> getObstacles(){
+		return obstalces;
+	}
 
-}
+	}

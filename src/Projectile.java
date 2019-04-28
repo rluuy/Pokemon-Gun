@@ -4,6 +4,7 @@ public class Projectile {
 	private int x, y, speedX, speedY;
 	private boolean visible;
 	
+	
 	public Projectile() {
 		
 	}

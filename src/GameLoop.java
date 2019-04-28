@@ -1,7 +1,10 @@
 import javafx.animation.AnimationTimer;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import stages.Stage1;
 import stages.Stage2;
 import stages.Stage3;
@@ -23,6 +26,7 @@ import javax.lang.model.element.ElementKind;
 
 import static java.util.stream.Stream.of;
 
+import java.nio.file.Paths;
 import java.nio.file.attribute.PosixFileAttributes;
 
 class GameLoop extends AnimationTimer {
@@ -37,6 +41,9 @@ class GameLoop extends AnimationTimer {
 	private GraphicsContext gc;
 	private PlayerChar e;
 	private ArrayList<String> input;
+	private ArrayList<Rectangle> obstacles;
+	private static MediaPlayer mediaPlayer;
+	
 
 	//d
 
@@ -45,25 +52,27 @@ class GameLoop extends AnimationTimer {
 		gc = inGC;
 		e = inE;
 		
-
-		
 	}
 
 	public void handle(long currentNanoTime) { //code of start, handle called by .start()	
-		//System.out.println("y = " + e.posY + " x =  " + e.posX);
+		System.out.println("y = " + e.totalPosY + " x =  " + e.totalPosX);
 		if (!isBattle) { 
 			if (e.totalPosX < 720) { // Stage 1-1 (Going Left and Right)
 				Stage1 s1 = new Stage1();
 				s1.generateTiles(gc);
-				e.posX = e.totalPosX;}			
+				obstacles = s1.getObstacles();
+				e.posX = e.totalPosX;}
+			
 			if (e.totalPosY < 480) {
 				Stage1 s1 = new Stage1(); // Stage 1-1 (Going Up and Down)
 				s1.generateTiles(gc);
 				e.posY = e.totalPosY;
+				obstacles = s1.getObstacles();
 			}
 			if (e.totalPosX > 720) { // Stage 1-2
 				Stage2 s2 = new Stage2();
 				s2.generateTiles(gc);
+				
 				e.posX = e.totalPosX - bufferX;			
 			}
 			if (e.totalPosX > 1440) { // Stage 1-3
@@ -86,7 +95,8 @@ class GameLoop extends AnimationTimer {
 				Stage6 s6 = new Stage6();
 				s6.generateTiles(gc);
 				e.posY = e.totalPosY - bufferY;
-				e.posX = e.totalPosX - (bufferX * 2);			
+				e.posX = e.totalPosX - (bufferX * 2);	
+				obstacles = s6.getObstacles();
 			}
 			if (e.totalPosY > 960) { // Stage 3-1
 				Stage7 s7 = new Stage7();
@@ -122,8 +132,10 @@ class GameLoop extends AnimationTimer {
 				e.posY = 420;
 				e.totalPosY = 1380;
 			}
-
+			
+			
 	
+
 			// Code for Animating the Player Char on Screen
 			of(Direction.cachedValues).filter(v -> input.contains(v.name())).findFirst().ifPresent(dir -> {
 				t2 = System.nanoTime();
@@ -149,7 +161,6 @@ class GameLoop extends AnimationTimer {
 			}
 			
 			
-			
 			List<Bullet> projectiles = e.getFireBullets();
 			for (int i = 0; i < projectiles.size(); i++) {
 				Image pokeball = new Image("file:images/pokeball.png");
@@ -159,14 +170,41 @@ class GameLoop extends AnimationTimer {
 					return;
 				} else {
 					 gc.drawImage(pokeball, projectiles.get(i).getX(), projectiles.get(i).getY());
-					
-
 				}
 
 
 			}
 			
 }
+
+
+	private void collision(int bufferY, int bufferX) {
+		Rectangle playerRect = new Rectangle(e.posX,e.posY, 48, 48);
+		for(Rectangle collision : obstacles) {
+	        if(collision.intersects(playerRect.getBoundsInLocal())){ 
+	        	if (e.direction.toString().equals("UP")) {
+		        	e.totalPosY = (int) collision.getY() + 50;
+		        	continue;
+	        	}
+	        	else if (e.direction.toString().equals("DOWN")) {
+		        	e.totalPosY = (int) collision.getY() + bufferY - 58;
+		        	System.out.println(collision.getY());
+		        	continue;
+	        	}
+	        	else if (e.direction.toString().equals("LEFT")) {
+		        	e.totalPosX = (int) collision.getX() + 50;
+		        	continue;
+	        	}
+	        	else if (e.direction.toString().equals("RIGHT")) {
+		        	e.totalPosX = (int) collision.getX() - 50;
+		        	continue;
+	        	}
+	        
+	        	
+	        }
+		}
+	}
+
 
 
 	}

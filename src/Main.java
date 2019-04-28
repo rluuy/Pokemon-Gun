@@ -25,9 +25,6 @@ public final class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			Media media = new Media(Paths.get("music/DuelOfFates.mp3").toUri().toString());
-			mediaPlayer = new MediaPlayer(media);
-			mediaPlayer.play();
 			Group root = new Group();
 			Scene scene = new Scene(root);
 			primaryStage.setScene(scene);
@@ -61,7 +58,6 @@ public final class Main extends Application {
 
 			GameLoop gl = new GameLoop(input, gc, p);
 			gl.start();
-
 			primaryStage.show();
 		} catch (Exception e) {
 			e.printStackTrace();

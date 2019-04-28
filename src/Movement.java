@@ -62,4 +62,11 @@ public class Movement {
 		totalPosY = totalPosY + ySpeed;
 	}
 	
+	public int hitboxY() {
+		return posY + 48;
+	}
+	public int hitboxX() {
+		return posX + 48;
+	}
+	
 }
