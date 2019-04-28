@@ -1,3 +1,4 @@
+package main;
 import javafx.scene.image.Image;
 
 import java.util.function.Consumer;

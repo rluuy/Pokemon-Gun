@@ -1,14 +1,10 @@
-
-
-import javafx.scene.canvas.GraphicsContext;
-
-import javafx.scene.image.Image;
-
+package main;
 import java.util.ArrayList;
 import java.util.List;
 
+import javafx.scene.image.Image;
 
-public class PlayerChar extends Movement{
+public class EnemyChar1 extends Movement{
 	private List<Bullet> firedBullets = new ArrayList<Bullet>();
 	Direction DOWN = Direction.DOWN;
 	Image emerald_down_rest;
@@ -25,7 +21,7 @@ public class PlayerChar extends Movement{
 	Image emerald_up_2;
 
 
-	public PlayerChar() {
+	public EnemyChar1() {
 		super();
 		emerald_down_rest = new Image("file:images/emerald_down_rest.png");
 		emerald_down_1 = new Image("file:images/emerald_down_1.png");
@@ -42,7 +38,7 @@ public class PlayerChar extends Movement{
 
 	}
 
-	public PlayerChar(int inPosX, int inPosY, int speed, double whMult) {
+	public EnemyChar1(int inPosX, int inPosY, int speed, double whMult) {
 		super(inPosX, inPosY, speed, whMult);
 		emerald_down_rest = new Image("file:images/emerald_down_rest.png");
 		emerald_down_1 = new Image("file:images/emerald_down_1.png");
@@ -58,17 +54,4 @@ public class PlayerChar extends Movement{
 		emerald_up_2 = new Image("file:images/emerald_up_2.png");
 
 	}
-	
-	public void fire(){
-	       Bullet bullet = new Bullet(posX, posY);
-	       if (firedBullets.size()  == 0) {
-	    	   firedBullets.add(bullet);
-	       }
-	   }
-
-	public List<Bullet> getFireBullets() {
-		return firedBullets;
-	}
-
-
 }

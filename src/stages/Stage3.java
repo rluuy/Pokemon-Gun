@@ -11,20 +11,20 @@ public class Stage3{
 	private ArrayList<Rectangle> obstalces = new ArrayList<Rectangle>() ;
 		int[][] tileMap = {
 				{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+				{0, 0, 0, 0, 0, 0, 0, 0, 7, 0, 0, 0, 0, 0, 0},
+				{0, 0, 0, 0, 0, 7, 0, 0, 0, 0, 0, 7, 0, 0, 0},
 				{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+				{0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 0, 0, 0, 0, 0},
+				{0, 0, 0, 0, 0, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 				{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-				{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-				{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-				{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-				{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-				{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-				{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-				{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+				{0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 0, 0, 0, 0, 0},
+				{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 0, 0, 0},
+				{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
 		}; //tileMap - may move on to text reading method instead
 
 		Image regTile = new Image("file:images/reg_tile_scaled.png");
 		
-		Image grassTile = new Image("file:images/reg_tile_scaled.png");
+		Image flowerTile = new Image("file:images/flower_tile.png");
 		Image rockTile = new Image("file:images/rock.png");
 
 		int tileLength = 48;
@@ -47,7 +47,9 @@ public class Stage3{
 						obstalces.add( new Rectangle(j * tileLength, i * tileWidth, tileLength, tileWidth));
 					}
 					if (tileMap[i][j] == 7) {
+						gc.drawImage(flowerTile, j * tileWidth, i * tileLength);
 					}
+					
 				}
 			}
 		}
