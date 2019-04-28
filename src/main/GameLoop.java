@@ -1,3 +1,4 @@
+package main;
 import javafx.animation.AnimationTimer;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
@@ -44,6 +45,7 @@ class GameLoop extends AnimationTimer {
 	private PlayerChar e;
 	private ArrayList<String> input;
 	private ArrayList<Rectangle> obstacles;
+	private ArrayList<EnemyChar1> enemy;
 	private static MediaPlayer mediaPlayer;
 	
 
@@ -58,6 +60,7 @@ class GameLoop extends AnimationTimer {
 
 	public void handle(long currentNanoTime) { //code of start, handle called by .start()	
 		if (!isBattle) { 
+		//	System.out.println("y = " + e.totalPosY + " x = " + e.totalPosX );
 			if (e.totalPosX < 720) { // Stage 1-1 (Going Left and Right)
 				bufferScalarX = 0;
 				bufferScalarY = 0;
@@ -79,6 +82,7 @@ class GameLoop extends AnimationTimer {
 				bufferScalarY = 0;
 				Stage2 s2 = new Stage2();
 				s2.generateTiles(gc);
+				obstacles = s2.getObstacles();
 				
 				e.posX = e.totalPosX - bufferX;			
 			}
@@ -96,6 +100,7 @@ class GameLoop extends AnimationTimer {
 				Stage4 s4 = new Stage4();
 				s4.generateTiles(gc);
 				e.posY = e.totalPosY - bufferY;
+				obstacles = s4.getObstacles();
 			}
 			if (e.totalPosY > 480 && e.totalPosX > 720) { // Stage 2-2
 				bufferScalarX = 1;
@@ -121,6 +126,7 @@ class GameLoop extends AnimationTimer {
 				Stage7 s7 = new Stage7();
 				s7.generateTiles(gc);
 				e.posY = e.totalPosY - (bufferY * 2);	
+				obstacles = s7.getObstacles();
 				
 			}
 			if (e.totalPosY > 960 && e.totalPosX > 720){ // Stage 3-2
@@ -138,8 +144,10 @@ class GameLoop extends AnimationTimer {
 				Stage9 s9 = new Stage9();
 				s9.generateTiles(gc);
 				e.posY = e.totalPosY - (bufferY * 2);	
-				e.posX = e.totalPosX - (bufferX * 2);				
-			}						
+				e.posX = e.totalPosX - (bufferX * 2);		
+				obstacles = s9.getObstacles();			
+			}	
+			
 			}
 			// Code for Out of Bounds Checking
 		
@@ -157,10 +165,8 @@ class GameLoop extends AnimationTimer {
 				e.posY = 420;
 				e.totalPosY = 1380;
 			}
-			
-			
-	
 
+						
 			// Code for Animating the Player Char on Screen
 			of(Direction.cachedValues).filter(v -> input.contains(v.name())).findFirst().ifPresent(dir -> {
 				t2 = System.nanoTime();
@@ -177,7 +183,7 @@ class GameLoop extends AnimationTimer {
 				e.direction = dir;
 
 			});
-
+			
 			if (input.size() == 0) gc.drawImage(e.direction.image.apply(e), e.posX, e.posY, e.width, e.height);
 			
 			if (input.contains("SPACE")) {

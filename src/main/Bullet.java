@@ -1,3 +1,4 @@
+package main;
 public class Bullet extends Projectile{
     private Direction direction;
     private float speed = 1.2f;
