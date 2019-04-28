@@ -12,11 +12,11 @@ public class Stage6 {
 	private ArrayList<Rectangle> obstalces = new ArrayList<Rectangle>() ;
 
 	int[][] tileMap = {
-			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2},
+			{2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2},
+			{2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2},
+			{2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2},
+			{2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2},
 			{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
 			{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
 			{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
@@ -25,7 +25,7 @@ public class Stage6 {
 	}; //tileMap - may move on to text reading method instead
 
 	Image regTile = new Image("file:images/reg_tile_scaled.png");
-	Image sandTile = new Image("file:images/sand_tile.png");
+	Image rockTile = new Image("file:images/rock.png");
 	Image waterTile = new Image("file:images/water_tile.png");
 
 	int tileLength = 48;
@@ -47,7 +47,8 @@ public class Stage6 {
 					obstalces.add( new Rectangle(j * tileLength, i * tileWidth, tileLength, tileWidth));
 				}
 				if (tileMap[i][j] == 2) {
-					gc.drawImage(sandTile, j * tileWidth, i * tileLength);
+					gc.drawImage(rockTile, j * tileWidth, i * tileLength);
+					obstalces.add( new Rectangle(j * tileLength, i * tileWidth, tileLength, tileWidth));
 				}
 			}
 		}

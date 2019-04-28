@@ -37,6 +37,8 @@ class GameLoop extends AnimationTimer {
 	private long interval = 200000000;
 	private int bufferX = 720;
 	private int bufferY = 480;
+	private int bufferScalarX = 1;
+	private int bufferScalarY = 1;
 	private boolean isBattle = false;
 	private GraphicsContext gc;
 	private PlayerChar e;
@@ -55,43 +57,58 @@ class GameLoop extends AnimationTimer {
 	}
 
 	public void handle(long currentNanoTime) { //code of start, handle called by .start()	
-		System.out.println("y = " + e.totalPosY + " x =  " + e.totalPosX);
 		if (!isBattle) { 
 			if (e.totalPosX < 720) { // Stage 1-1 (Going Left and Right)
+				bufferScalarX = 0;
+				bufferScalarY = 0;
 				Stage1 s1 = new Stage1();
 				s1.generateTiles(gc);
 				obstacles = s1.getObstacles();
 				e.posX = e.totalPosX;}
 			
 			if (e.totalPosY < 480) {
+				bufferScalarX = 0;
+				bufferScalarY = 0;
 				Stage1 s1 = new Stage1(); // Stage 1-1 (Going Up and Down)
 				s1.generateTiles(gc);
 				e.posY = e.totalPosY;
 				obstacles = s1.getObstacles();
 			}
 			if (e.totalPosX > 720) { // Stage 1-2
+				bufferScalarX = 1;
+				bufferScalarY = 0;
 				Stage2 s2 = new Stage2();
 				s2.generateTiles(gc);
 				
 				e.posX = e.totalPosX - bufferX;			
 			}
 			if (e.totalPosX > 1440) { // Stage 1-3
+				bufferScalarX = 2;
+				bufferScalarY = 0;
 				Stage3 s3 = new Stage3();
 				s3.generateTiles(gc);
-				e.posX = e.totalPosX - (bufferX * 2);
+				e.posX = e.totalPosX - (bufferX * bufferScalarX);
+				obstacles = s3.getObstacles();
 			}
 			if (e.totalPosY > 480) { // Stage 2-1
+				bufferScalarX = 0;
+				bufferScalarY = 1;
 				Stage4 s4 = new Stage4();
 				s4.generateTiles(gc);
 				e.posY = e.totalPosY - bufferY;
 			}
 			if (e.totalPosY > 480 && e.totalPosX > 720) { // Stage 2-2
+				bufferScalarX = 1;
+				bufferScalarY = 1;
 				Stage5 s5 = new Stage5();
 				s5.generateTiles(gc);
 				e.posY = e.totalPosY - bufferY;
-				e.posX = e.totalPosX - bufferX;				
+				e.posX = e.totalPosX - bufferX;		
+				obstacles = s5.getObstacles();
 			}
 			if (e.totalPosY > 480 && e.totalPosX > 1440) { // Stage 2-3
+				bufferScalarX = 2;
+				bufferScalarY = 1;
 				Stage6 s6 = new Stage6();
 				s6.generateTiles(gc);
 				e.posY = e.totalPosY - bufferY;
@@ -99,17 +116,25 @@ class GameLoop extends AnimationTimer {
 				obstacles = s6.getObstacles();
 			}
 			if (e.totalPosY > 960) { // Stage 3-1
+				bufferScalarX = 0;
+				bufferScalarY = 2;
 				Stage7 s7 = new Stage7();
 				s7.generateTiles(gc);
 				e.posY = e.totalPosY - (bufferY * 2);	
+				
 			}
 			if (e.totalPosY > 960 && e.totalPosX > 720){ // Stage 3-2
+				bufferScalarX = 1;
+				bufferScalarY = 2;
 				Stage8 s8 = new Stage8();
 				s8.generateTiles(gc);
 				e.posY = e.totalPosY - (bufferY * 2);	
 				e.posX = e.totalPosX - bufferX;
+				obstacles = s8.getObstacles();
 			}
 			if (e.totalPosY > 960 && e.totalPosX > 1440){ // Stage 3-3
+				bufferScalarX = 2;
+				bufferScalarY = 2;
 				Stage9 s9 = new Stage9();
 				s9.generateTiles(gc);
 				e.posY = e.totalPosY - (bufferY * 2);	
@@ -160,6 +185,8 @@ class GameLoop extends AnimationTimer {
 				e.fire();
 			}
 			
+			collision();
+			
 			
 			List<Bullet> projectiles = e.getFireBullets();
 			for (int i = 0; i < projectiles.size(); i++) {
@@ -178,25 +205,24 @@ class GameLoop extends AnimationTimer {
 }
 
 
-	private void collision(int bufferY, int bufferX) {
+	private void collision() {
 		Rectangle playerRect = new Rectangle(e.posX,e.posY, 48, 48);
 		for(Rectangle collision : obstacles) {
 	        if(collision.intersects(playerRect.getBoundsInLocal())){ 
 	        	if (e.direction.toString().equals("UP")) {
-		        	e.totalPosY = (int) collision.getY() + 50;
+		        	e.totalPosY = (int) collision.getY() + (bufferY * bufferScalarY) + 50;
 		        	continue;
 	        	}
 	        	else if (e.direction.toString().equals("DOWN")) {
-		        	e.totalPosY = (int) collision.getY() + bufferY - 58;
-		        	System.out.println(collision.getY());
+		        	e.totalPosY = (int) collision.getY() + (bufferY * bufferScalarY) - 58;
 		        	continue;
 	        	}
 	        	else if (e.direction.toString().equals("LEFT")) {
-		        	e.totalPosX = (int) collision.getX() + 50;
+		        	e.totalPosX = (int) collision.getX() + (bufferX * bufferScalarX) + 50;
 		        	continue;
 	        	}
 	        	else if (e.direction.toString().equals("RIGHT")) {
-		        	e.totalPosX = (int) collision.getX() - 50;
+		        	e.totalPosX = (int) collision.getX() + (bufferX * bufferScalarX) - 50;
 		        	continue;
 	        	}
 	        
