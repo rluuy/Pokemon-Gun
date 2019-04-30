@@ -87,13 +87,14 @@ public final class Main extends Application {
 			});
 			menu.getItems().addAll(menu1,menu2,menu3);
 			layout.getChildren().add(menuBar);
-	        Canvas can = new Canvas(720, 100);
+	        Canvas can = new Canvas(500, 100);
 			layout.getChildren().add(can);
 			System.out.println(System.getProperty("user.dir"));
 			
 			Image image = new Image("file:images/emerald_Battle_1.png");
 	        ImageView imageView = new ImageView(image);
 	        layout.getChildren().add(imageView);
+	    
 			primaryStage.setTitle("Pokemon Gun");
 			primaryStage.setScene(Layoutscene);
 			
