@@ -90,11 +90,8 @@ public final class Main extends Application {
 	        Canvas can = new Canvas(720, 100);
 			layout.getChildren().add(can);
 			System.out.println(System.getProperty("user.dir"));
-			System.out.println("HEREEEE");
-			FileInputStream in = new FileInputStream("/Users/mayankgandhi/Desktop/School/335/csc335-team-zelda-finalproject-ryan-denny-mayank-dominic/images/zelda_logo.png");
-			Image image = new Image(in);
 			
-			
+			Image image = new Image("file:images/zelda_logo.png");
 	        ImageView imageView = new ImageView(image);
 	        layout.getChildren().add(imageView);
 			primaryStage.setTitle("Final Project");
