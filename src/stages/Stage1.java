@@ -26,6 +26,7 @@ public class Stage1 {
 	Image regTile = new Image("file:images/reg_tile_scaled.png");
 	Image grassTile = new Image("file:images/reg_tile_scaled.png");
 	Image flowerTile = new Image("file:images/grass-tile2.png");
+	Image paveTile = new Image("file:images/pavement.png");
 
 	int tileLength = 48;
 	int tileWidth = 48;
@@ -53,10 +54,7 @@ public class Stage1 {
 				//	gc.drawImage(grassTile, j * tileWidth, i * tileLength);
 				}
 				if (tileMap[i][j] == 7) {
-				//	gc.setFill(Color.AQUAMARINE);
-					//gc.fillRect(j * tileLength, i * tileWidth, tileLength, tileWidth);
-					gc.drawImage(flowerTile, j * tileWidth, i * tileLength);
-					obstalces.add( new Rectangle(j * tileLength, i * tileWidth, tileLength, tileWidth));
+	
 				}
 			}
 		}
