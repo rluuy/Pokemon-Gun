@@ -5,11 +5,12 @@ import javafx.scene.canvas.GraphicsContext;
 
 import javafx.scene.image.Image;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class PlayerChar extends Movement{
+public class PlayerChar extends Movement implements Serializable{
 	private List<Bullet> firedBullets = new ArrayList<Bullet>();
 	Direction DOWN = Direction.DOWN;
 	Image emerald_down_rest;

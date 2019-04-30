@@ -32,6 +32,7 @@ public final class Main extends Application {
 
 	private static MediaPlayer mediaPlayer;
 	VBox root, layout;
+	GameLoop gl;
 	
 	public static void main(String[] args) {
 		launch(args);
@@ -57,8 +58,10 @@ public final class Main extends Application {
 			MenuBar menuBar = new MenuBar();
 			menuBar.getMenus().add(menu);
 			MenuItem menu1 = new Menu("New");
-			MenuItem menu2 = new Menu("Load");
-			MenuItem menu3 = new Menu("Exit");
+			MenuItem menu2 = new Menu("Save");
+			MenuItem menu3 = new Menu("Load");
+			MenuItem menu4 = new Menu("Exit");
+			
 			menu1.setOnAction(new EventHandler<ActionEvent>() 
 			{
 				@Override
@@ -68,7 +71,7 @@ public final class Main extends Application {
 					primaryStage.setScene(scene);
 				}
 			});
-			menu3.setOnAction(new EventHandler<ActionEvent>() {
+			menu4.setOnAction(new EventHandler<ActionEvent>() {
 				@Override
 				public void handle(ActionEvent event)
 				{
@@ -85,7 +88,7 @@ public final class Main extends Application {
 					}
 				}
 			});
-			menu.getItems().addAll(menu1,menu2,menu3);
+			menu.getItems().addAll(menu1,menu2,menu3,menu4);
 			layout.getChildren().add(menuBar);
 	        Canvas can = new Canvas(720, 100);
 			layout.getChildren().add(can);
@@ -108,7 +111,35 @@ public final class Main extends Application {
 				input.remove(code);
 			});
 			GraphicsContext gc = canvas.getGraphicsContext2D(); 
-			GameLoop gl = new GameLoop(input, gc, p);
+			gl = new GameLoop(input, gc, p);
+			menu2.setOnAction(new EventHandler<ActionEvent>() 
+			{
+				@Override
+				public void handle(ActionEvent event)
+				{
+					System.out.println("here");
+					ObjectOutputStream objectOutputStream = null;
+					try {
+						objectOutputStream = new ObjectOutputStream(new FileOutputStream("data/save_game.dat"));
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}   
+					try {
+							objectOutputStream.writeObject(gl);
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+				        try {
+							objectOutputStream.close();
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+				}
+			});
+			
 			gl.start();
 			primaryStage.show();
 			

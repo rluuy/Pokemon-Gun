@@ -27,10 +27,11 @@ import javax.lang.model.element.ElementKind;
 
 import static java.util.stream.Stream.of;
 
+import java.io.Serializable;
 import java.nio.file.Paths;
 import java.nio.file.attribute.PosixFileAttributes;
 
-class GameLoop extends AnimationTimer {
+class GameLoop extends AnimationTimer implements Serializable {
 
 	private long t1 = System.nanoTime(); //Gets total time elapsed in nanoseconds, so early value
 	private long t2; //to be initialized as later value to compare (t2-t1)
