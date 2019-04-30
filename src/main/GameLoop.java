@@ -188,9 +188,12 @@ class GameLoop extends AnimationTimer {
 			
 			if (input.contains("SPACE")) {
 				gc.drawImage(e.direction.image.apply(e), e.posX, e.posY, e.width, e.height);
-				e.fire();
+		
+
 			}
 			
+			gc.fillText("HP: " + Integer.toString(e.getHealth()), 20, 20);
+			gc.fillText("AMMO: UNLIMITED ", 20, 40);
 			collision();
 			
 			

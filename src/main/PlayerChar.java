@@ -11,6 +11,7 @@ import java.util.List;
 
 public class PlayerChar extends Movement{
 	private List<Bullet> firedBullets = new ArrayList<Bullet>();
+	private int health;
 	Direction DOWN = Direction.DOWN;
 	Image emerald_down_rest;
 	Image emerald_down_1;
@@ -45,18 +46,19 @@ public class PlayerChar extends Movement{
 
 	public PlayerChar(int inPosX, int inPosY, int speed, double whMult) {
 		super(inPosX, inPosY, speed, whMult);
-		emerald_down_rest = new Image("file:images/emerald_down_rest.png");
-		emerald_down_1 = new Image("file:images/emerald_down_1.png");
-		emerald_down_2 = new Image("file:images/emerald_down_2.png");
-		emerald_left_rest = new Image("file:images/emerald_left_rest.png");
-		emerald_left_1 = new Image("file:images/emerald_left_1.png");
-		emerald_left_2 = new Image("file:images/emerald_left_2.png");
-		emerald_right_rest = new Image("file:images/emerald_right_rest.png");
-		emerald_right_1 = new Image("file:images/emerald_right_1.png");
-		emerald_right_2 = new Image("file:images/emerald_right_2.png");
-		emerald_up_rest = new Image("file:images/emerald_up_rest.png");
-		emerald_up_1 = new Image("file:images/emerald_up_1.png");
-		emerald_up_2 = new Image("file:images/emerald_up_2.png");
+		emerald_down_rest = new Image("file:images/enemy1_down_rest.png");
+		emerald_down_1 = new Image("file:images/enemy1_down_1.png");
+		emerald_down_2 = new Image("file:images/enemy1_down_2.png");
+		emerald_left_rest = new Image("file:images/enemy1_left_rest.png");
+		emerald_left_1 = new Image("file:images/enemy1_left_1.png");
+		emerald_left_2 = new Image("file:images/enemy1_left_2.png");
+		emerald_right_rest = new Image("file:images/enemy1_right_rest.png");
+		emerald_right_1 = new Image("file:images/enemy1_right_1.png");
+		emerald_right_2 = new Image("file:images/enemy1_right_2.png");
+		emerald_up_rest = new Image("file:images/enemy1_up_rest.png");
+		emerald_up_1 = new Image("file:images/enemy1_up_1.png");
+		emerald_up_2 = new Image("file:images/enemy1_up_2.png");
+		health = 3;
 
 	}
 	
@@ -69,6 +71,10 @@ public class PlayerChar extends Movement{
 
 	public List<Bullet> getFireBullets() {
 		return firedBullets;
+	}
+	
+	public int getHealth() {
+		return health;
 	}
 
 

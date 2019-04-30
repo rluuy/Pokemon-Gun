@@ -50,54 +50,54 @@ public final class Main extends Application {
 			
 			Canvas canvas = new Canvas(720, 480);
 			root.getChildren().add(canvas);
-			
-			layout = new VBox();
-			Scene Layoutscene = new Scene(layout);
-			Menu menu = new Menu("File");
-			MenuBar menuBar = new MenuBar();
-			menuBar.getMenus().add(menu);
-			MenuItem menu1 = new Menu("New");
-			MenuItem menu2 = new Menu("Load");
-			MenuItem menu3 = new Menu("Exit");
-			menu1.setOnAction(new EventHandler<ActionEvent>() 
-			{
-				@Override
-				public void handle(ActionEvent event)
-				{
-					root.getChildren().add(menuBar);
-					primaryStage.setScene(scene);
-				}
-			});
-			menu3.setOnAction(new EventHandler<ActionEvent>() {
-				@Override
-				public void handle(ActionEvent event)
-				{
-					Alert alert = new Alert(AlertType.CONFIRMATION);
-					alert.setTitle("Pokemon Gun");
-					alert.setHeaderText("You are about to quit without saving");
-					alert.setContentText("Are you sure?");
-
-					Optional<ButtonType> result = alert.showAndWait();
-					if (result.get() == ButtonType.OK)
-					{
-					Platform.exit();
-					System.exit(0);
-					}
-				}
-			});
-			menu.getItems().addAll(menu1,menu2,menu3);
-			layout.getChildren().add(menuBar);
-	        Canvas can = new Canvas(500, 100);
-			layout.getChildren().add(can);
-			System.out.println(System.getProperty("user.dir"));
-			
-			Image image = new Image("file:images/emerald_Battle_1.png");
-	        ImageView imageView = new ImageView(image);
-	        layout.getChildren().add(imageView);
-	    
+//			
+//			layout = new VBox();
+//			Scene Layoutscene = new Scene(layout);
+//			Menu menu = new Menu("File");
+//			MenuBar menuBar = new MenuBar();
+//			menuBar.getMenus().add(menu);
+//			MenuItem menu1 = new Menu("New");
+//			MenuItem menu2 = new Menu("Load");
+//			MenuItem menu3 = new Menu("Exit");
+//			menu1.setOnAction(new EventHandler<ActionEvent>() 
+//			{
+//				@Override
+//				public void handle(ActionEvent event)
+//				{
+//					root.getChildren().add(menuBar);
+//					primaryStage.setScene(scene);
+//				}
+//			});
+//			menu3.setOnAction(new EventHandler<ActionEvent>() {
+//				@Override
+//				public void handle(ActionEvent event)
+//				{
+//					Alert alert = new Alert(AlertType.CONFIRMATION);
+//					alert.setTitle("Pokemon Gun");
+//					alert.setHeaderText("You are about to quit without saving");
+//					alert.setContentText("Are you sure?");
+//
+//					Optional<ButtonType> result = alert.showAndWait();
+//					if (result.get() == ButtonType.OK)
+//					{
+//					Platform.exit();
+//					System.exit(0);
+//					}
+//				}
+//			});
+//			menu.getItems().addAll(menu1,menu2,menu3);
+//			layout.getChildren().add(menuBar);
+//	        Canvas can = new Canvas(500, 100);
+//			layout.getChildren().add(can);
+//			System.out.println(System.getProperty("user.dir"));
+//			
+//			Image image = new Image("file:images/emerald_Battle_1.png");
+//	        ImageView imageView = new ImageView(image);
+//	        layout.getChildren().add(imageView);
+//	    
 			primaryStage.setTitle("Pokemon Gun");
-			primaryStage.setScene(Layoutscene);
-			
+			primaryStage.setScene(scene);
+//			
 			ArrayList<String> input = new ArrayList<>(); 
 			scene.setOnKeyPressed(e -> {
 				String code = e.getCode().toString();
