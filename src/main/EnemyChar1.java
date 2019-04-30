@@ -5,7 +5,6 @@ import java.util.List;
 import javafx.scene.image.Image;
 
 public class EnemyChar1 extends Movement{
-	private List<Bullet> firedBullets = new ArrayList<Bullet>();
 	Direction DOWN = Direction.DOWN;
 	Image emerald_down_rest;
 	Image emerald_down_1;

@@ -10,7 +10,6 @@ import java.util.List;
 
 
 public class PlayerChar extends Movement{
-	private List<Bullet> firedBullets = new ArrayList<Bullet>();
 	private int health;
 	Direction DOWN = Direction.DOWN;
 	Image emerald_down_rest;
@@ -62,16 +61,6 @@ public class PlayerChar extends Movement{
 
 	}
 	
-	public void fire(){
-	       Bullet bullet = new Bullet(posX, posY);
-	       if (firedBullets.size()  == 0) {
-	    	   firedBullets.add(bullet);
-	       }
-	   }
-
-	public List<Bullet> getFireBullets() {
-		return firedBullets;
-	}
 	
 	public int getHealth() {
 		return health;
