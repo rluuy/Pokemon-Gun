@@ -76,7 +76,7 @@ public final class Main extends Application {
 				public void handle(ActionEvent event)
 				{
 					Alert alert = new Alert(AlertType.CONFIRMATION);
-					alert.setTitle("The Legend of Zelda");
+					alert.setTitle("Pokemon Gun");
 					alert.setHeaderText("You are about to quit without saving");
 					alert.setContentText("Are you sure?");
 
@@ -90,14 +90,15 @@ public final class Main extends Application {
 			});
 			menu.getItems().addAll(menu1,menu2,menu3,menu4);
 			layout.getChildren().add(menuBar);
-	        Canvas can = new Canvas(720, 100);
+	        Canvas can = new Canvas(500, 100);
 			layout.getChildren().add(can);
 			System.out.println(System.getProperty("user.dir"));
 			
-			Image image = new Image("file:images/zelda_logo.png");
+			Image image = new Image("file:images/emerald_Battle_1.png");
 	        ImageView imageView = new ImageView(image);
 	        layout.getChildren().add(imageView);
-			primaryStage.setTitle("Final Project");
+	    
+			primaryStage.setTitle("Pokemon Gun");
 			primaryStage.setScene(Layoutscene);
 			
 			ArrayList<String> input = new ArrayList<>(); 

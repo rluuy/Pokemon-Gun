@@ -13,11 +13,11 @@ public class Stage5 {
 	int[][] tileMap = {
 			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
 			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+			{0, 0, 0, 0, 7, 7, 7, 7, 7, 7, 7, 7, 0, 0, 1},
+			{0, 0, 0, 0, 7, 7, 0, 0, 0, 0, 7, 7, 0, 0, 1},
+			{0, 0, 0, 0, 7, 7, 0, 0, 0, 0, 7, 7, 0, 0, 1},
+			{0, 0, 0, 0, 7, 7, 0, 0, 0, 0, 7, 7, 0, 0, 1},
+			{0, 0, 0, 0, 7, 7, 0, 0, 0, 0, 7, 7, 0, 0, 1},
 			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
 			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
 			{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
@@ -26,6 +26,7 @@ public class Stage5 {
 	Image regTile = new Image("file:images/reg_tile_scaled.png");
 	Image grassTile = new Image("file:images/reg_tile_scaled.png");
 	Image rockTile = new Image("file:images/rock.png");
+	Image waterTile = new Image("file:images/water_tile.png");
 
 	int tileLength = 48;
 	int tileWidth = 48;
@@ -48,6 +49,8 @@ public class Stage5 {
 					
 				}
 				if (tileMap[i][j] == 7) {
+					gc.drawImage(waterTile, j * tileWidth, i * tileLength);
+					obstalces.add( new Rectangle(j * tileLength, i * tileWidth, tileLength, tileWidth));
 				}
 			}
 		}

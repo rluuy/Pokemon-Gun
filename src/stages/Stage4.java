@@ -8,23 +8,26 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 public class Stage4 {
+	//a
 	private ArrayList<Rectangle> obstalces = new ArrayList<Rectangle>() ;
 
 	int[][] tileMap = {
+			
 			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 2, 0, 0, 2, 0, 0, 2, 0, 0, 2, 0, 0, 0},
 			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 2, 0, 0, 2, 0, 0, 0, 0, 0, 0},
 			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+			{0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 7, 7, 7, 0, 0, 0, 0, 0, 1},
 	}; //tileMap - may move on to text reading method instead
 
 	Image regTile = new Image("file:images/reg_tile_scaled.png");
-	Image grassTile = new Image("file:images/reg_tile_scaled.png");
+	Image sandTile = new Image("file:images/oceantile.png");
+	Image potTile = new Image("file:images/pot.png");
 	Image rockTile = new Image("file:images/rock.png");
 
 	int tileLength = 48;
@@ -43,13 +46,18 @@ public class Stage4 {
 					gc.drawImage(regTile, j * tileWidth, i * tileLength);
 				}
 				if (tileMap[i][j] == 1) {
+					gc.drawImage(regTile, j * tileWidth, i * tileLength);
 					gc.drawImage(rockTile, j * tileWidth, i * tileLength);
 					obstalces.add( new Rectangle(j * tileLength, i * tileWidth, tileLength, tileWidth));
 				}
+				if (tileMap[i][j] == 2) {
+					gc.drawImage(regTile, j * tileWidth, i * tileLength);
+					gc.drawImage(potTile, j * tileWidth, i * tileLength);
+					obstalces.add( new Rectangle(j * tileLength, i * tileWidth, tileLength, tileWidth));
+					
+				}
 				if (tileMap[i][j] == 7) {
-				//	gc.setFill(Color.AQUAMARINE);
-				//	gc.fillRect(j * tileLength, i * tileWidth, tileLength, tileWidth);
-				//	gc.drawImage(flowerTile, j * tileWidth, i * tileLength);
+					gc.drawImage(sandTile, j * tileWidth, i * tileLength);
 				}
 			}
 		}

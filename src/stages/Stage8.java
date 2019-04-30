@@ -22,7 +22,7 @@ public class Stage8 {
 			{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
 	}; //tileMap - may move on to text reading method instead
 
-	Image regTile = new Image("file:images/reg_tile_scaled.png");
+	Image regTile = new Image("file:images/oceantile.png");
 	Image grassTile = new Image("file:images/tile2.png");
 	Image cactusTile = new Image("file:images/cactus.png");
 
