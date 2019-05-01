@@ -1,6 +1,7 @@
 package main;
 
 import javafx.animation.AnimationTimer;
+import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.media.Media;
@@ -64,12 +65,31 @@ class GameLoop extends AnimationTimer implements Serializable {
 	long start = System.nanoTime();
 	long start2 = System.nanoTime();
 
-	GameLoop(ArrayList<String> inInput, GraphicsContext inGC, PlayerChar inE) {
+	public GameLoop() 
+	{
+		input = new ArrayList<>(); 
+		gc = new Canvas(720, 480).getGraphicsContext2D();
+		e=new PlayerChar(50, 50, 10 , 0.43);
+		input = new ArrayList<String>() ;
+		obstacles = new ArrayList<Rectangle>();
+		playerItems = new ArrayList<Sprite>();
+		start = System.nanoTime();
+		start2 = System.nanoTime();
+		items = new ArrayList<Sprite>();
+		enemies = new ArrayList<Enemy>();
+		projectilesP = new ArrayList<Sprite>();
+		projectilesE = new ArrayList<Sprite>();
+		start = System.nanoTime();
+		start2 = System.nanoTime();
+	}
+	
+	public GameLoop(ArrayList<String> inInput, GraphicsContext inGC, PlayerChar inE) {
 		input = inInput;
 		gc = inGC;
 		e = inE;
-
 	}
+	
+	
 
 	public void handle(long currentNanoTime) { // code of start, handle called by .start()
 		if (!isBattle) {
