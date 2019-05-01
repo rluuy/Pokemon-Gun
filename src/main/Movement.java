@@ -42,6 +42,7 @@ public class Movement {
 		
 		direction = DOWN;
 	}
+
 	
 	public void moveLeft() {
 		posX = posX - xSpeed;

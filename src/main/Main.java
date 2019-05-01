@@ -32,7 +32,6 @@ import javafx.scene.input.KeyEvent;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 
-
 public final class Main extends Application {
 
 	private static MediaPlayer mediaPlayer;
@@ -65,7 +64,7 @@ public final class Main extends Application {
 			primaryStage.setScene(scene);
 			
 			gc = canvas.getGraphicsContext2D(); 
-			gm = new GameLoopModel();
+			gm = new GameLoopModel(p);
 			gl = new GameLoop(gm,gc);
 			
 			VBox PauseBox = new VBox();
@@ -121,14 +120,18 @@ public final class Main extends Application {
 					canvas = new Canvas(720, 480);
 					root.getChildren().add(canvas);	
 					gc = canvas.getGraphicsContext2D(); 
-					gm = new GameLoopModel();
+					gm = new GameLoopModel(p);
 					gl = new GameLoop(gm,gc);
 					gl.start();
 					primaryStage.setScene(scene);
 					primaryStage.show();
 					scene.setOnKeyPressed(e -> {
 						String code = e.getCode().toString();
-						if (!gm.input.contains(code))
+						if(code.equals("ESCAPE"))
+		                {
+		                	primaryStage.setScene(PauseMenu);
+		                }
+						else if (!gm.input.contains(code))
 							gm.input.add(code);
 					});
 					
@@ -163,7 +166,7 @@ public final class Main extends Application {
 						@Override
 						public void handle(ActionEvent event)
 						{
-							String d = (String)"data/save_game"+(filecount)+".dat";
+							String d = (String)"data/save_game"+(filecount++)+".dat";
 							System.out.println("here");
 							ObjectOutputStream objectOutputStream = null;
 							try {
@@ -174,6 +177,8 @@ public final class Main extends Application {
 							}   
 							try {
 									objectOutputStream.writeObject(gm);
+									System.out.println("Saving"+ gm.totalPosX);
+									primaryStage.setScene(scene);
 								} catch (IOException e) {
 									// TODO Auto-generated catch block
 									e.printStackTrace();
@@ -203,7 +208,7 @@ public final class Main extends Application {
 			Button ld5 = new Button("Load 5");
 			ld5.setOnAction(e -> { filecount=5; });
 			Button ld6 = new Button("< Back");
-			LoadBox.getChildren().addAll(ld1, ld2, ld3, ld4, ld5,ld6);
+			LoadBox.getChildren().addAll(ld1, ld2, ld3, ld4, ld5, ld6);
 			ld6.setOnAction(e -> {  primaryStage.setScene(PauseMenu); });
 			
 			btn3.setOnAction(new EventHandler<ActionEvent>() 
@@ -211,21 +216,26 @@ public final class Main extends Application {
 				@Override
 				public void handle(ActionEvent event)
 				{
-					
 					root = new VBox(); 
 					scene = new Scene(root,720,480);    
-					p = new PlayerChar(50, 50, 10 , 0.43,3);
 					canvas = new Canvas(720, 480);
 					root.getChildren().add(canvas);	
 					gc = canvas.getGraphicsContext2D(); 
-					gm = Load(1);
-					gl = new GameLoop(gm,gc);
+					gm = Load(filecount-1);
+					System.out.println("Loading"+ gm.totalPosX);
+					p = new PlayerChar(10 , 0.43, gm.PlayerCharHealth,gm.posX,gm.posY,gm.totalPosX,gm.totalPosY);
+					System.out.println(gm.toString());
+					gl = new GameLoop(gm,gc,p);
 					gl.start();
 					primaryStage.setScene(scene);
 					primaryStage.show();
 					scene.setOnKeyPressed(e -> {
 						String code = e.getCode().toString();
-						 if (!gm.input.contains(code))
+						if(code.equals("ESCAPE"))
+		                {
+		                	primaryStage.setScene(PauseMenu);
+		                }
+						else if (!gm.input.contains(code))
 							gm.input.add(code);
 					});
 					scene.setOnKeyReleased(e -> {
@@ -245,26 +255,27 @@ public final class Main extends Application {
 	{
 		GameLoopModel gm=null;
 		String d = (String)"data/save_game"+(load)+".dat";
-		ObjectInputStream objecInputStream = null;
+		ObjectInputStream objectInputStream = null;
 		try {
-			objecInputStream = new ObjectInputStream(new FileInputStream(d));
+			objectInputStream = new ObjectInputStream(new FileInputStream(d));
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		} 
 		try {
-			gm = (GameLoopModel) objecInputStream.readObject();
-			System.out.println(gm.toString());
+			gm = (GameLoopModel) objectInputStream.readObject();
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		try {
-			objecInputStream.close();
+			objectInputStream.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		System.out.println("sending in load");
 		return gm;
 	}
 

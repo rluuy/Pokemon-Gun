@@ -30,6 +30,8 @@ public class GameLoopModel implements Serializable
 	public boolean gotItem2 = true;
 	long start = System.nanoTime();
 	long start2 = System.nanoTime();
+	public int posX, posY;
+	public int totalPosX, totalPosY;
 	
 	public GameLoopModel()
 	{
@@ -55,5 +57,38 @@ public class GameLoopModel implements Serializable
 		input = new ArrayList<String>();
 		gotItem = true;
 		gotItem2 = true;
+		posX = 50;
+		posY = 50;
+		totalPosX = 50;
+		totalPosY = 50;
+	}
+	public GameLoopModel(PlayerChar p)
+	{
+		t1 = System.nanoTime();
+		t2 = System.nanoTime();
+		input = new ArrayList<>(); 
+		PlayerCharHealth=3;
+		obstacles = new ArrayList<Rectangle>();
+//		playerItems = new ArrayList<Sprite>();
+		start = System.nanoTime();
+		start2 = System.nanoTime(); 
+//		items = new ArrayList<Sprite>();
+		enemies = new ArrayList<Enemy>();
+//		projectilesP = new ArrayList<Sprite>();
+//		projectilesE = new ArrayList<Sprite>();
+		diff=0;
+		interval = 200000000;
+		bufferX = 720;
+		bufferY = 480;
+		bufferScalarX = 1;
+		bufferScalarY = 1;
+		isBattle = false;
+		input = new ArrayList<String>();
+		gotItem = true;
+		gotItem2 = true;
+		posX = p.posX;
+		posY = p.posY;
+		totalPosX = p.totalPosX;
+		totalPosY = p.totalPosY;
 	}
 }
