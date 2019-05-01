@@ -14,7 +14,7 @@ public class Enemy extends Sprite {
 	private int deltaX = 0;
 	private int deltaY = 0;
 	private int ticks;
-	Image emerald_down_rest = new Image("file:images/enemy1_down_rest.png");
+	Image image;
 	
 	public Enemy(int type, int posX, int posY) {
 		super();
@@ -22,7 +22,14 @@ public class Enemy extends Sprite {
 		this.posX = posX;
 		this.posY = posY;
 		this.ticks = 0;
-		super.setImage(emerald_down_rest);
+		
+		if (type == 1)
+			image = new Image("file:images/enemy1_down_rest.png");
+		else if (type == 2) 
+			image = new Image("file:images/enemychar2_down_rest.png");
+		else 
+			image = new Image("file:images/enemy1_down_rest.png");
+		super.setImage(image);
 
 		super.setPosition(posX, posY);
 	}
@@ -48,8 +55,11 @@ public class Enemy extends Sprite {
 	 */
 	private void renderOne(GraphicsContext gc) {
 		if (direction == 1) {
+			image = new Image("file:images/enemychar2_up_rest.png");
+			super.setImage(image);
 			positionY -= velocity;
-			if (positionY == 0) {
+			deltaY += velocity;
+			if (deltaY == 200) {
 				deltaY = 0;
 				direction = 3;
 			}
@@ -57,16 +67,18 @@ public class Enemy extends Sprite {
 		else if (direction == 2)
 			positionX += velocity;
 		else if (direction == 3) {
+			image = new Image("file:images/enemychar2_down_rest.png");
+			super.setImage(image);
 			positionY += velocity;
 			deltaY += velocity;
-			if (positionY + emerald_down_rest.getHeight() == gc.getCanvas().getHeight()) {
+			if (deltaY == 200) {
 				deltaY = 0;
 				direction = 1;
 			}
 		}
 		else if (direction == 4)
 			positionX -= velocity;
-		super.render(gc);
+		gc.drawImage(image, positionX, positionY, 100*.43, 150*.43);
 	}
 	
 	/**
@@ -79,8 +91,12 @@ public class Enemy extends Sprite {
 			positionY -= velocity;
 		}
 		else if (direction == 2) {
+			image = new Image("file:images/enemychar2_right_rest.png");
+			super.setImage(image);
 			positionX += velocity;
-			if (positionX + emerald_down_rest.getWidth() == gc.getCanvas().getWidth()) {
+			deltaX += velocity;
+			if (deltaX == 100) {
+				deltaX = 0;
 				direction = 4;
 			}
 		}
@@ -88,12 +104,16 @@ public class Enemy extends Sprite {
 			positionY += velocity;
 		}
 		else if (direction == 4) {
+			image = new Image("file:images/enemychar2_left_rest.png");
+			super.setImage(image);
 			positionX -= velocity;
-			if (positionX == 0) {
+			deltaX += velocity;
+			if (deltaX == 100) {
+				deltaX = 0;
 				direction = 2;
 			}
 		}
-		super.render(gc);
+		gc.drawImage(image, positionX, positionY, 100*.43, 150*.43);
 	}
 	
 	/**
@@ -102,6 +122,22 @@ public class Enemy extends Sprite {
 	 * @param gc  javafx.scene.canvas.GraphicsContext
 	 */
 	private void renderThree(GraphicsContext gc) {
+		if (direction == 1) {
+			image = new Image("file:images/enemy1_up_rest.png");
+			super.setImage(image);
+		}
+		else if (direction == 2) {
+			image = new Image("file:images/enemy1_right_rest.png");
+			super.setImage(image);
+		}
+		else if (direction == 3) {
+			image = new Image("file:images/enemy1_down_rest.png");
+			super.setImage(image);
+		}
+		else if (direction == 4) {
+			image = new Image("file:images/enemy1_left_rest.png");
+			super.setImage(image);
+		}
 		if (this.ticks == 300) {
 			if (direction == 5) {
 				direction = 1;
@@ -113,7 +149,7 @@ public class Enemy extends Sprite {
 			}
 		}
 		ticks++;
-		super.render(gc);
+		gc.drawImage(image, positionX, positionY, 100*.43, 150*.43);
 	}
 	
 	/**
@@ -154,7 +190,7 @@ public class Enemy extends Sprite {
 				direction = 3;
 			}
 		}
-		super.render(gc);
+		gc.drawImage(image, positionX, positionY, 100*.43, 150*.43);
 	}
 
 	public void loseHealth() {

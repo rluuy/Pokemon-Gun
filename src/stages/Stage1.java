@@ -91,10 +91,5 @@ public class Stage1 {
 		enemy.direction = 1;
 		enemy.setVelocity(1);
 		enemies.add( enemy );
-
-		Enemy enemy2 = new Enemy(2, 200, 200);
-		enemy2.direction = 2;
-		enemy2.setVelocity(1);
-		enemies.add( enemy2 );
 	}
 }
