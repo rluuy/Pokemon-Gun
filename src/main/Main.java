@@ -1,7 +1,11 @@
 package main;
 import java.io.*;
 import java.nio.file.Paths;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Optional;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
@@ -40,6 +44,7 @@ public final class Main extends Application {
 	GraphicsContext gc;
 	PlayerChar p;
 	Scene scene;
+	int filecount=0;
 
 	public static void main(String[] args) {
 		launch(args);
@@ -143,63 +148,92 @@ public final class Main extends Application {
 			});
 			
 			btn2.setOnAction(new EventHandler<ActionEvent>() 
-			{
-				@Override
-				public void handle(ActionEvent event)
-				{
-					ObjectOutputStream objectOutputStream = null;
-					try {
-						objectOutputStream = new ObjectOutputStream(new FileOutputStream("data/save_game.dat"));
-					} catch (IOException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					} 
-					try {
-						objectOutputStream.writeObject(gm);
-					} catch (Exception e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					try {
-						objectOutputStream.close();
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				}
-			});
+					{
+						@Override
+						public void handle(ActionEvent event)
+						{
+							String d = (String)"data/save_game"+(filecount)+".dat";
+							System.out.println("here");
+							ObjectOutputStream objectOutputStream = null;
+							try {
+								objectOutputStream = new ObjectOutputStream(new FileOutputStream(d));
+							} catch (IOException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}   
+							try {
+									objectOutputStream.writeObject(gm);
+								} catch (IOException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+						        try {
+									objectOutputStream.close();
+								} catch (IOException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+						}
+					});
+			VBox LoadBox = new VBox();
+			LoadBox.setAlignment(Pos.CENTER);
+			LoadBox.setPadding(new Insets(10));
+			LoadBox.setSpacing(10);
+			Scene LoadMenu = new Scene(LoadBox,720,480);
+			Button ld1 = new Button("Load 1");
+			ld1.setOnAction(e -> { filecount=1; });
+			Button ld2 = new Button("Load 2");
+			ld2.setOnAction(e -> { filecount=2; });
+			Button ld3 = new Button("Load 3");
+			ld3.setOnAction(e -> { filecount=3; });
+			Button ld4 = new Button("Load 4");
+			ld4.setOnAction(e -> { filecount=4; });
+			Button ld5 = new Button("Load 5");
+			ld5.setOnAction(e -> { filecount=5; });
+			Button ld6 = new Button("< Back");
+			LoadBox.getChildren().addAll(ld1, ld2, ld3, ld4, ld5,ld6);
+			ld6.setOnAction(e -> {  primaryStage.setScene(PauseMenu); });
 			
 			btn3.setOnAction(new EventHandler<ActionEvent>() 
 			{
 				@Override
 				public void handle(ActionEvent event)
 				{
-					ObjectInputStream objecInputStream = null;
-					try {
-						objecInputStream = new ObjectInputStream(new FileInputStream("data/save_game.dat"));
-					} catch (IOException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					} 
-					try {
-						gm = (GameLoopModel) objecInputStream.readObject();
-					} catch (Exception e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					try {
-						objecInputStream.close();
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+					
+					primaryStage.setScene(LoadMenu);
 				}
 			});
-			
 			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public GameLoopModel Load(int load)
+	{
+		GameLoopModel gm=null;
+		String d = (String)"data/save_game"+(load)+".dat";
+		ObjectInputStream objecInputStream = null;
+		try {
+			objecInputStream = new ObjectInputStream(new FileInputStream(d));
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} 
+		try {
+			gm = (GameLoopModel) objecInputStream.readObject();
+			System.out.println(gm.toString());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			objecInputStream.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return gm;
 	}
 
 }
