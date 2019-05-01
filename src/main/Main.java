@@ -57,25 +57,6 @@ public final class Main extends Application {
 			primaryStage.setTitle("Pokemon Gun");
 			primaryStage.setScene(scene);
 			
-			VBox PauseBox = new VBox();
-			PauseBox.setAlignment(Pos.CENTER);
-			PauseBox.setPadding(new Insets(10));
-			PauseBox.setSpacing(10);
-			Scene PauseMenu = new Scene(PauseBox,720,480);
-			Button btn1 = new Button("New");
-			Button btn2 = new Button("Save");
-			Button btn3 = new Button("Load");
-			Button btn4 = new Button("Quit");
-			Button btn5 = new Button("Cancel");
-			PauseBox.getChildren().addAll(btn1, btn2, btn3, btn4, btn5);
-
-			btn5.setOnAction(e -> {
-				primaryStage.setScene(scene);
-			});
-
-			primaryStage.setTitle("Pokemon Gun");
-			primaryStage.setScene(scene);
-
 			
 			ArrayList<String> input = new ArrayList<>(); 
 			scene.setOnKeyPressed(e -> {
@@ -89,13 +70,6 @@ public final class Main extends Application {
 				input.remove(code);
 			});
 			
-			scene.setOnKeyPressed(e -> {
-				String code = e.getCode().toString();
-				if(code.equals("ESCAPE"))
-				{
-					primaryStage.setScene(PauseMenu);
-				}
-			});	
 			GraphicsContext gc = canvas.getGraphicsContext2D(); 
 			GameLoop gl = new GameLoop(input, gc, p);
 			gl.start();
