@@ -1,6 +1,4 @@
 package main;
-
-
 import javafx.scene.canvas.GraphicsContext;
 
 import javafx.scene.image.Image;
@@ -27,6 +25,10 @@ public class PlayerChar extends Movement implements Serializable
 	Image emerald_up_1;
 	Image emerald_up_2;
 
+	public PlayerChar(int health)
+	{
+		this.health = health;
+	}
 
 	public PlayerChar() {
 		super();
@@ -42,10 +44,9 @@ public class PlayerChar extends Movement implements Serializable
 		emerald_up_rest = new Image("file:images/emerald_up_rest.png");
 		emerald_up_1 = new Image("file:images/emerald_up_1.png");
 		emerald_up_2 = new Image("file:images/emerald_up_2.png");
-
 	}
 
-	public PlayerChar(int inPosX, int inPosY, int speed, double whMult) {
+	public PlayerChar(int inPosX, int inPosY, int speed, double whMult, int health) {
 		super(inPosX, inPosY, speed, whMult);
 		emerald_down_rest = new Image("file:images/enemy1_down_rest.png");
 		emerald_down_1 = new Image("file:images/enemy1_down_1.png");
@@ -59,7 +60,7 @@ public class PlayerChar extends Movement implements Serializable
 		emerald_up_rest = new Image("file:images/enemy1_up_rest.png");
 		emerald_up_1 = new Image("file:images/enemy1_up_1.png");
 		emerald_up_2 = new Image("file:images/enemy1_up_2.png");
-		health = 3;
+		this.health = health;
 
 	}
 	

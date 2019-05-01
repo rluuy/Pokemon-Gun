@@ -35,11 +35,15 @@ public final class Main extends Application {
 	VBox root;
 	HBox layout;
 	GameLoop gl;
+	GameLoopModel gm;
+	Canvas canvas;
+	GraphicsContext gc;
+	PlayerChar p;
+	Scene scene;
 
 	public static void main(String[] args) {
 		launch(args);
 	}
-	
 	
 	@Override
 	public void start(Stage primaryStage) 
@@ -47,13 +51,17 @@ public final class Main extends Application {
 		try 
 		{
 			root = new VBox(); 
-			Scene scene = new Scene(root,720,480);    
-			PlayerChar p = new PlayerChar(50, 50, 10 , 0.43);
+			scene = new Scene(root,720,480);    
+			p = new PlayerChar(50, 50, 10 , 0.43,3);
 
-			Canvas canvas = new Canvas(720, 480);
+			canvas = new Canvas(720, 480);
 			root.getChildren().add(canvas);	
 			primaryStage.setTitle("Pokemon Gun");
 			primaryStage.setScene(scene);
+			
+			gc = canvas.getGraphicsContext2D(); 
+			gm = new GameLoopModel();
+			gl = new GameLoop(gm,gc);
 			
 			VBox PauseBox = new VBox();
 			PauseBox.setAlignment(Pos.CENTER);
@@ -70,7 +78,7 @@ public final class Main extends Application {
 			btn5.setOnAction(e -> {
 				primaryStage.setScene(scene);
 			});
-
+			
 			ArrayList<String> input = new ArrayList<>(); 
 			
 			scene.setOnKeyPressed(e -> {
@@ -80,17 +88,21 @@ public final class Main extends Application {
                 	primaryStage.setScene(PauseMenu);
                 }
 				else if (!input.contains(code))
-					input.add(code);
+					gm.input.add(code);
 			});
 			
 			scene.setOnKeyReleased(e -> {
 				String code = e.getCode().toString();
-				input.remove(code);
+				gm.input.remove(code);
+				System.out.println(input.toString());
 			});
 			
-			GraphicsContext gc = canvas.getGraphicsContext2D(); 
-			GameLoop gl = new GameLoop(input, gc, p);
+//			GraphicsContext gc = canvas.getGraphicsContext2D(); 
+//			gl = new GameLoop(input, gc, p);
+//			gl.start();
+			
 			gl.start();
+			
 			primaryStage.show();
 			
 			btn1.setOnAction(new EventHandler<ActionEvent>() 
@@ -98,9 +110,17 @@ public final class Main extends Application {
 				@Override
 				public void handle(ActionEvent event)
 				{
-					GameLoop gl = new GameLoop();
+					root = new VBox(); 
+					scene = new Scene(root,720,480);    
+					p = new PlayerChar(50, 50, 10 , 0.43,3);
+					canvas = new Canvas(720, 480);
+					root.getChildren().add(canvas);	
+					gc = canvas.getGraphicsContext2D(); 
+					gm = new GameLoopModel();
+					gl = new GameLoop(gm,gc);
 					gl.start();
 					primaryStage.setScene(scene);
+					primaryStage.show();
 				}
 			});
 			
@@ -116,8 +136,8 @@ public final class Main extends Application {
 					Optional<ButtonType> result = alert.showAndWait();
 					if (result.get() == ButtonType.OK)
 					{
-					Platform.exit();
-					System.exit(0);
+						Platform.exit();
+						System.exit(0);
 					}
 				}
 			});
@@ -135,8 +155,8 @@ public final class Main extends Application {
 						e1.printStackTrace();
 					} 
 					try {
-						objectOutputStream.writeObject(gl);
-					} catch (IOException e) {
+						objectOutputStream.writeObject(gm);
+					} catch (Exception e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
@@ -148,6 +168,34 @@ public final class Main extends Application {
 					}
 				}
 			});
+			
+			btn3.setOnAction(new EventHandler<ActionEvent>() 
+			{
+				@Override
+				public void handle(ActionEvent event)
+				{
+					ObjectInputStream objecInputStream = null;
+					try {
+						objecInputStream = new ObjectInputStream(new FileInputStream("data/save_game.dat"));
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					} 
+					try {
+						gm = (GameLoopModel) objecInputStream.readObject();
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					try {
+						objecInputStream.close();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			});
+			
 			
 		} catch (Exception e) {
 			e.printStackTrace();

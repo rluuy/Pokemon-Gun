@@ -48,39 +48,71 @@ class GameLoop extends AnimationTimer implements Serializable {
 	private boolean isBattle = false;
 	private GraphicsContext gc;
 	private PlayerChar e;
-
 	private ArrayList<String> input;
 	private ArrayList<Rectangle> obstacles;
 	private ArrayList<Sprite> playerItems = new ArrayList<Sprite>();
-
 	private ArrayList<Sprite> items;
 	private ArrayList<Enemy> enemies;
 	private ArrayList<Sprite> projectilesP = new ArrayList<Sprite>();
 	private ArrayList<Sprite> projectilesE = new ArrayList<Sprite>();
-
 	Image pokeball = new Image("file:images/pokeball.png");
 	private boolean gotItem = true;
 	private boolean gotItem2 = true;
-
 	long start = System.nanoTime();
 	long start2 = System.nanoTime();
 
 	public GameLoop() 
 	{
+		t1 = System.nanoTime();
+		t2 = System.nanoTime();
 		input = new ArrayList<>(); 
 		gc = new Canvas(720, 480).getGraphicsContext2D();
-		e=new PlayerChar(50, 50, 10 , 0.43);
-		input = new ArrayList<String>() ;
+		e = new PlayerChar(50, 50, 10, 0.43, 3);
 		obstacles = new ArrayList<Rectangle>();
 		playerItems = new ArrayList<Sprite>();
 		start = System.nanoTime();
-		start2 = System.nanoTime();
+		start2 = System.nanoTime(); 
 		items = new ArrayList<Sprite>();
 		enemies = new ArrayList<Enemy>();
 		projectilesP = new ArrayList<Sprite>();
 		projectilesE = new ArrayList<Sprite>();
-		start = System.nanoTime();
-		start2 = System.nanoTime();
+		diff=0;
+		interval = 200000000;
+		bufferX = 720;
+		bufferY = 480;
+		bufferScalarX = 1;
+		bufferScalarY = 1;
+		isBattle = false;
+		input = new ArrayList<String>();
+		gotItem = true;
+		gotItem2 = true;
+	}
+	
+	public GameLoop(GameLoopModel x, GraphicsContext inGC)
+	{
+		t1 = x.t1; // Gets total time elapsed in nanoseconds, so early value
+		t2 = x.t2; // to be initialized as later value to compare (t2-t1)
+		diff = x.diff;
+		interval = x.interval;
+		bufferX = x.bufferX;
+		bufferY = x.bufferY;
+		bufferScalarX = x.bufferScalarX;
+		bufferScalarY = x.bufferScalarY;
+		isBattle = x.isBattle;
+		gc = inGC;
+		e = new PlayerChar(50, 50, 10 , 0.43, x.PlayerCharHealth);
+		input=x.input;
+		obstacles=x.obstacles;
+		playerItems = new ArrayList<Sprite>();
+		items=new ArrayList<Sprite>();
+		enemies=x.enemies;
+		projectilesP = new ArrayList<Sprite>();
+		projectilesE = new ArrayList<Sprite>();
+		pokeball = new Image("file:images/pokeball.png");
+		gotItem = x.gotItem;
+		gotItem2 = x.gotItem2;
+		start = x.start;
+		start2 = x.start2;
 	}
 	
 	public GameLoop(ArrayList<String> inInput, GraphicsContext inGC, PlayerChar inE) {
@@ -88,8 +120,6 @@ class GameLoop extends AnimationTimer implements Serializable {
 		gc = inGC;
 		e = inE;
 	}
-	
-	
 
 	public void handle(long currentNanoTime) { // code of start, handle called by .start()
 		if (!isBattle) {
