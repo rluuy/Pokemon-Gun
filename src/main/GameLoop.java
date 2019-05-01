@@ -36,8 +36,8 @@ import java.nio.file.attribute.PosixFileAttributes;
 
 class GameLoop extends AnimationTimer implements Serializable {
 
-	private long t1 = System.nanoTime(); // Gets total time elapsed in nanoseconds, so early value
-	private long t2; // to be initialized as later value to compare (t2-t1)
+	private long t1 = System.nanoTime(); 
+	private long t2; 
 	private long diff;
 	private long interval = 200000000;
 	private int bufferX = 720;
@@ -81,17 +81,29 @@ class GameLoop extends AnimationTimer implements Serializable {
 
 	}
 
+	
+	/**
+	 * Handle's purpose is to run the gameloop itself. It handles loading stages, placement of enemies,
+	 * in-game collisions, movement, as well as holds the data for items. It basically is the heart of the 
+	 * program. 
+	 * 
+	 * The Map is divided up into 9 different stages 
+	 * {[1-1, 1-2, 1-3]
+	 * [2-1, 2-2, 2-3]
+	 * [3-1, 3-2, 3-3]}
+	 */
 	public void handle(long currentNanoTime) { // code of start, handle called by .start()
 		if (!isBattle) {
 			//System.out.println("y = " + e.totalPosY + " x = " + e.totalPosX );
+		
 			if (e.totalPosX < 720) { // Stage 1-1 (Going Left and Right)
 				bufferScalarX = 0;
 				bufferScalarY = 0;
 				Stage1 s1 = new Stage1();
 				s1.generateTiles(gc);
 				obstacles = s1.getObstacles();
-				e.posX = e.totalPosX;
-				if (gotItem) {
+				e.posX = e.totalPosX; 
+				if (gotItem) {	// Code for checking Items and Enemies 
 					items = s1.getItems();
 					enemies = s1.getEnemies();
 					gotItem = false;
@@ -105,15 +117,18 @@ class GameLoop extends AnimationTimer implements Serializable {
 					gotItem9 = true;
 				}
 			}
-			if (e.totalPosY < 480) {
+		
+			
+			if (e.totalPosY < 480) {	// Stage 1-1 (Going Up and Down)
 				bufferScalarX = 0;
 				bufferScalarY = 0;
-				Stage1 s1 = new Stage1(); // Stage 1-1 (Going Up and Down)
+				Stage1 s1 = new Stage1(); 
 				s1.generateTiles(gc);
 				e.posY = e.totalPosY;
 				obstacles = s1.getObstacles();
 				dungeon = s1.getD();
 			}
+		
 			if (e.totalPosX > 720 && e.totalPosX < 1440 && e.totalPosY < 480) { // Stage 1-2
 				bufferScalarX = 1;
 				bufferScalarY = 0;
@@ -288,8 +303,8 @@ class GameLoop extends AnimationTimer implements Serializable {
 			}
 
 		}
+	
 		// Code for Out of Bounds Checking
-
 		if (e.posY < 0) { // Out of Bounds TOP
 			e.totalPosY = 0;
 		}
@@ -327,12 +342,15 @@ class GameLoop extends AnimationTimer implements Serializable {
 
 		});
 
+		
+		// Draws the animation when there is no more legitimate input
 		if (input.size() == 0)
 			gc.drawImage(e.direction.image.apply(e), e.posX, e.posY, e.width, e.height);
 
 		long end = System.nanoTime();
 		long elapsed = end - start;
 
+		// Draws the Animation for shooting a pokeball
 		if (input.contains("SPACE") && elapsed > 200000000) {
 			Sprite pokeballS = new Sprite();
 			pokeballS.setImage(pokeball);
@@ -441,6 +459,9 @@ class GameLoop extends AnimationTimer implements Serializable {
 	}
 	
 
+	/**
+	 * playerHit's purpose is to detect when a player is hit and update the values
+	 */
 	private void playerHit() {
 		Rectangle playerRect = new Rectangle(e.posX, e.posY, 48, 48);
 		for (int i = 0; i < projectilesE.size(); i++) {
@@ -454,6 +475,10 @@ class GameLoop extends AnimationTimer implements Serializable {
 		}
 	}
 
+	/**
+	 * collision is for obstacle collisions in the game. It resets the players 
+	 * position back depending on the direction that the player is walking.
+	 */
 	private void collision() {
 		Rectangle playerRect = new Rectangle(e.posX, e.posY, 48, 48);
 		for (Rectangle collision : obstacles) {
@@ -476,28 +501,31 @@ class GameLoop extends AnimationTimer implements Serializable {
 		}
 	}
 	
+	/**
+	 * dcollision is a special type of collision that sends the player to the 
+	 * somewhere else (dungeon) if they hit the stair block within the game. 
+	 */
 	private void dcollision() {
 		Rectangle playerRect = new Rectangle(e.posX, e.posY, 48, 48);
 		if (dungeon != null) {
 		for (Rectangle collision : dungeon) {
 			if (collision.intersects(playerRect.getBoundsInLocal())) {
-				//System.out.println(collision.getX());
-				if (collision.getX() == 336.0) {
+				if (collision.getX() == 336.0) { // Moves Player on Stage 2-2 to 1-3
 					e.totalPosX = 2060;
 					e.totalPosY = 0;
 					e.posY = 0;
 					e.posX = 660;
-				} else if (collision.getX() == 672.0) {
+				} else if (collision.getX() == 672.0) { // Moves Player on Stage 1-3 to 2-2
 					e.totalPosX = 1120;
 					e.totalPosY = 626;
 					e.posY = 146;
 					e.posX = 400;
-				} else if (collision.getX() == 0.0) {
+				} else if (collision.getX() == 0.0) { // Moves Player on Stage 3-1 to 2-3
 					e.totalPosX = 2000;
 					e.totalPosY = 652;
 					e.posY = 172;
 					e.posX = 600;
-				} else if (collision.getX() == 624.0) {
+				} else if (collision.getX() == 624.0) { // Moves Player on Stage 2-3 to 3-1
 					e.totalPosX = 50;
 					e.totalPosY = 1380;
 					e.posX = 50;

@@ -2,6 +2,11 @@ package stages;
 
 import java.util.ArrayList;
 
+/**
+ * Code for Stage 1-1. This stage is meant to be blank with no obstacles and a few enemies as to ease the player into the game. 
+ * Contains paths that lead to Stage 1-2 and Stage 2-1. 
+ */
+
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
@@ -11,7 +16,6 @@ public class Stage1 {
 	private ArrayList<Rectangle> obstacles = new ArrayList<Rectangle>() ;
 	private ArrayList<Sprite> items = new ArrayList<Sprite>() ;
 	private ArrayList<Enemy> enemies = new ArrayList<Enemy>() ;
-
 
 	Image pokeball = new Image("file:images/pokeball.png");
 
@@ -38,6 +42,10 @@ public class Stage1 {
 	int tileWidth = 48;
 
 
+	/**
+	 * generateTiles's purpose is to generate the stage based on the TileMap.
+	 * @param gc is the graphics context that we are drawing on.
+	 */
 	public void generateTiles(GraphicsContext gc) {
 		Sprite pokeballS = new Sprite();
 		pokeballS.setImage(pokeball);
@@ -52,10 +60,10 @@ public class Stage1 {
 		int mapWidth = tileMap[0].length;
 
 
+		// For Loops that modifies the stage based on the value in the TileMap
 		for (int i = 0; i < mapLength; i++) { 
 			for (int j = 0; j < mapWidth; j++) {
 				gc.fillRect(j * tileLength, i * tileWidth, 48, 48);
-
 				if (tileMap[i][j] == 0) {
 					gc.drawImage(regTile, j * tileWidth, i * tileLength);
 				}
@@ -63,29 +71,34 @@ public class Stage1 {
 					gc.setFill(Color.RED);
 					gc.fillRect(j * tileLength, i * tileWidth, tileLength, tileWidth);
 					obstacles.add( new Rectangle(j * tileLength, i * tileWidth, tileLength, tileWidth));
-
-					//	gc.drawImage(grassTile, j * tileWidth, i * tileLength);
-				}
-				if (tileMap[i][j] == 7) {
-
 				}
 			}
 		}
 	}
+	
+	// Getter for Obstacles in Stage
 	public ArrayList<Rectangle> getObstacles(){
 		return obstacles;
 	}
+	
+	// Getter for Items in Stage 
 	public ArrayList<Sprite> getItems() {
 		// TODO Auto-generated method stub
 		return items;
 	}
+	
+	// Getter for Enemies in Stage 
 	public ArrayList<Enemy> getEnemies() {
 		// TODO Auto-generated method stub
 		return enemies;
 	}
+	
+	// Getter for if the Exist a Dungeon Entrance
 	public ArrayList<Rectangle> getD() {
 		return null;
 	}
+	
+	// Method for creating the eneimies on the stage 
 	private void createEnemies() {
 		Enemy enemy = new Enemy(1, 300, 300);
 		enemy.direction = 1;
