@@ -9,6 +9,12 @@ import javafx.scene.shape.Rectangle;
 
 public class Stage1 {
 	private ArrayList<Rectangle> obstalces = new ArrayList<Rectangle>() ;
+	private ArrayList<Sprite> items = new ArrayList<Sprite>() ;
+	private ArrayList<Enemy> enemies = new ArrayList<Enemy>() ;
+
+
+	Image pokeball = new Image("file:images/pokeball.png");
+	
 
 	int[][] tileMap = {
 			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
@@ -33,6 +39,17 @@ public class Stage1 {
 
 
 	public void generateTiles(GraphicsContext gc) {
+		Sprite pokeballS = new Sprite();
+		pokeballS.setImage(pokeball);
+		double px = 350 * Math.random() + 50;
+		double py = 350 * Math.random() + 50;
+		pokeballS.setPosition(300,300);
+		items.add( pokeballS );
+
+		Enemy enemy = new Enemy();
+		enemy.direction = 1;
+		enemy.setVelocity(10, 10);
+		enemies.add( enemy );
 		
 
 		int mapLength = tileMap.length;
@@ -62,5 +79,15 @@ public class Stage1 {
 	public ArrayList<Rectangle> getObstacles(){
 		return obstalces;
 	}
+	public ArrayList<Sprite> getItems() {
+		// TODO Auto-generated method stub
+		return items;
+	}
+	public ArrayList<Enemy> getEnemies() {
+		// TODO Auto-generated method stub
+		return enemies;
+	}
+	
+	
 
 	}

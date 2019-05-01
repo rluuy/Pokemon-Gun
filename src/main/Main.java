@@ -52,6 +52,7 @@ public final class Main extends Application {
 
 			Canvas canvas = new Canvas(720, 480);
 			root.getChildren().add(canvas);
+
 			
 			primaryStage.setTitle("Pokemon Gun");
 			primaryStage.setScene(scene);
@@ -71,6 +72,10 @@ public final class Main extends Application {
 			btn5.setOnAction(e -> {
 				primaryStage.setScene(scene);
 			});
+
+			primaryStage.setTitle("Pokemon Gun");
+			primaryStage.setScene(scene);
+
 			
 			ArrayList<String> input = new ArrayList<>(); 
 			scene.setOnKeyPressed(e -> {
