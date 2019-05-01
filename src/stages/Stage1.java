@@ -49,12 +49,20 @@ public class Stage1 {
 	public void generateTiles(GraphicsContext gc) {
 		Sprite pokeballS = new Sprite();
 		pokeballS.setImage(pokeball);
-		double px = 350 * Math.random() + 50;
-		double py = 350 * Math.random() + 50;
-		pokeballS.setPosition(300,300);
+		pokeballS.setPosition(100,300);
 		items.add( pokeballS );
 
-		createEnemies();
+
+		//createEnemies();
+		Boss boss = new Boss();
+		boss.direction = 1;
+		boss.setVelocity(1);
+		enemies.add( boss );
+		Enemy enemy = new Enemy();
+		enemy.direction = 1;
+		enemy.setVelocity(1);
+		enemies.add( enemy );
+		
 
 		int mapLength = tileMap.length;
 		int mapWidth = tileMap[0].length;
@@ -100,14 +108,14 @@ public class Stage1 {
 	
 	// Method for creating the eneimies on the stage 
 	private void createEnemies() {
-		Enemy enemy = new Enemy(1, 300, 300);
-		enemy.direction = 1;
-		enemy.setVelocity(1);
-		enemies.add( enemy );
-
-		Enemy enemy2 = new Enemy(2, 200, 200);
-		enemy2.direction = 2;
-		enemy2.setVelocity(1);
-		enemies.add( enemy2 );
+//		Enemy enemy = new Enemy(1, 300, 300);
+//		enemy.direction = 1;
+//		enemy.setVelocity(1);
+//		enemies.add( enemy );
+//
+//		Enemy enemy2 = new Enemy(2, 200, 200);
+//		enemy2.direction = 2;
+//		enemy2.setVelocity(1);
+//		enemies.add( enemy2 );
 	}
 }

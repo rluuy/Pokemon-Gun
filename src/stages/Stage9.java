@@ -36,7 +36,7 @@ public class Stage9 {
 		int mapLength = tileMap.length;
 		int mapWidth = tileMap[0].length;
 
-		createEnemies();
+		//createEnemies();
 
 		for (int i = 0; i < mapLength; i++) { 
 			for (int j = 0; j < mapWidth; j++) {
@@ -71,10 +71,10 @@ public class Stage9 {
 	public ArrayList<Enemy> getEnemies() {
 		return enemies;
 	}
-	private void createEnemies() {
-		Enemy enemy = new Enemy(1, 300, 300);
-		enemy.direction = 1;
-		enemy.setVelocity(1);
-		enemies.add( enemy );
-	}
+//	private void createEnemies() {
+//		Enemy enemy = new Enemy(1, 300, 300);
+//		enemy.direction = 1;
+//		enemy.setVelocity(1);
+//		enemies.add( enemy );
+//	}
 }

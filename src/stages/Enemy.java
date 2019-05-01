@@ -8,15 +8,23 @@ import javafx.scene.image.Image;
 
 public class Enemy extends Sprite {
 	private int health = 3;
+
 	private int type;
 	private int posX;
 	private int posY;
 	private int deltaX = 0;
 	private int deltaY = 0;
 	private int ticks;
+
+	public int projectileDir;
+	public boolean hasBloom = false;
+	public boolean hasProjectileDir = false;
+
 	Image emerald_down_rest = new Image("file:images/enemy1_down_rest.png");
 	
-	public Enemy(int type, int posX, int posY) {
+	//public Enemy(int type, int posX, int posY) {
+	
+	public Enemy() {
 		super();
 		this.type = type;
 		this.posX = posX;
