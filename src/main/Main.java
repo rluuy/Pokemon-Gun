@@ -92,7 +92,7 @@ public final class Main extends Application {
                 {
                 	primaryStage.setScene(PauseMenu);
                 }
-				else if (!input.contains(code))
+				else if (!gm.input.contains(code))
 					gm.input.add(code);
 			});
 			
@@ -126,6 +126,17 @@ public final class Main extends Application {
 					gl.start();
 					primaryStage.setScene(scene);
 					primaryStage.show();
+					scene.setOnKeyPressed(e -> {
+						String code = e.getCode().toString();
+						if (!gm.input.contains(code))
+							gm.input.add(code);
+					});
+					
+					scene.setOnKeyReleased(e -> {
+						String code = e.getCode().toString();
+						gm.input.remove(code);
+						System.out.println(input.toString());
+					});
 				}
 			});
 			
@@ -175,6 +186,7 @@ public final class Main extends Application {
 								}
 						}
 					});
+			
 			VBox LoadBox = new VBox();
 			LoadBox.setAlignment(Pos.CENTER);
 			LoadBox.setPadding(new Insets(10));
@@ -200,7 +212,27 @@ public final class Main extends Application {
 				public void handle(ActionEvent event)
 				{
 					
-					primaryStage.setScene(LoadMenu);
+					root = new VBox(); 
+					scene = new Scene(root,720,480);    
+					p = new PlayerChar(50, 50, 10 , 0.43,3);
+					canvas = new Canvas(720, 480);
+					root.getChildren().add(canvas);	
+					gc = canvas.getGraphicsContext2D(); 
+					gm = Load(1);
+					gl = new GameLoop(gm,gc);
+					gl.start();
+					primaryStage.setScene(scene);
+					primaryStage.show();
+					scene.setOnKeyPressed(e -> {
+						String code = e.getCode().toString();
+						 if (!gm.input.contains(code))
+							gm.input.add(code);
+					});
+					scene.setOnKeyReleased(e -> {
+						String code = e.getCode().toString();
+						gm.input.remove(code);
+						System.out.println(input.toString());
+					});
 				}
 			});
 			
