@@ -1,5 +1,9 @@
 package stages;
 
+/**
+ * Class that represents the base for a sprite in the game
+ */
+
 import javafx.scene.image.Image;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.geometry.Rectangle2D;
@@ -9,16 +13,14 @@ public class Sprite {
 	public double positionX;
 	public double positionY;
 	public int direction = 0;
-	protected double velocityX;
-	private double velocityY;
+	protected double velocity;
 	public double width;
 	public double height;
 
 	public Sprite() {
 		positionX = 0;
 		positionY = 0;
-		velocityX = 0;
-		velocityY = 0;
+		velocity = 0;
 	}
 
 	public void setImage(Image i) {
@@ -37,19 +39,17 @@ public class Sprite {
 		positionY = y;
 	}
 
-	public void setVelocity(double x, double y) {
-		velocityX = x;
-		velocityY = y;
+	public void setVelocity(double v) {
+		velocity = v;
 	}
 
 	public void addVelocity(double x, double y) {
-		velocityX += x;
-		velocityY += y;
+		System.out.print("HERE");
+		velocity += x;
 	}
 
 	public void update(double time) {
-		positionX += velocityX * time;
-		positionY += velocityY * time;
+		positionX += velocity * time;
 	}
 
 	public void render(GraphicsContext gc) {
@@ -66,15 +66,15 @@ public class Sprite {
 
 	public void renderMotion(GraphicsContext gc) {
 		if (direction == 1)
-			positionY -= velocityX;
+			positionY -= velocity;
 		else if (direction == 2)
-			positionX += velocityX;
+			positionX += velocity;
 		else if (direction == 3)
-			positionY += velocityX;
+			positionY += velocity;
 		else if (direction == 4)
-			positionX -= velocityX;
+			positionX -= velocity;
 		gc.drawImage(image, positionX, positionY);
-
 	}
 
 }
+

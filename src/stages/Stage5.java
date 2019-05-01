@@ -10,6 +10,7 @@ import javafx.scene.shape.Rectangle;
 public class Stage5 {
 	private ArrayList<Rectangle> obstalces = new ArrayList<Rectangle>() ;
 	private ArrayList<Rectangle> duengon = new ArrayList<Rectangle>() ;
+	private ArrayList<Enemy> enemies = new ArrayList<Enemy>() ;
 
 	int[][] tileMap = {
 			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
@@ -52,6 +53,7 @@ public class Stage5 {
 		int mapLength = tileMap.length;
 		int mapWidth = tileMap[0].length;
 
+		createEnemies();
 
 		for (int i = 0; i < mapLength; i++) { 
 			for (int j = 0; j < mapWidth; j++) {			
@@ -62,12 +64,12 @@ public class Stage5 {
 					gc.drawImage(regTile, j * tileWidth, i * tileLength);
 					gc.drawImage(rockTile, j * tileWidth, i * tileLength);
 					obstalces.add( new Rectangle(j * tileLength, i * tileWidth, tileLength, tileWidth));
-					
+
 				}
 				if (tileMap[i][j] == 2) {
 					gc.drawImage(stairTile, j * tileWidth, i * tileLength);
 					duengon.add( new Rectangle(j * tileLength, i * tileWidth, tileLength, tileWidth));
-					
+
 				}
 				if (tileMap[i][j] == 7) {
 					gc.drawImage(waterTile, j * tileWidth, i * tileLength);
@@ -76,13 +78,21 @@ public class Stage5 {
 			}
 		}
 	}
-	
+
 	public ArrayList<Rectangle> getObstacles(){
 		return obstalces;
 	}
-	
+
 	public ArrayList<Rectangle> getD(){
 		return duengon;
 	}
-
+	public ArrayList<Enemy> getEnemies() {
+		return enemies;
+	}
+	private void createEnemies() {
+		Enemy enemy = new Enemy(4, 300, 300);
+		enemy.direction = 1;
+		enemy.setVelocity(1);
+		enemies.add( enemy );
+	}
 }
