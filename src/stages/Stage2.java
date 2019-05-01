@@ -9,6 +9,7 @@ import javafx.scene.shape.Rectangle;
 
 public class Stage2 {
 	private ArrayList<Rectangle> obstalces = new ArrayList<Rectangle>() ;
+	private ArrayList<Enemy> enemies = new ArrayList<Enemy>() ;
 
 	int[][] tileMap = {
 			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 0, 0, 0, 1},
@@ -27,7 +28,7 @@ public class Stage2 {
 	Image flowerTile = new Image("file:images/grass-tile2.png");
 	Image rockTile = new Image("file:images/rock.png");
 	Image Tree = new Image("file:images/tree1.png");
-	
+
 
 	int tileLength = 48;
 	int tileWidth = 48;
@@ -37,7 +38,8 @@ public class Stage2 {
 		int mapLength = tileMap.length;
 		int mapWidth = tileMap[0].length;
 
-		
+		createEnemies();
+
 		for (int i = 0; i < mapLength; i++) { 
 			for (int j = 0; j < mapWidth; j++) {
 				if (tileMap[i][j] == 0) {
@@ -52,7 +54,7 @@ public class Stage2 {
 					gc.drawImage(regTile, j * tileWidth, i * tileLength);
 					gc.drawImage(Tree, j * tileWidth, i * tileLength);
 					obstalces.add( new Rectangle(j * tileLength, i * tileWidth, tileLength, tileWidth));
-					
+
 				}
 			}
 		}
@@ -60,5 +62,13 @@ public class Stage2 {
 	public ArrayList<Rectangle> getObstacles(){
 		return obstalces;
 	}
-
+	public ArrayList<Enemy> getEnemies() {
+		return enemies;
+	}
+	private void createEnemies() {
+		Enemy enemy = new Enemy(3, 300, 300);
+		enemy.direction = 1;
+		enemy.setVelocity(1);
+		enemies.add( enemy );
+	}
 }

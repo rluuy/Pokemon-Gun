@@ -48,7 +48,7 @@ public final class Main extends Application {
 		{
 			root = new VBox(); 
 			Scene scene = new Scene(root,720,480);    
-			PlayerChar p = new PlayerChar(50, 50, 10 , 0.43);;
+			PlayerChar p = new PlayerChar(50, 50, 5 , 0.43);;
 
 			Canvas canvas = new Canvas(720, 480);
 			root.getChildren().add(canvas);

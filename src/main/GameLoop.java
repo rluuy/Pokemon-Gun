@@ -60,6 +60,13 @@ class GameLoop extends AnimationTimer implements Serializable {
 	Image pokeball = new Image("file:images/pokeball.png");
 	private boolean gotItem = true;
 	private boolean gotItem2 = true;
+	private boolean gotItem3 = true;
+	private boolean gotItem4 = true;
+	private boolean gotItem5 = true;
+	private boolean gotItem6 = true;
+	private boolean gotItem7 = true;
+	private boolean gotItem8 = true;
+	private boolean gotItem9 = true;
 
 	long start = System.nanoTime();
 	long start2 = System.nanoTime();
@@ -85,9 +92,16 @@ class GameLoop extends AnimationTimer implements Serializable {
 					items = s1.getItems();
 					enemies = s1.getEnemies();
 					gotItem = false;
+					gotItem2 = true;
+					gotItem3 = true;
+					gotItem4 = true;
+					gotItem5 = true;
+					gotItem6 = true;
+					gotItem7 = true;
+					gotItem8 = true;
+					gotItem9 = true;
 				}
 			}
-
 			if (e.totalPosY < 480) {
 				bufferScalarX = 0;
 				bufferScalarY = 0;
@@ -96,32 +110,67 @@ class GameLoop extends AnimationTimer implements Serializable {
 				e.posY = e.totalPosY;
 				obstacles = s1.getObstacles();
 			}
-			if (e.totalPosX > 720) { // Stage 1-2
+			if (e.totalPosX > 720 && e.totalPosX < 1440 && e.totalPosY < 480) { // Stage 1-2
 				bufferScalarX = 1;
 				bufferScalarY = 0;
 				Stage2 s2 = new Stage2();
 				s2.generateTiles(gc);
 				obstacles = s2.getObstacles();
-
 				e.posX = e.totalPosX - bufferX;
+				if (gotItem2) {
+					enemies = s2.getEnemies();
+					gotItem = true;
+					gotItem2 = false;
+					gotItem3 = true;
+					gotItem4 = true;
+					gotItem5 = true;
+					gotItem6 = true;
+					gotItem7 = true;
+					gotItem8 = true;
+					gotItem9 = true;
+				}
 			}
-			if (e.totalPosX > 1440) { // Stage 1-3
+			if (e.totalPosX > 1440 && e.totalPosY < 480) { // Stage 1-3
 				bufferScalarX = 2;
 				bufferScalarY = 0;
 				Stage3 s3 = new Stage3();
 				s3.generateTiles(gc);
 				e.posX = e.totalPosX - (bufferX * bufferScalarX);
 				obstacles = s3.getObstacles();
+				if (gotItem3) {
+					enemies = s3.getEnemies();
+					gotItem = true;
+					gotItem2 = true;
+					gotItem3 = false;
+					gotItem4 = true;
+					gotItem5 = true;
+					gotItem6 = true;
+					gotItem7 = true;
+					gotItem8 = true;
+					gotItem9 = true;
+				}
 			}
-			if (e.totalPosY > 480) { // Stage 2-1
+			if (e.totalPosY > 480 && e.totalPosY < 960 && e.totalPosX < 720) { // Stage 2-1
 				bufferScalarX = 0;
 				bufferScalarY = 1;
 				Stage4 s4 = new Stage4();
 				s4.generateTiles(gc);
 				e.posY = e.totalPosY - bufferY;
 				obstacles = s4.getObstacles();
+				if (gotItem4) {
+					enemies = s4.getEnemies();
+					gotItem = true;
+					gotItem2 = true;
+					gotItem3 = true;
+					gotItem4 = false;
+					gotItem5 = true;
+					gotItem6 = true;
+					gotItem7 = true;
+					gotItem8 = true;
+					gotItem9 = true;
+				}
 			}
-			if (e.totalPosY > 480 && e.totalPosX > 720) { // Stage 2-2
+			if (e.totalPosY > 480 && e.totalPosY < 960 && e.totalPosX > 720 && e.totalPosX < 1440) { // Stage 2-2
 				bufferScalarX = 1;
 				bufferScalarY = 1;
 				Stage5 s5 = new Stage5();
@@ -129,8 +178,20 @@ class GameLoop extends AnimationTimer implements Serializable {
 				e.posY = e.totalPosY - bufferY;
 				e.posX = e.totalPosX - bufferX;
 				obstacles = s5.getObstacles();
+				if (gotItem5) {
+					enemies = s5.getEnemies();
+					gotItem = true;
+					gotItem2 = true;
+					gotItem3 = true;
+					gotItem4 = true;
+					gotItem5 = false;
+					gotItem6 = true;
+					gotItem7 = true;
+					gotItem8 = true;
+					gotItem9 = true;
+				}
 			}
-			if (e.totalPosY > 480 && e.totalPosX > 1440) { // Stage 2-3
+			if (e.totalPosY > 480 && e.totalPosY < 960 && e.totalPosX > 1440) { // Stage 2-3
 				bufferScalarX = 2;
 				bufferScalarY = 1;
 				Stage6 s6 = new Stage6();
@@ -138,17 +199,40 @@ class GameLoop extends AnimationTimer implements Serializable {
 				e.posY = e.totalPosY - bufferY;
 				e.posX = e.totalPosX - (bufferX * 2);
 				obstacles = s6.getObstacles();
+				if (gotItem6) {
+					enemies = s6.getEnemies();
+					gotItem = true;
+					gotItem2 = true;
+					gotItem3 = true;
+					gotItem4 = true;
+					gotItem5 = true;
+					gotItem6 = false;
+					gotItem7 = true;
+					gotItem8 = true;
+					gotItem9 = true;
+				}
 			}
-			if (e.totalPosY > 960) { // Stage 3-1
+			if (e.totalPosY > 960 && e.totalPosX < 720) { // Stage 3-1
 				bufferScalarX = 0;
 				bufferScalarY = 2;
 				Stage7 s7 = new Stage7();
 				s7.generateTiles(gc);
 				e.posY = e.totalPosY - (bufferY * 2);
 				obstacles = s7.getObstacles();
-
+				if (gotItem7) {
+					enemies = s7.getEnemies();
+					gotItem = true;
+					gotItem2 = true;
+					gotItem3 = true;
+					gotItem4 = true;
+					gotItem5 = true;
+					gotItem6 = true;
+					gotItem7 = false;
+					gotItem8 = true;
+					gotItem9 = true;;
+				}
 			}
-			if (e.totalPosY > 960 && e.totalPosX > 720) { // Stage 3-2
+			if (e.totalPosY > 960 && e.totalPosX > 720 && e.totalPosX < 1440) { // Stage 3-2
 				bufferScalarX = 1;
 				bufferScalarY = 2;
 				Stage8 s8 = new Stage8();
@@ -156,6 +240,18 @@ class GameLoop extends AnimationTimer implements Serializable {
 				e.posY = e.totalPosY - (bufferY * 2);
 				e.posX = e.totalPosX - bufferX;
 				obstacles = s8.getObstacles();
+				if (gotItem8) {
+					enemies = s8.getEnemies();
+					gotItem = true;
+					gotItem2 = true;
+					gotItem3 = true;
+					gotItem4 = true;
+					gotItem5 = true;
+					gotItem6 = true;
+					gotItem7 = true;
+					gotItem8 = false;
+					gotItem9 = true;
+				}
 			}
 			if (e.totalPosY > 960 && e.totalPosX > 1440) { // Stage 3-3
 				bufferScalarX = 2;
@@ -165,6 +261,18 @@ class GameLoop extends AnimationTimer implements Serializable {
 				e.posY = e.totalPosY - (bufferY * 2);
 				e.posX = e.totalPosX - (bufferX * 2);
 				obstacles = s9.getObstacles();
+				if (gotItem9) {
+					enemies = s9.getEnemies();
+					gotItem = true;
+					gotItem2 = true;
+					gotItem3 = true;
+					gotItem4 = true;
+					gotItem5 = true;
+					gotItem6 = true;
+					gotItem7 = true;
+					gotItem8 = true;
+					gotItem9 = false;
+				}
 			}
 
 		}
@@ -219,7 +327,7 @@ class GameLoop extends AnimationTimer implements Serializable {
 			double px = e.posX;
 			double py = e.posY;
 			pokeballS.setPosition(px, py);
-			pokeballS.setVelocity(20, 20);
+			pokeballS.setVelocity(20);
 			if (e.direction.toString() == "UP")
 				pokeballS.direction = 1;
 			else if (e.direction.toString() == "RIGHT")
@@ -246,7 +354,6 @@ class GameLoop extends AnimationTimer implements Serializable {
 		
 		if (elapsed2 > 500000000) {
 			for (Enemy enemy : enemies) {
-				System.out.print("1");
 
 				Sprite pokeballS = new Sprite();
 				pokeballS.setImage(pokeball);
@@ -256,12 +363,22 @@ class GameLoop extends AnimationTimer implements Serializable {
 				if (enemy.direction == 1) {
 					pokeballS.direction = 1;
 					pokeballS.setPosition(px, py);
-					pokeballS.setVelocity(10, 10);
+					pokeballS.setVelocity(10);
 				}
 				else if (enemy.direction == 3) {
 					pokeballS.direction = 3;
 					pokeballS.setPosition(px, py);
-					pokeballS.setVelocity(10, 10);
+					pokeballS.setVelocity(10);
+				}
+				else if (enemy.direction == 2) {
+					pokeballS.direction = 2;
+					pokeballS.setPosition(px, py);
+					pokeballS.setVelocity(10);
+				}
+				else if (enemy.direction == 4) {
+					pokeballS.direction = 4;
+					pokeballS.setPosition(px, py);
+					pokeballS.setVelocity(10);
 				}
 				projectilesE.add(pokeballS);
 
