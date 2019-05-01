@@ -48,7 +48,7 @@ public class Stage1 {
 
 		Enemy enemy = new Enemy();
 		enemy.direction = 1;
-		enemy.setVelocity(10, 10);
+		enemy.setVelocity(1, 1);
 		enemies.add( enemy );
 		
 
