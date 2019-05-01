@@ -48,7 +48,7 @@ public class Stage4 {
 				if (tileMap[i][j] == 1) {
 					gc.drawImage(regTile, j * tileWidth, i * tileLength);
 					gc.drawImage(rockTile, j * tileWidth, i * tileLength);
-					obstalces.add( new Rectangle(j * tileLength, i * tileWidth, tileLength, tileWidth));
+					obstalces.add( new Rectangle(j * tileLength, i * tileWidth, tileLength - 10, tileWidth - 10));
 				}
 				if (tileMap[i][j] == 2) {
 					gc.drawImage(regTile, j * tileWidth, i * tileLength);

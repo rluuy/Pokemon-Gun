@@ -64,7 +64,6 @@ public final class Main extends Application {
 				if (!input.contains(code))
 					input.add(code);
 			});
-			
 			scene.setOnKeyReleased(e -> {
 				String code = e.getCode().toString();
 				input.remove(code);
