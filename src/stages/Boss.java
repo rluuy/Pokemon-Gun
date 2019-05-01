@@ -3,24 +3,22 @@ package stages;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
-public class Enemy extends Sprite {
-	private int health = 3;
-	private int deltaY = 0;
-	public int projectileDir;
-	public boolean hasBloom = false;
-	public boolean hasProjectileDir = false;
-	
+public class Boss extends Enemy {
+	private int health = 20;
 	Image emerald_down_rest = new Image("file:images/enemy1_down_rest.png");
 	
-	
-	public Enemy() {
+	private int deltaY = 0;
+	public Boss() {
 		super();
+		this.hasProjectileDir = true;
+		this.projectileDir = 2;
 		super.setImage(emerald_down_rest);
-
-		super.setPosition(300, 300);
+		super.setPosition(10, 10);
 	}
 	
 	public void render(GraphicsContext gc) {
+		checkBounds();
+		
 		if (direction == 1) {
 			positionY -= velocityX;
 			deltaY += velocityX;
@@ -44,6 +42,16 @@ public class Enemy extends Sprite {
 		super.render(gc);
 	}
 	
+	private void checkBounds() {
+		if (positionY > 470) {
+			direction = 1;
+		}
+		if (positionY < 10) {
+			direction = 3;
+		}
+		
+	}
+
 	public void loseHealth() {
 		health--;
 	}

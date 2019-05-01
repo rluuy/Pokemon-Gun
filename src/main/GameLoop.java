@@ -63,6 +63,8 @@ class GameLoop extends AnimationTimer implements Serializable {
 
 	long start = System.nanoTime();
 	long start2 = System.nanoTime();
+	long startCollision = System.nanoTime();
+	long elapsedCollision;
 
 	GameLoop(ArrayList<String> inInput, GraphicsContext inGC, PlayerChar inE) {
 		input = inInput;
@@ -73,7 +75,6 @@ class GameLoop extends AnimationTimer implements Serializable {
 
 	public void handle(long currentNanoTime) { // code of start, handle called by .start()
 		if (!isBattle) {
-			// System.out.println("y = " + e.totalPosY + " x = " + e.totalPosX );
 			if (e.totalPosX < 720) { // Stage 1-1 (Going Left and Right)
 				bufferScalarX = 0;
 				bufferScalarY = 0;
@@ -239,36 +240,31 @@ class GameLoop extends AnimationTimer implements Serializable {
 
 		long end2 = System.nanoTime();
 		long elapsed2 = end2 - start2;
-		
+
 		for (Enemy enemy : enemies) {
 			enemy.render(gc);
 		}
-		
+
 		if (elapsed2 > 500000000) {
 			for (Enemy enemy : enemies) {
-				System.out.print("1");
 
 				Sprite pokeballS = new Sprite();
 				pokeballS.setImage(pokeball);
 				double px = enemy.positionX;
 				double py = enemy.positionY;
+				if (enemy.hasProjectileDir) {
+					pokeballS.direction = enemy.projectileDir;
+				} else {
+					pokeballS.direction = enemy.direction;
+				}
 
-				if (enemy.direction == 1) {
-					pokeballS.direction = 1;
-					pokeballS.setPosition(px, py);
-					pokeballS.setVelocity(10, 10);
-				}
-				else if (enemy.direction == 3) {
-					pokeballS.direction = 3;
-					pokeballS.setPosition(px, py);
-					pokeballS.setVelocity(10, 10);
-				}
+				pokeballS.setPosition(px, py);
+				pokeballS.setVelocity(10, 10);
 				projectilesE.add(pokeballS);
 
 				enemy.render(gc);
 			}
 			start2 = System.nanoTime();
-
 		}
 
 		for (int i = 0; i < projectilesP.size(); i++) {
@@ -279,9 +275,6 @@ class GameLoop extends AnimationTimer implements Serializable {
 			} else {
 				projectilesP.get(i).renderMotion(gc);
 				gc.drawImage(e.direction.image.apply(e), e.posX, e.posY, e.width, e.height);
-//				for (Enemy enemy : enemies) {
-//					enemy.render(gc);
-//				}
 			}
 		}
 
@@ -292,16 +285,19 @@ class GameLoop extends AnimationTimer implements Serializable {
 
 			} else {
 				projectilesE.get(i).renderMotion(gc);
-				//gc.drawImage(e.direction.image.apply(e), e.posX, e.posY, e.width, e.height);
 				for (Enemy enemy : enemies) {
 					enemy.render(gc);
 				}
 			}
 		}
 
-		hit();
-		collision();
+		long endCollision = System.nanoTime();
+		elapsedCollision = endCollision - startCollision;
 		enemyCollision();
+
+		hit();
+		projectileCollision();
+		collision();
 		pickUpItem();
 		playerHit();
 
@@ -309,8 +305,8 @@ class GameLoop extends AnimationTimer implements Serializable {
 		gc.fillText("AMMO: UNLIMITED ", 20, 40);
 
 	}
-	
 
+	// Player is hit by an enemy and loses health
 	private void playerHit() {
 		Rectangle playerRect = new Rectangle(e.posX, e.posY, 48, 48);
 		for (int i = 0; i < projectilesE.size(); i++) {
@@ -324,6 +320,7 @@ class GameLoop extends AnimationTimer implements Serializable {
 		}
 	}
 
+	// Player cannot walk through obstacles 
 	private void collision() {
 		Rectangle playerRect = new Rectangle(e.posX, e.posY, 48, 48);
 		for (Rectangle collision : obstacles) {
@@ -345,13 +342,39 @@ class GameLoop extends AnimationTimer implements Serializable {
 			}
 		}
 	}
+	
+	// Removes projectiles that collide into an obstacle
+	private void projectileCollision() {
+		for (Rectangle collision : obstacles) {
+			for (int j = 0; j < projectilesP.size(); j++) {
+				Sprite proj = projectilesP.get(j);
+				Rectangle projectileRect = new Rectangle(proj.positionX, proj.positionY, 48, 48);
+				if (collision.intersects(projectileRect.getBoundsInLocal())) {
+					projectilesP.remove(j);
+				}
+			}
+			for (int k = 0; k < projectilesE.size(); k++) {
+				Sprite proj = projectilesE.get(k);
+				Rectangle projectileRect = new Rectangle(proj.positionX, proj.positionY, 48, 48);
+				if (collision.intersects(projectileRect.getBoundsInLocal())) {
+					projectilesE.remove(k);
+				}
+			}
+		}
+	}
 
+	// Player loses health when colliding with an enemy
 	private void enemyCollision() {
 		Rectangle playerRect = new Rectangle(e.posX, e.posY, 48, 48);
 		for (int i = 0; i < enemies.size(); i++) {
 			Sprite enemy = enemies.get(i);
-			Rectangle enemyRect = new Rectangle(enemy.positionX, enemy.positionX, 48, 48);
+			Rectangle enemyRect = new Rectangle(enemy.positionX, enemy.positionY, 30, 30);
 			if (enemyRect.intersects(playerRect.getBoundsInLocal())) {
+				System.out.print("1");
+				if (elapsedCollision > 1000000000) {
+					e.loseHealth();
+					startCollision = System.nanoTime();
+				}
 				if (e.direction.toString().equals("UP")) {
 					e.totalPosY = (int) enemyRect.getY() + (bufferY * bufferScalarY) + 50;
 					continue;
@@ -369,17 +392,16 @@ class GameLoop extends AnimationTimer implements Serializable {
 		}
 	}
 
+	// Player hit an enemy with a projectile
 	private void hit() {
 		for (int i = 0; i < enemies.size(); i++) {
 			Enemy enemy = enemies.get(i);
 			Rectangle enemyRect = new Rectangle(enemy.positionX, enemy.positionX, 48, 48);
 			for (int j = 0; j < projectilesP.size(); j++) {
-				Sprite projectile = projectilesP.get(i);
+				Sprite projectile = projectilesP.get(j);
 				Rectangle proj = new Rectangle(projectile.positionX, projectile.positionX, 48, 48);
 				if (projectile.intersects(enemy)) {
-					//for (int k = 0; in )
 					gc.drawImage(new Image("file:images/enemy1_down_rest copy.png"), enemy.positionX, enemy.positionY);
-					
 					projectilesP.remove(j);
 					enemy.loseHealth();
 					if (enemy.getHealth() == 0)
@@ -389,15 +411,16 @@ class GameLoop extends AnimationTimer implements Serializable {
 		}
 	}
 
+	// Player picks up an item
 	private void pickUpItem() {
 		Rectangle playerRect = new Rectangle(e.posX, e.posY, 48, 48);
 		for (int i = 0; i < items.size(); i++) {
-			Sprite collision = items.get(i);
-			Rectangle rect = new Rectangle(collision.positionX, collision.positionY, 48, 48);
+			Sprite item = items.get(i);
+			Rectangle rect = new Rectangle(item.positionX, item.positionY, 48, 48);
 
 			if (rect.intersects(playerRect.getBoundsInLocal())) {
 				items.remove(i);
-				playerItems.add(collision);
+				playerItems.add(item);
 			}
 		}
 	}

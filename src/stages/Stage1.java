@@ -41,11 +41,13 @@ public class Stage1 {
 	public void generateTiles(GraphicsContext gc) {
 		Sprite pokeballS = new Sprite();
 		pokeballS.setImage(pokeball);
-		double px = 350 * Math.random() + 50;
-		double py = 350 * Math.random() + 50;
-		pokeballS.setPosition(300,300);
+		pokeballS.setPosition(100,300);
 		items.add( pokeballS );
 
+		Boss boss = new Boss();
+		boss.direction = 1;
+		boss.setVelocity(1, 1);
+		enemies.add( boss );
 		Enemy enemy = new Enemy();
 		enemy.direction = 1;
 		enemy.setVelocity(1, 1);
