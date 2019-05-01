@@ -20,8 +20,8 @@ public class Stage3{
 				{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 				{1, 0, 0, 0, 0, 0, 0, 0, 0, 7, 0, 0, 0, 0, 0},
 				{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 0, 0, 0},
-				{1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-		}; //tileMap - may move on to text reading method instead
+				{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+		};
 
 		Image regTile = new Image("file:images/reg_tile_scaled.png");
 		Image stairTile = new Image("file:images/stairs.png");
