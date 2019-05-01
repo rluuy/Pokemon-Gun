@@ -50,8 +50,6 @@ class GameLoop extends AnimationTimer implements Serializable {
 	private static MediaPlayer mediaPlayer;
 	
 
-	//d
-
 	GameLoop(ArrayList<String> inInput, GraphicsContext inGC, PlayerChar inE) {
 		input = inInput;
 		gc = inGC;
