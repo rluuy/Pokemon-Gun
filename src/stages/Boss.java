@@ -8,37 +8,37 @@ public class Boss extends Enemy {
 	Image emerald_down_rest = new Image("file:images/enemy1_down_rest.png");
 	
 	private int deltaY = 0;
-	public Boss() {
-		super();
+	public Boss(int type, int x, int y) {
+		super(type, x, y);
 		this.hasProjectileDir = true;
 		this.projectileDir = 2;
 		super.setImage(emerald_down_rest);
-		super.setPosition(10, 10);
+		//super.setPosition(10, 10);
 	}
 	
 	public void render(GraphicsContext gc) {
 		checkBounds();
 		
 		if (direction == 1) {
-			positionY -= velocityX;
-			deltaY += velocityX;
+			positionY -= velocity;
+			deltaY += velocity;
 			if (deltaY == 300) {
 				deltaY = 0;
 				direction = 3;
 			}
 		}
 		else if (direction == 2)
-			positionX += velocityX;
+			positionX += velocity;
 		else if (direction == 3) {
-			positionY += velocityX;
-			deltaY += velocityX;
+			positionY += velocity;
+			deltaY += velocity;
 			if (deltaY == 300) {
 				deltaY = 0;
 				direction = 1;
 			}
 		}
 		else if (direction == 4)
-			positionX -= velocityX;
+			positionX -= velocity;
 		super.render(gc);
 	}
 	

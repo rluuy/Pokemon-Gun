@@ -393,23 +393,7 @@ class GameLoop extends AnimationTimer implements Serializable {
 					pokeballS.direction = enemy.direction;
 				}
 
-				if (enemy.direction == 1) {
-					pokeballS.direction = 1;
-					pokeballS.setPosition(px, py);
-					pokeballS.setVelocity(10);
-				} else if (enemy.direction == 3) {
-					pokeballS.direction = 3;
-					pokeballS.setPosition(px, py);
-					pokeballS.setVelocity(10);
-				} else if (enemy.direction == 2) {
-					pokeballS.direction = 2;
-					pokeballS.setPosition(px, py);
-					pokeballS.setVelocity(10);
-				} else if (enemy.direction == 4) {
-					pokeballS.direction = 4;
-					pokeballS.setPosition(px, py);
-					pokeballS.setVelocity(10);
-				}
+				pokeballS.setVelocity(10);
 				pokeballS.setPosition(px, py);
 				projectilesE.add(pokeballS);
 

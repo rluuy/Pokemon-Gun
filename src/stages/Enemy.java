@@ -22,9 +22,8 @@ public class Enemy extends Sprite {
 
 	Image emerald_down_rest = new Image("file:images/enemy1_down_rest.png");
 	
-	//public Enemy(int type, int posX, int posY) {
-	
-	public Enemy() {
+	public Enemy(int type, int posX, int posY) {
+
 		super();
 		this.type = type;
 		this.posX = posX;
