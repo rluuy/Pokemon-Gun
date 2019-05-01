@@ -47,9 +47,12 @@ class GameLoop extends AnimationTimer implements Serializable {
 	private boolean isBattle = false;
 	private GraphicsContext gc;
 	private PlayerChar e;
+	private boolean dflag = false;
+	private boolean sflag = true;
 
 	private ArrayList<String> input;
 	private ArrayList<Rectangle> obstacles;
+	private ArrayList<Rectangle> dungeon;
 	private ArrayList<Sprite> playerItems = new ArrayList<Sprite>();
 
 	private ArrayList<Sprite> items;
@@ -73,7 +76,7 @@ class GameLoop extends AnimationTimer implements Serializable {
 
 	public void handle(long currentNanoTime) { // code of start, handle called by .start()
 		if (!isBattle) {
-			// System.out.println("y = " + e.totalPosY + " x = " + e.totalPosX );
+			//System.out.println("y = " + e.totalPosY + " x = " + e.totalPosX );
 			if (e.totalPosX < 720) { // Stage 1-1 (Going Left and Right)
 				bufferScalarX = 0;
 				bufferScalarY = 0;
@@ -95,6 +98,7 @@ class GameLoop extends AnimationTimer implements Serializable {
 				s1.generateTiles(gc);
 				e.posY = e.totalPosY;
 				obstacles = s1.getObstacles();
+				dungeon = s1.getD();
 			}
 			if (e.totalPosX > 720) { // Stage 1-2
 				bufferScalarX = 1;
@@ -102,6 +106,7 @@ class GameLoop extends AnimationTimer implements Serializable {
 				Stage2 s2 = new Stage2();
 				s2.generateTiles(gc);
 				obstacles = s2.getObstacles();
+				dungeon = s2.getD();
 
 				e.posX = e.totalPosX - bufferX;
 			}
@@ -112,6 +117,7 @@ class GameLoop extends AnimationTimer implements Serializable {
 				s3.generateTiles(gc);
 				e.posX = e.totalPosX - (bufferX * bufferScalarX);
 				obstacles = s3.getObstacles();
+				dungeon = s3.getD();
 			}
 			if (e.totalPosY > 480) { // Stage 2-1
 				bufferScalarX = 0;
@@ -120,15 +126,17 @@ class GameLoop extends AnimationTimer implements Serializable {
 				s4.generateTiles(gc);
 				e.posY = e.totalPosY - bufferY;
 				obstacles = s4.getObstacles();
+				dungeon = s4.getD();
 			}
-			if (e.totalPosY > 480 && e.totalPosX > 720) { // Stage 2-2
+			if (e.totalPosY > 480 && e.totalPosX > 720 && dflag == false) { // Stage 2-2
 				bufferScalarX = 1;
 				bufferScalarY = 1;
 				Stage5 s5 = new Stage5();
-				s5.generateTiles(gc);
+				s5.generateTiles(gc, false);
 				e.posY = e.totalPosY - bufferY;
 				e.posX = e.totalPosX - bufferX;
 				obstacles = s5.getObstacles();
+				dungeon = s5.getD();
 			}
 			if (e.totalPosY > 480 && e.totalPosX > 1440) { // Stage 2-3
 				bufferScalarX = 2;
@@ -138,6 +146,7 @@ class GameLoop extends AnimationTimer implements Serializable {
 				e.posY = e.totalPosY - bufferY;
 				e.posX = e.totalPosX - (bufferX * 2);
 				obstacles = s6.getObstacles();
+				dungeon = s6.getD();
 			}
 			if (e.totalPosY > 960) { // Stage 3-1
 				bufferScalarX = 0;
@@ -146,6 +155,7 @@ class GameLoop extends AnimationTimer implements Serializable {
 				s7.generateTiles(gc);
 				e.posY = e.totalPosY - (bufferY * 2);
 				obstacles = s7.getObstacles();
+				dungeon = s7.getD();
 
 			}
 			if (e.totalPosY > 960 && e.totalPosX > 720) { // Stage 3-2
@@ -156,6 +166,7 @@ class GameLoop extends AnimationTimer implements Serializable {
 				e.posY = e.totalPosY - (bufferY * 2);
 				e.posX = e.totalPosX - bufferX;
 				obstacles = s8.getObstacles();
+				dungeon = s8.getD();
 			}
 			if (e.totalPosY > 960 && e.totalPosX > 1440) { // Stage 3-3
 				bufferScalarX = 2;
@@ -165,6 +176,7 @@ class GameLoop extends AnimationTimer implements Serializable {
 				e.posY = e.totalPosY - (bufferY * 2);
 				e.posX = e.totalPosX - (bufferX * 2);
 				obstacles = s9.getObstacles();
+				dungeon = s9.getD();
 			}
 
 		}
@@ -301,6 +313,7 @@ class GameLoop extends AnimationTimer implements Serializable {
 
 		hit();
 		collision();
+		dcollision();
 		enemyCollision();
 		pickUpItem();
 		playerHit();
@@ -343,6 +356,40 @@ class GameLoop extends AnimationTimer implements Serializable {
 				}
 
 			}
+		}
+	}
+	
+	private void dcollision() {
+		Rectangle playerRect = new Rectangle(e.posX, e.posY, 48, 48);
+		if (dungeon != null) {
+		for (Rectangle collision : dungeon) {
+			if (collision.intersects(playerRect.getBoundsInLocal())) {
+				//System.out.println(collision.getX());
+				if (collision.getX() == 336.0) {
+					e.totalPosX = 2060;
+					e.totalPosY = 0;
+					e.posY = 0;
+					e.posX = 660;
+				} else if (collision.getX() == 672.0) {
+					e.totalPosX = 1120;
+					e.totalPosY = 626;
+					e.posY = 146;
+					e.posX = 400;
+				} else if (collision.getX() == 0.0) {
+					e.totalPosX = 2000;
+					e.totalPosY = 652;
+					e.posY = 172;
+					e.posX = 600;
+				} else if (collision.getX() == 624.0) {
+					e.totalPosX = 50;
+					e.totalPosY = 1380;
+					e.posX = 50;
+					e.posY = 420;
+				}
+				
+				
+				
+			}}
 		}
 	}
 

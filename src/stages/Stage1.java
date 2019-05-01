@@ -87,6 +87,9 @@ public class Stage1 {
 		// TODO Auto-generated method stub
 		return enemies;
 	}
+	public ArrayList<Rectangle> getD() {
+		return null;
+	}
 	
 	
 

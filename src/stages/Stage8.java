@@ -54,5 +54,9 @@ public class Stage8 {
 	public ArrayList<Rectangle> getObstacles(){
 		return obstalces;
 	}
+	public ArrayList<Rectangle> getD() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }

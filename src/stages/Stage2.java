@@ -60,5 +60,8 @@ public class Stage2 {
 	public ArrayList<Rectangle> getObstacles(){
 		return obstalces;
 	}
+	public ArrayList<Rectangle> getD() {
+		return null;
+	}
 
 }

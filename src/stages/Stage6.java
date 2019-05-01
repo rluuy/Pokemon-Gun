@@ -10,13 +10,14 @@ import javafx.scene.shape.Rectangle;
 
 public class Stage6 {
 	private ArrayList<Rectangle> obstalces = new ArrayList<Rectangle>() ;
+	private ArrayList<Rectangle> duengon = new ArrayList<Rectangle>() ;
 
 	int[][] tileMap = {
+			{2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2},
 			{2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2},
 			{2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2},
 			{2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2},
-			{2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2},
-			{2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2},
+			{2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 2},
 			{1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1},
 			{1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1},
 			{1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1},
@@ -27,6 +28,7 @@ public class Stage6 {
 	Image regTile = new Image("file:images/reg_tile_scaled.png");
 	Image rockTile = new Image("file:images/rock.png");
 	Image waterTile = new Image("file:images/water_tile.png");
+	Image stairTile = new Image("file:images/stairs.png");
 
 	int tileLength = 48;
 	int tileWidth = 48;
@@ -50,11 +52,17 @@ public class Stage6 {
 					gc.drawImage(rockTile, j * tileWidth, i * tileLength);
 					obstalces.add( new Rectangle(j * tileLength, i * tileWidth, tileLength, tileWidth));
 				}
+				if (tileMap[i][j] == 7) {
+					gc.drawImage(stairTile, j * tileWidth, i * tileLength);
+					duengon.add( new Rectangle(j * tileLength, i * tileWidth, tileLength, tileWidth));
 			}
-		}
+		}}
 	}
 	public ArrayList<Rectangle> getObstacles(){
 		return obstalces;
+	}
+	public ArrayList<Rectangle> getD() {
+		return duengon;
 	}
 
 }

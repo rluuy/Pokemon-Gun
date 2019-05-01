@@ -33,7 +33,21 @@ public class Stage5 {
 	int tileLength = 48;
 	int tileWidth = 48;
 
-	public void generateTiles(GraphicsContext gc) {
+	public void generateTiles(GraphicsContext gc, boolean a) {
+		if ( a == true) {
+			int[][] tileMap = {
+					{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+					{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+					{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+					{0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 7, 7, 0, 0, 1},
+					{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 7, 0, 0, 1},
+					{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 7, 0, 0, 1},
+					{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 7, 0, 0, 1},
+					{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+					{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+					{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+			};
+		}
 
 		int mapLength = tileMap.length;
 		int mapWidth = tileMap[0].length;

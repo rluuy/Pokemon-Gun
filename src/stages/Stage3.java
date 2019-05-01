@@ -9,21 +9,22 @@ import javafx.scene.shape.Rectangle;
 
 public class Stage3{
 	private ArrayList<Rectangle> obstalces = new ArrayList<Rectangle>() ;
+	private ArrayList<Rectangle> duengon = new ArrayList<Rectangle>() ;
 		int[][] tileMap = {
-				{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-				{0, 0, 0, 0, 0, 0, 0, 0, 7, 0, 0, 0, 0, 0, 0},
-				{0, 0, 0, 0, 0, 7, 0, 0, 0, 0, 0, 7, 0, 0, 0},
-				{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-				{0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 0, 0, 0, 0, 0},
-				{0, 0, 0, 0, 0, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-				{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-				{0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 0, 0, 0, 0, 0},
-				{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 0, 0, 0},
-				{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+				{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2},
+				{1, 0, 0, 0, 0, 0, 0, 0, 7, 0, 0, 0, 0, 0, 0},
+				{1, 0, 0, 0, 0, 7, 0, 0, 0, 0, 0, 7, 0, 0, 0},
+				{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+				{1, 0, 0, 0, 0, 0, 0, 0, 0, 7, 0, 0, 0, 0, 0},
+				{1, 0, 0, 0, 0, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+				{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+				{1, 0, 0, 0, 0, 0, 0, 0, 0, 7, 0, 0, 0, 0, 0},
+				{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 0, 0, 0},
+				{1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1},
 		}; //tileMap - may move on to text reading method instead
 
 		Image regTile = new Image("file:images/reg_tile_scaled.png");
-		
+		Image stairTile = new Image("file:images/stairs.png");
 		Image flowerTile = new Image("file:images/flower_tile.png");
 		Image rockTile = new Image("file:images/rock.png");
 
@@ -46,6 +47,11 @@ public class Stage3{
 						gc.drawImage(rockTile, j * tileWidth, i * tileLength);
 						obstalces.add( new Rectangle(j * tileLength, i * tileWidth, tileLength, tileWidth));
 					}
+					if (tileMap[i][j] == 2) {
+						gc.drawImage(stairTile, j * tileWidth, i * tileLength);
+						duengon.add( new Rectangle(j * tileLength, i * tileWidth, tileLength, tileWidth));
+						
+					}
 					if (tileMap[i][j] == 7) {
 						gc.drawImage(flowerTile, j * tileWidth, i * tileLength);
 					}
@@ -55,5 +61,8 @@ public class Stage3{
 		}
 		public ArrayList<Rectangle> getObstacles(){
 			return obstalces;
+		}
+		public ArrayList<Rectangle> getD() {
+			return duengon;
 		}
 	}
