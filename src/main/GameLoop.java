@@ -84,7 +84,7 @@ class GameLoop extends AnimationTimer {
 					items = s1.getItems();
 					enemies = s1.getEnemies();
 					gotItem = false;
-					}
+				}
 			}
 
 			if (e.totalPosY < 480) {
@@ -213,94 +213,114 @@ class GameLoop extends AnimationTimer {
 		long elapsed = end - start;
 
 		if (input.contains("SPACE") && elapsed > 200000000) {
-		Sprite pokeballS = new Sprite();
-		pokeballS.setImage(pokeball);
-		double px = e.posX;
-		double py = e.posY;
-		pokeballS.setPosition(px,py);
-		pokeballS.setVelocity(20, 20);
-		if (e.direction.toString() == "UP") 
-		pokeballS.direction = 1;
-		else if (e.direction.toString() == "RIGHT") 
-		pokeballS.direction = 2;
-		else if (e.direction.toString() == "DOWN") 
-		pokeballS.direction = 3;
-		else if (e.direction.toString() == "LEFT") 
-		pokeballS.direction = 4;
-		projectilesP.add( pokeballS );
-		//gc.drawImage(e.direction.image.apply(e), e.posX, e.posY, e.width, e.height);
+			Sprite pokeballS = new Sprite();
+			pokeballS.setImage(pokeball);
+			double px = e.posX;
+			double py = e.posY;
+			pokeballS.setPosition(px, py);
+			pokeballS.setVelocity(20, 20);
+			if (e.direction.toString() == "UP")
+				pokeballS.direction = 1;
+			else if (e.direction.toString() == "RIGHT")
+				pokeballS.direction = 2;
+			else if (e.direction.toString() == "DOWN")
+				pokeballS.direction = 3;
+			else if (e.direction.toString() == "LEFT")
+				pokeballS.direction = 4;
+			projectilesP.add(pokeballS);
+			// gc.drawImage(e.direction.image.apply(e), e.posX, e.posY, e.width, e.height);
 
-		start = System.nanoTime();
+			start = System.nanoTime();
 		}
 
 		for (Sprite pokeball : items)
-		pokeball.render(gc);
+			pokeball.render(gc);
 
 		long end2 = System.nanoTime();
 		long elapsed2 = end2 - start2;
+		
 		for (Enemy enemy : enemies) {
-		enemy.render(gc);
+			enemy.render(gc);
 		}
-		if (elapsed2 > 200000000) {
+		
+		if (elapsed2 > 500000000) {
+			for (Enemy enemy : enemies) {
+				System.out.print("1");
 
-		for (Enemy enemy : enemies) {
-		Sprite pokeballS = new Sprite();
-		pokeballS.setImage(pokeball);
-		double px = enemy.positionX;
-		double py = enemy.positionY;
+				Sprite pokeballS = new Sprite();
+				pokeballS.setImage(pokeball);
+				double px = enemy.positionX;
+				double py = enemy.positionY;
 
-		if (enemy.direction == 1) {
-		pokeballS.direction = 1;
-		pokeballS.setPosition(px - 50, py + 50);
-		pokeballS.setVelocity(10, 10);
-		}
-		projectilesE.add(pokeballS);
+				if (enemy.direction == 1) {
+					pokeballS.direction = 1;
+					pokeballS.setPosition(px, py);
+					pokeballS.setVelocity(10, 10);
+				}
+				else if (enemy.direction == 3) {
+					pokeballS.direction = 3;
+					pokeballS.setPosition(px, py);
+					pokeballS.setVelocity(10, 10);
+				}
+				projectilesE.add(pokeballS);
 
-		start2 = System.nanoTime();
-		enemy.render(gc);
-		}
+				enemy.render(gc);
+			}
+			start2 = System.nanoTime();
+
 		}
 
 		for (int i = 0; i < projectilesP.size(); i++) {
-		if (projectilesP.get(i).positionX > 720 || projectilesP.get(i).positionY > 480 || projectilesP.get(i).positionY < 0
-		|| projectilesP.get(i).positionX < 0) {
-		projectilesP.remove(i);
+			if (projectilesP.get(i).positionX > 720 || projectilesP.get(i).positionY > 480
+					|| projectilesP.get(i).positionY < 0 || projectilesP.get(i).positionX < 0) {
+				projectilesP.remove(i);
 
-		}
-		else {
-		projectilesP.get(i).renderMotion(gc);
-		gc.drawImage(e.direction.image.apply(e), e.posX, e.posY, e.width, e.height);
-		for (Enemy enemy : enemies) {
-		enemy.render(gc);
-		}
-		}
+			} else {
+				projectilesP.get(i).renderMotion(gc);
+				gc.drawImage(e.direction.image.apply(e), e.posX, e.posY, e.width, e.height);
+//				for (Enemy enemy : enemies) {
+//					enemy.render(gc);
+//				}
+			}
 		}
 
 		for (int i = 0; i < projectilesE.size(); i++) {
-		if (projectilesE.get(i).positionX > 720 || projectilesE.get(i).positionY > 480 || projectilesE.get(i).positionY < 0
-		|| projectilesE.get(i).positionX < 0) {
-		projectilesE.remove(i);
+			if (projectilesE.get(i).positionX > 720 || projectilesE.get(i).positionY > 480
+					|| projectilesE.get(i).positionY < 0 || projectilesE.get(i).positionX < 0) {
+				projectilesE.remove(i);
 
+			} else {
+				projectilesE.get(i).renderMotion(gc);
+				//gc.drawImage(e.direction.image.apply(e), e.posX, e.posY, e.width, e.height);
+				for (Enemy enemy : enemies) {
+					enemy.render(gc);
+				}
+			}
 		}
-		else {
-		projectilesE.get(i).renderMotion(gc);
-		gc.drawImage(e.direction.image.apply(e), e.posX, e.posY, e.width, e.height);
-		for (Enemy enemy : enemies) {
-		enemy.render(gc);
-		}
-		}
-		}
-
 
 		hit();
 		collision();
 		enemyCollision();
 		pickUpItem();
+		playerHit();
 
 		gc.fillText("HP: " + Integer.toString(e.getHealth()), 20, 20);
 		gc.fillText("AMMO: UNLIMITED ", 20, 40);
+
+	}
 	
 
+	private void playerHit() {
+		Rectangle playerRect = new Rectangle(e.posX, e.posY, 48, 48);
+		for (int i = 0; i < projectilesE.size(); i++) {
+			Sprite projectile = projectilesE.get(i);
+			Rectangle rect = new Rectangle(projectile.positionX, projectile.positionY, 48, 48);
+
+			if (rect.intersects(playerRect.getBoundsInLocal())) {
+				e.loseHealth();
+				projectilesE.remove(i);
+			}
+		}
 	}
 
 	private void collision() {
@@ -350,14 +370,19 @@ class GameLoop extends AnimationTimer {
 
 	private void hit() {
 		for (int i = 0; i < enemies.size(); i++) {
-			Sprite enemy = enemies.get(i);
+			Enemy enemy = enemies.get(i);
 			Rectangle enemyRect = new Rectangle(enemy.positionX, enemy.positionX, 48, 48);
 			for (int j = 0; j < projectilesP.size(); j++) {
 				Sprite projectile = projectilesP.get(i);
 				Rectangle proj = new Rectangle(projectile.positionX, projectile.positionX, 48, 48);
 				if (projectile.intersects(enemy)) {
-					enemies.remove(i);
+					//for (int k = 0; in )
+					gc.drawImage(new Image("file:images/enemy1_down_rest copy.png"), enemy.positionX, enemy.positionY);
+					
 					projectilesP.remove(j);
+					enemy.loseHealth();
+					if (enemy.getHealth() == 0)
+						enemies.remove(i);
 				}
 			}
 		}
