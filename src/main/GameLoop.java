@@ -54,7 +54,7 @@ class GameLoop extends AnimationTimer implements Serializable {
 	private ArrayList<String> input;
 	private ArrayList<Rectangle> obstacles;
 	private ArrayList<Rectangle> dungeon;
-	private ArrayList<Sprite> playerItems = new ArrayList<Sprite>();
+	private ArrayList<Item> playerItems = new ArrayList<Item>();
 
 	private ArrayList<Item> items = new ArrayList<Item>();
 	private ArrayList<Enemy> enemies;
