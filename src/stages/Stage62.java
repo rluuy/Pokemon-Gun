@@ -8,6 +8,7 @@ import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
+// Stage62 is the opened up Stage once we have the Key in our inventory
 
 public class Stage62 {
 	private ArrayList<Rectangle> obstalces = new ArrayList<Rectangle>() ;
@@ -62,15 +63,30 @@ public class Stage62 {
 			}
 		}}
 	}
+	/**
+	 * Gets the Obstacles on the Stage
+	 * @return List of Rectangle Obstacles 
+	 */
 	public ArrayList<Rectangle> getObstacles(){
 		return obstalces;
 	}
+	/**
+	 * Gets the Duengon Entrences on the Stage 
+	 * @return List of Rectangle Objects 
+	 */
 	public ArrayList<Rectangle> getD() {
 		return duengon;
 	}
+	/**
+	 * Gets the Enemies on the Stage 
+	 * @return List of Enemy Objects 
+	 */
 	public ArrayList<Enemy> getEnemies() {
 		return enemies;
 	}
+	/**
+	 * CreateEnemies Spawns the Enemies on this specific Map
+	 */
 	private void createEnemies() {
 		Enemy enemy = new Enemy(3, 285, 450);
 		enemy.hollow = true;

@@ -7,6 +7,11 @@ import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
+/**
+ * FINAL BOSS ROOM
+ * @author DennyHo
+ *
+ */
 public class Stage9 {
 	private ArrayList<Rectangle> obstalces = new ArrayList<Rectangle>() ;
 	private ArrayList<Enemy> enemies = new ArrayList<Enemy>() ;
@@ -60,15 +65,30 @@ public class Stage9 {
 		}
 	}
 
+	/**
+	 * get Obstacles 
+	 * @return List of Obstacles 
+	 */
 	public ArrayList<Rectangle> getObstacles(){
 		return obstalces;
 	}
+	/**
+	 * get D Entrences 
+	 * @return List of Rectangle Duengeon 
+	 */
 	public ArrayList<Rectangle> getD() {
 		return null;
 	}
+	/**
+	 * Gets Enemies 
+	 * @return List of Enemies 
+	 */
 	public ArrayList<Enemy> getEnemies() {
 		return enemies;
 	}
+	/**
+	 * Create Enemies on Stage 
+	 */
 	private void createEnemies() {
 		Enemy enemy = new Enemy(4, 300, 300);
 		enemy.direction = 1;

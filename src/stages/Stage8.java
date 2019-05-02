@@ -7,6 +7,11 @@ import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
+/**
+ * Stage 8 contains the Boots 
+ * @author DennyHo
+ *
+ */
 public class Stage8 {
 	private ArrayList<Rectangle> obstalces = new ArrayList<Rectangle>() ;
 	private ArrayList<Enemy> enemies = new ArrayList<Enemy>() ;
@@ -58,19 +63,38 @@ public class Stage8 {
 			}
 		}
 	}
+	/**
+	 * Gets Rectangle Obstacles 
+	 * @return List of Rectangle Obstacles 
+	 */
 	public ArrayList<Rectangle> getObstacles(){
 		return obstalces;
 	}
+	/**
+	 * Gets the Dungon Obstacles 
+	 * @return List of Dungeon Rectangles 
+	 */
 	public ArrayList<Rectangle> getD() {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	/**
+	 * Gets Enemies 
+	 * @return List of Enemies 
+	 */
 	public ArrayList<Enemy> getEnemies() {
 		return enemies;
 	}
+	/**
+	 * Gets Items 
+	 * @return List of Items on Screen 
+	 */
 	public ArrayList<Item> getItems() {
 		return items;
 	}
+	/**
+	 * create Enemies makes enemies 
+	 */
 	private void createEnemies() {
 		Enemy enemy = new Enemy(2, 600, 400);
 		enemy.direction = 1;

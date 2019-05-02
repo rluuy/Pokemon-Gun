@@ -7,6 +7,7 @@ import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
+//Stage7 contains the Entrence to the place needed for the key to open up the boss room 
 public class Stage7 {
 	private ArrayList<Rectangle> obstalces = new ArrayList<Rectangle>() ;
 	private ArrayList<Rectangle> duengon = new ArrayList<Rectangle>() ;
@@ -63,15 +64,30 @@ public class Stage7 {
 				}
 			}}
 	}
+	/**
+	 * Gets Obstacles 
+	 * @return Lists of Rectangle Obstacles 
+	 */
 	public ArrayList<Rectangle> getObstacles(){
 		return obstalces;
 	}
+	/**
+	 * Gets Dungon Entrences 
+	 * @return Lists of Rectangle Dungeon Entrences 
+	 */
 	public ArrayList<Rectangle> getD() {
 		return duengon;
 	}
+	/**
+	 * Gets Enemies 
+	 * @return List of Enemy on Stage 
+	 */
 	public ArrayList<Enemy> getEnemies() {
 		return enemies;
 	}
+	/**
+	 * CreateEnemies Makes the Enemies on this stage 
+	 */
 	private void createEnemies() {
 		Enemy enemy = new Enemy(2, 350, 300);
 		enemy.direction = 2;
