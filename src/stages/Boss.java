@@ -20,15 +20,25 @@ public class Boss extends Enemy {
 		checkBounds();
 		
 		if (direction == 1) {
+			image = new Image("file:images/enemyf_up_rest.png");
+			super.setImage(image);
 			positionY -= velocity;
 		}
-		else if (direction == 2)
+		else if (direction == 2) {
+			image = new Image("file:images/enemyf_right_rest.png");
+			super.setImage(image);
 			positionX += velocity;
+		}
 		else if (direction == 3) {
+			image = new Image("file:images/enemyf_down_rest.png");
+			super.setImage(image);
 			positionY += velocity;
 		}
-		else if (direction == 4)
+		else if (direction == 4) {
+			image = new Image("file:images/enemyf_left_rest.png");
+			super.setImage(image);
 			positionX -= velocity;
+		}
 		super.render(gc);
 	}
 	
