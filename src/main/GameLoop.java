@@ -173,7 +173,6 @@ class GameLoop extends AnimationTimer implements Serializable {
 		if(e.getHealth()==0)
 			isGameOver=1;
 			
-		e.increaseHealth();
 		// Stage 1-1 (Going Left and Right)
 		if (e.totalPosX < 720 && e.totalPosY < 480) {
 			bufferScalarX = 0;
