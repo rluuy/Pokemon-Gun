@@ -346,9 +346,6 @@ class GameLoop extends AnimationTimer implements Serializable {
 						return;
 					}
 				}
-		
-		
-			
 		}
 		if (e.totalPosY > 960 && e.totalPosX < 720) { // Stage 3-1
 			bufferScalarX = 0;
