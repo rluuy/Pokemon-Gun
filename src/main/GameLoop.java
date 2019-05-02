@@ -416,12 +416,12 @@ class GameLoop extends AnimationTimer implements Serializable {
 		long elapsed2 = end2 - start2;
 
 		for (Enemy enemy : enemies) {
-			if (enemy.type == 5)
+			if (enemy.type == 5 || (enemy.type == 3 && enemy.hasAI))
 				enemy.AIDirection(e.posX, e.posY);
 			enemy.render(gc);
 		}
 
-		if (elapsed2 > 500000000) {
+		if (elapsed2 > 900000000) {
 			for (Enemy enemy : enemies) {
 
 				Sprite pokeballS = new Sprite();
@@ -438,8 +438,6 @@ class GameLoop extends AnimationTimer implements Serializable {
 				pokeballS.setVelocity(10);
 				pokeballS.setPosition(px, py);
 				projectilesE.add(pokeballS);
-
-				// enemy.render(gc);
 			}
 			start2 = System.nanoTime();
 		}

@@ -69,9 +69,11 @@ public class Stage2 {
 		return enemies;
 	}
 	private void createEnemies() {
-		Enemy enemy = new Enemy(3, 300, 300);
-		enemy.direction = 1;
-		enemy.setVelocity(1);
-		enemies.add( enemy );
+		Enemy boss = new Enemy(1,620,460);
+		boss.direction = 1;
+		boss.setVelocity(5);
+		boss.hasProjectileDir = true;
+		boss.projectileDir = 4;
+		enemies.add(boss);
 	}
 }
