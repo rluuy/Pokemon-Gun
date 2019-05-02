@@ -75,6 +75,7 @@ class GameLoop extends AnimationTimer implements Serializable {
 	private boolean gotItem8 = true;
 	private boolean gotItem9 = true;
 
+	public boolean isGameOver=false;
 	long start = System.nanoTime();
 	long start2 = System.nanoTime();
 	long startCollision = System.nanoTime();
@@ -147,10 +148,16 @@ class GameLoop extends AnimationTimer implements Serializable {
 	 * The Map is divided up into 9 different stages {[1-1, 1-2, 1-3] [2-1, 2-2,
 	 * 2-3] [3-1, 3-2, 3-3]}
 	 */
-	public void handle(long currentNanoTime) { // code of start, handle called by .start()
-
+	public void handle(long currentNanoTime) {
+		
+		// code of start, handle called by .start())
+			
+		
 		if (!isBattle) {
 			//System.out.println("y = " + e.totalPosY + " x = " + e.totalPosX );
+		
+		if(e.getHealth()==0)
+			isGameOver=true;
 			
 			
 		// Stage 1-1 (Going Left and Right)

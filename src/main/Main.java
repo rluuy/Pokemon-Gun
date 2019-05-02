@@ -63,22 +63,22 @@ public final class Main extends Application {
 	{
 		if(inX==0 && inY==0)
 			return 1;
-			else if(inX==0 && inY==1)
-				return 4;
-				else if(inX==0 && inY==2)
-					return 7;
-					else if(inX==1 && inY==0)
-						return 2;
-						else if(inX==1 && inY==1)
-							return 5;
-							else if(inX==1 && inY==2)
-								return 8;
-								else if(inX==2 && inY==0)
-									return 3;
-									else if(inX==2 && inY==1)
-										return 6;
-										else if(inX==2 && inY==2)
-											return 9;
+		else if(inX==0 && inY==1)
+			return 4;
+		else if(inX==0 && inY==2)
+			return 7;
+		else if(inX==1 && inY==0)
+			return 2;
+		else if(inX==1 && inY==1)
+			return 5;
+		else if(inX==1 && inY==2)
+			return 8;
+		else if(inX==2 && inY==0)
+			return 3;
+		else if(inX==2 && inY==1)
+			return 6;
+		else if(inX==2 && inY==2)
+			return 9;
 		return -1;
 	}	
 
@@ -116,7 +116,7 @@ public final class Main extends Application {
 			Button btn4 = new Button("Quit");
 			Button btn5 = new Button("Cancel");
 			PauseBox.getChildren().addAll(btn1, btn2, btn3, btn4, btn5);
-			
+
 			//ImageBox is the VBox that contains the image of the map and tells the player what stage
 			// they are on.
 			VBox ImageBox = new VBox();
@@ -136,14 +136,20 @@ public final class Main extends Application {
 			btn5.setOnAction(e -> {
 				primaryStage.setScene(scene);
 			});
-			
+
 			ArrayList<String> input = new ArrayList<>(); 
 
 			//track movements of the player according to the user input.
 			scene.setOnKeyPressed(e -> {
+				if(gl.isGameOver==true)
+				{
+					System.out.println("YOU DIED");
+					primaryStage.setScene(PauseMenu);
+				}
 				String code = e.getCode().toString();
 				if(code.equals("ESCAPE"))
 				{
+
 					stageN = getStage((gl.getPlayer().totalPosX)/720,(gl.getPlayer().totalPosY)/480);
 					ImageBox.getChildren().clear();
 					ImageBox.getChildren().add(mapView);
@@ -153,9 +159,11 @@ public final class Main extends Application {
 				}
 				else if (!gm.input.contains(code))
 					gm.input.add(code);
+
 			});
 
 			scene.setOnKeyReleased(e -> {
+
 				String code = e.getCode().toString();
 				gm.input.remove(code);
 				System.out.println(input.toString());
@@ -281,7 +289,7 @@ public final class Main extends Application {
 						Alert alert = new Alert(AlertType.CONFIRMATION);
 						alert.setTitle("Pokemon Gun");
 						alert.setHeaderText("You haven't saved anything yet!");
-						
+
 						Optional<ButtonType> result = alert.showAndWait();
 					}
 					else
@@ -315,22 +323,10 @@ public final class Main extends Application {
 				}
 			});
 
-
 			//When the Game is Over, show Game Over and revert to the Main Menu
-			if(gl.getPlayer().getHealth()==0)
-			{
-				System.out.println("GAME OVER");
-				VBox goBox = new VBox();
-				goBox.setPadding(new Insets(10));
-				Scene GOverScene = new Scene(goBox,720,480);
-				Image goImage = new Image("images/game_over.png");
-				ImageView gOver = new ImageView(goImage);
-				goBox.getChildren().add(gOver);
-				primaryStage.setScene(GOverScene);
-				TimeUnit.SECONDS.sleep(2);
-				primaryStage.setScene(PauseMenu);
-			}
-		} catch (Exception e) {
+
+		}
+		catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
