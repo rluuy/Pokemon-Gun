@@ -15,6 +15,7 @@ public class Item extends Sprite{
 	Image boots = new Image("file:images/boots.png");
 	
 	Item(int type, int x, int y) {
+		this.type = type;
 		if (type == 1)
 			super.setImage(key);
 		else if (type == 2)

@@ -607,6 +607,7 @@ class GameLoop extends AnimationTimer implements Serializable {
 			if (rect.intersects(playerRect.getBoundsInLocal())) {
 				if (item.type == 1)
 					gotKey = true;
+				System.out.print(gotKey);
 				items.remove(i);
 				playerItems.add(item);
 			}
