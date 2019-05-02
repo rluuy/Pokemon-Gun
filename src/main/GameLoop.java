@@ -208,7 +208,6 @@ class GameLoop extends AnimationTimer implements Serializable {
 		}
 		// Stage 1-2
 		if (e.totalPosX > 720 && e.totalPosX < 1440 && e.totalPosY < 480) {
-			items = new ArrayList<Item>();
 			bufferScalarX = 1;
 			bufferScalarY = 0;
 			Stage2 s2 = new Stage2();
@@ -218,7 +217,7 @@ class GameLoop extends AnimationTimer implements Serializable {
 			e.posX = e.totalPosX - bufferX;
 			if (gotItem2) {
 				enemies = s2.getEnemies();
-				items = new ArrayList<Item>();
+				items = s2.getItems();
 				gotItem = true;
 				gotItem2 = false;
 				gotItem3 = true;
@@ -727,12 +726,11 @@ class GameLoop extends AnimationTimer implements Serializable {
 						if (enemy.type == 4) {
 							isGameOver=2;
 						}
-
-						if (enemy.type == 5) {
-							if (enemy.hasKey && !gotKey)
-								items.add(new Item(1, (int) enemy.positionX, (int) enemy.positionY));
-							else 
-								items.add(new Item(3, (int) enemy.positionX, (int) enemy.positionY));
+						if (enemy.hasKey && !gotKey)
+							items.add(new Item(1, (int) enemy.positionX, (int) enemy.positionY));	
+						
+						else {
+							items.add(new Item(3, (int) enemy.positionX, (int) enemy.positionY));
 						}
 						enemies.remove(i);
 					}
