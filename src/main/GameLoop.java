@@ -16,6 +16,7 @@ import stages.Stage3;
 import stages.Stage4;
 import stages.Stage5;
 import stages.Stage6;
+import stages.Stage62;
 import stages.Stage7;
 import stages.Stage8;
 import stages.Stage9;
@@ -50,6 +51,7 @@ class GameLoop extends AnimationTimer implements Serializable {
 	private PlayerChar e;
 	private boolean dflag = false;
 	private boolean sflag = true;
+	private boolean keyflag = false;
 
 	private ArrayList<String> input;
 	private ArrayList<Rectangle> obstacles;
@@ -221,25 +223,56 @@ class GameLoop extends AnimationTimer implements Serializable {
 		if (e.totalPosY > 480 && e.totalPosY < 960 && e.totalPosX > 1440) { // Stage 2-3
 			bufferScalarX = 2;
 			bufferScalarY = 1;
-
-			Stage6 s6 = new Stage6();
-			s6.generateTiles(gc);
-			e.posY = e.totalPosY - bufferY;
-			e.posX = e.totalPosX - (bufferX * 2);
-			obstacles = s6.getObstacles();
-			dungeon = s6.getD();
-			if (gotItem6) {
-				enemies = s6.getEnemies();
-				gotItem = true;
-				gotItem2 = true;
-				gotItem3 = true;
-				gotItem4 = true;
-				gotItem5 = true;
-				gotItem6 = false;
-				gotItem7 = true;
-				gotItem8 = true;
-				gotItem9 = true;
+			for (int i =0; i < playerItems.size(); i++) {
+				Item item = playerItems.get(i);
+				if (item.type == 1) {
+					keyflag = true;
+				}
 			}
+			if (keyflag == true) {
+					Stage62 s62 = new Stage62();
+					s62.generateTiles(gc);
+					e.posY = e.totalPosY - bufferY;
+					e.posX = e.totalPosX - (bufferX * 2);
+					obstacles = s62.getObstacles();
+					dungeon = s62.getD();
+					if (gotItem6) {
+						enemies = s62.getEnemies();
+						gotItem = true;
+						gotItem2 = true;
+						gotItem3 = true;
+						gotItem4 = true;
+						gotItem5 = true;
+						gotItem6 = false;
+						gotItem7 = true;
+						gotItem8 = true;
+						gotItem9 = true;
+						return;	
+					}
+				}
+				else if (keyflag == false) {
+					Stage6 s6 = new Stage6();
+					s6.generateTiles(gc);
+					e.posY = e.totalPosY - bufferY;
+					e.posX = e.totalPosX - (bufferX * 2);
+					obstacles = s6.getObstacles();
+					dungeon = s6.getD();
+					if (gotItem6) {
+						enemies = s6.getEnemies();
+						gotItem = true;
+						gotItem2 = true;
+						gotItem3 = true;
+						gotItem4 = true;
+						gotItem5 = true;
+						gotItem6 = false;
+						gotItem7 = true;
+						gotItem8 = true;
+						gotItem9 = true;
+					}
+				}
+		
+		
+			
 		}
 		if (e.totalPosY > 960 && e.totalPosX < 720) { // Stage 3-1
 			bufferScalarX = 0;
