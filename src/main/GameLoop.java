@@ -8,6 +8,7 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import stages.Enemy;
+import stages.Item;
 import stages.Sprite;
 import stages.Stage1;
 import stages.Stage2;
@@ -55,12 +56,14 @@ class GameLoop extends AnimationTimer implements Serializable {
 	private ArrayList<Rectangle> dungeon;
 	private ArrayList<Sprite> playerItems = new ArrayList<Sprite>();
 
-	private ArrayList<Sprite> items;
+	private ArrayList<Item> items = new ArrayList<Item>();
 	private ArrayList<Enemy> enemies;
 	private ArrayList<Sprite> projectilesP = new ArrayList<Sprite>();
 	private ArrayList<Sprite> projectilesE = new ArrayList<Sprite>();
 
 	Image pokeball = new Image("file:images/pokeball.png");
+	private boolean gotKey = false;
+	private boolean gotBoots = false;
 	private boolean gotItem = true;
 	private boolean gotItem2 = true;
 	private boolean gotItem3 = true;
@@ -92,215 +95,217 @@ class GameLoop extends AnimationTimer implements Serializable {
 	 * 2-3] [3-1, 3-2, 3-3]}
 	 */
 	public void handle(long currentNanoTime) { // code of start, handle called by .start()
-		if (!isBattle) {
-
-			if (e.totalPosX < 720) { // Stage 1-1 (Going Left and Right)
-				bufferScalarX = 0;
-				bufferScalarY = 0;
-				Stage1 s1 = new Stage1();
-				s1.generateTiles(gc);
-				obstacles = s1.getObstacles();
-				e.posX = e.totalPosX;
-				if (gotItem) { // Code for checking Items and Enemies
-					items = s1.getItems();
-					enemies = s1.getEnemies();
-					gotItem = false;
-					gotItem2 = true;
-					gotItem3 = true;
-					gotItem4 = true;
-					gotItem5 = true;
-					gotItem6 = true;
-					gotItem7 = true;
-					gotItem8 = true;
-					gotItem9 = true;
-				}
+		// Stage 1-1 (Going Left and Right)
+		if (e.totalPosX < 720) {
+			bufferScalarX = 0;
+			bufferScalarY = 0;
+			Stage1 s1 = new Stage1();
+			s1.generateTiles(gc);
+			e.posX = e.totalPosX;
+			obstacles = s1.getObstacles();
+			if (gotItem) { // Code for checking Items and Enemies
+				enemies = s1.getEnemies();
+				gotItem = false;
+				gotItem2 = true;
+				gotItem3 = true;
+				gotItem4 = true;
+				gotItem5 = true;
+				gotItem6 = true;
+				gotItem7 = true;
+				gotItem8 = true;
+				gotItem9 = true;
+			}
+		}
+		// Stage 1-1 (Going Up and Down)
+		if (e.totalPosY < 480) {
+			bufferScalarX = 0;
+			bufferScalarY = 0;
+			Stage1 s1 = new Stage1();
+			s1.generateTiles(gc);
+			e.posY = e.totalPosY;
+			obstacles = s1.getObstacles();
+			dungeon = s1.getD();
+		}
+		// Stage 1-2
+		if (e.totalPosX > 720 && e.totalPosX < 1440 && e.totalPosY < 480) {
+			bufferScalarX = 1;
+			bufferScalarY = 0;
+			Stage2 s2 = new Stage2();
+			s2.generateTiles(gc);
+			obstacles = s2.getObstacles();
+			dungeon = s2.getD();
+			e.posX = e.totalPosX - bufferX;
+			if (gotItem2) {
+				enemies = s2.getEnemies();
+				gotItem = true;
+				gotItem2 = false;
+				gotItem3 = true;
+				gotItem4 = true;
+				gotItem5 = true;
+				gotItem6 = true;
+				gotItem7 = true;
+				gotItem8 = true;
+				gotItem9 = true;
 			}
 
-			if (e.totalPosY < 480) { // Stage 1-1 (Going Up and Down)
-				bufferScalarX = 0;
-				bufferScalarY = 0;
-				Stage1 s1 = new Stage1();
-				s1.generateTiles(gc);
-				e.posY = e.totalPosY;
-				obstacles = s1.getObstacles();
-				dungeon = s1.getD();
+		}
+		if (e.totalPosX > 1440 && e.totalPosY < 480) { // Stage 1-3
+			bufferScalarX = 2;
+			bufferScalarY = 0;
+			Stage3 s3 = new Stage3();
+			s3.generateTiles(gc);
+			e.posX = e.totalPosX - (bufferX * bufferScalarX);
+			obstacles = s3.getObstacles();
+			dungeon = s3.getD();
+			if (gotItem3) {
+				enemies = s3.getEnemies();
+				gotItem = true;
+				gotItem2 = true;
+				gotItem3 = false;
+				gotItem4 = true;
+				gotItem5 = true;
+				gotItem6 = true;
+				gotItem7 = true;
+				gotItem8 = true;
+				gotItem9 = true;
+				if (!gotKey) {
+					items = s3.getItems();
+				}
 			}
+			
+		}
+		if (e.totalPosY > 480 && e.totalPosY < 960 && e.totalPosX < 720) { // Stage 2-1
+			bufferScalarX = 0;
+			bufferScalarY = 1;
+			Stage4 s4 = new Stage4();
+			s4.generateTiles(gc);
+			e.posY = e.totalPosY - bufferY;
+			obstacles = s4.getObstacles();
+			dungeon = s4.getD();
+			if (gotItem4) {
+				enemies = s4.getEnemies();
+				gotItem = true;
+				gotItem2 = true;
+				gotItem3 = true;
+				gotItem4 = false;
+				gotItem5 = true;
+				gotItem6 = true;
+				gotItem7 = true;
+				gotItem8 = true;
+				gotItem9 = true;
+			}
+		}
+		if (e.totalPosY > 480 && e.totalPosY < 960 && e.totalPosX > 720 && e.totalPosX < 1440 && dflag == false) { // Stage
+																													// 2-2
+			bufferScalarX = 1;
+			bufferScalarY = 1;
+			Stage5 s5 = new Stage5();
+			s5.generateTiles(gc, false);
+			e.posY = e.totalPosY - bufferY;
+			e.posX = e.totalPosX - bufferX;
+			obstacles = s5.getObstacles();
+			dungeon = s5.getD();
+			if (gotItem5) {
+				enemies = s5.getEnemies();
+				gotItem = true;
+				gotItem2 = true;
+				gotItem3 = true;
+				gotItem4 = true;
+				gotItem5 = false;
+				gotItem6 = true;
+				gotItem7 = true;
+				gotItem8 = true;
+				gotItem9 = true;
+			}
+		}
+		if (e.totalPosY > 480 && e.totalPosY < 960 && e.totalPosX > 1440) { // Stage 2-3
+			bufferScalarX = 2;
+			bufferScalarY = 1;
 
-			if (e.totalPosX > 720 && e.totalPosX < 1440 && e.totalPosY < 480) { // Stage 1-2
-				bufferScalarX = 1;
-				bufferScalarY = 0;
-				Stage2 s2 = new Stage2();
-				s2.generateTiles(gc);
-				obstacles = s2.getObstacles();
-				dungeon = s2.getD();
-				e.posX = e.totalPosX - bufferX;
-				if (gotItem2) {
-					enemies = s2.getEnemies();
-					gotItem = true;
-					gotItem2 = false;
-					gotItem3 = true;
-					gotItem4 = true;
-					gotItem5 = true;
-					gotItem6 = true;
-					gotItem7 = true;
-					gotItem8 = true;
-					gotItem9 = true;
-				}
+			Stage6 s6 = new Stage6();
+			s6.generateTiles(gc);
+			e.posY = e.totalPosY - bufferY;
+			e.posX = e.totalPosX - (bufferX * 2);
+			obstacles = s6.getObstacles();
+			dungeon = s6.getD();
+			if (gotItem6) {
+				enemies = s6.getEnemies();
+				gotItem = true;
+				gotItem2 = true;
+				gotItem3 = true;
+				gotItem4 = true;
+				gotItem5 = true;
+				gotItem6 = false;
+				gotItem7 = true;
+				gotItem8 = true;
+				gotItem9 = true;
 			}
-			if (e.totalPosX > 1440 && e.totalPosY < 480) { // Stage 1-3
-				bufferScalarX = 2;
-				bufferScalarY = 0;
-				Stage3 s3 = new Stage3();
-				s3.generateTiles(gc);
-				e.posX = e.totalPosX - (bufferX * bufferScalarX);
-				obstacles = s3.getObstacles();
-				dungeon = s3.getD();
-				if (gotItem3) {
-					enemies = s3.getEnemies();
-					gotItem = true;
-					gotItem2 = true;
-					gotItem3 = false;
-					gotItem4 = true;
-					gotItem5 = true;
-					gotItem6 = true;
-					gotItem7 = true;
-					gotItem8 = true;
-					gotItem9 = true;
-				}
+		}
+		if (e.totalPosY > 960 && e.totalPosX < 720) { // Stage 3-1
+			bufferScalarX = 0;
+			bufferScalarY = 2;
+			Stage7 s7 = new Stage7();
+			s7.generateTiles(gc);
+			e.posY = e.totalPosY - (bufferY * 2);
+			obstacles = s7.getObstacles();
+			dungeon = s7.getD();
+			if (gotItem7) {
+				enemies = s7.getEnemies();
+				gotItem = true;
+				gotItem2 = true;
+				gotItem3 = true;
+				gotItem4 = true;
+				gotItem5 = true;
+				gotItem6 = true;
+				gotItem7 = false;
+				gotItem8 = true;
+				gotItem9 = true;
+				
 			}
-			if (e.totalPosY > 480 && e.totalPosY < 960 && e.totalPosX < 720) { // Stage 2-1
-				bufferScalarX = 0;
-				bufferScalarY = 1;
-				Stage4 s4 = new Stage4();
-				s4.generateTiles(gc);
-				e.posY = e.totalPosY - bufferY;
-				obstacles = s4.getObstacles();
-				dungeon = s4.getD();
-				if (gotItem4) {
-					enemies = s4.getEnemies();
-					gotItem = true;
-					gotItem2 = true;
-					gotItem3 = true;
-					gotItem4 = false;
-					gotItem5 = true;
-					gotItem6 = true;
-					gotItem7 = true;
-					gotItem8 = true;
-					gotItem9 = true;
-				}
+		}
+		if (e.totalPosY > 960 && e.totalPosX > 720 && e.totalPosX < 1440) { // Stage 3-2
+			bufferScalarX = 1;
+			bufferScalarY = 2;
+			Stage8 s8 = new Stage8();
+			s8.generateTiles(gc);
+			e.posY = e.totalPosY - (bufferY * 2);
+			e.posX = e.totalPosX - bufferX;
+			obstacles = s8.getObstacles();
+			dungeon = s8.getD();
+			if (gotItem8) {
+				enemies = s8.getEnemies();
+				gotItem = true;
+				gotItem2 = true;
+				gotItem3 = true;
+				gotItem4 = true;
+				gotItem5 = true;
+				gotItem6 = true;
+				gotItem7 = true;
+				gotItem8 = false;
+				gotItem9 = true;
 			}
-			if (e.totalPosY > 480 && e.totalPosY < 960 && e.totalPosX > 720 && e.totalPosX < 1440 && dflag == false) { // Stage
-																														// 2-2
-				bufferScalarX = 1;
-				bufferScalarY = 1;
-				Stage5 s5 = new Stage5();
-				s5.generateTiles(gc, false);
-				e.posY = e.totalPosY - bufferY;
-				e.posX = e.totalPosX - bufferX;
-				obstacles = s5.getObstacles();
-				dungeon = s5.getD();
-				if (gotItem5) {
-					enemies = s5.getEnemies();
-					gotItem = true;
-					gotItem2 = true;
-					gotItem3 = true;
-					gotItem4 = true;
-					gotItem5 = false;
-					gotItem6 = true;
-					gotItem7 = true;
-					gotItem8 = true;
-					gotItem9 = true;
-				}
+		}
+		if (e.totalPosY > 960 && e.totalPosX > 1440) { // Stage 3-3
+			bufferScalarX = 2;
+			bufferScalarY = 2;
+			Stage9 s9 = new Stage9();
+			s9.generateTiles(gc);
+			e.posY = e.totalPosY - (bufferY * 2);
+			e.posX = e.totalPosX - (bufferX * 2);
+			obstacles = s9.getObstacles();
+			dungeon = s9.getD();
+			if (gotItem9) {
+				enemies = s9.getEnemies();
+				gotItem = true;
+				gotItem2 = true;
+				gotItem3 = true;
+				gotItem4 = true;
+				gotItem5 = true;
+				gotItem6 = true;
+				gotItem7 = true;
+				gotItem8 = true;
+				gotItem9 = false;
 			}
-			if (e.totalPosY > 480 && e.totalPosY < 960 && e.totalPosX > 1440) { // Stage 2-3
-				bufferScalarX = 2;
-				bufferScalarY = 1;
-				Stage6 s6 = new Stage6();
-				s6.generateTiles(gc);
-				e.posY = e.totalPosY - bufferY;
-				e.posX = e.totalPosX - (bufferX * 2);
-				obstacles = s6.getObstacles();
-				dungeon = s6.getD();
-				if (gotItem6) {
-					enemies = s6.getEnemies();
-					gotItem = true;
-					gotItem2 = true;
-					gotItem3 = true;
-					gotItem4 = true;
-					gotItem5 = true;
-					gotItem6 = false;
-					gotItem7 = true;
-					gotItem8 = true;
-					gotItem9 = true;
-				}
-			}
-			if (e.totalPosY > 960 && e.totalPosX < 720) { // Stage 3-1
-				bufferScalarX = 0;
-				bufferScalarY = 2;
-				Stage7 s7 = new Stage7();
-				s7.generateTiles(gc);
-				e.posY = e.totalPosY - (bufferY * 2);
-				obstacles = s7.getObstacles();
-				dungeon = s7.getD();
-				if (gotItem7) {
-					enemies = s7.getEnemies();
-					gotItem = true;
-					gotItem2 = true;
-					gotItem3 = true;
-					gotItem4 = true;
-					gotItem5 = true;
-					gotItem6 = true;
-					gotItem7 = false;
-					gotItem8 = true;
-					gotItem9 = true;
-					;
-				}
-			}
-			if (e.totalPosY > 960 && e.totalPosX > 720 && e.totalPosX < 1440) { // Stage 3-2
-				bufferScalarX = 1;
-				bufferScalarY = 2;
-				Stage8 s8 = new Stage8();
-				s8.generateTiles(gc);
-				e.posY = e.totalPosY - (bufferY * 2);
-				e.posX = e.totalPosX - bufferX;
-				obstacles = s8.getObstacles();
-				dungeon = s8.getD();
-				if (gotItem8) {
-					enemies = s8.getEnemies();
-					gotItem = true;
-					gotItem2 = true;
-					gotItem3 = true;
-					gotItem4 = true;
-					gotItem5 = true;
-					gotItem6 = true;
-					gotItem7 = true;
-					gotItem8 = false;
-					gotItem9 = true;
-				}
-			}
-			if (e.totalPosY > 960 && e.totalPosX > 1440) { // Stage 3-3
-				bufferScalarX = 2;
-				bufferScalarY = 2;
-				Stage9 s9 = new Stage9();
-				s9.generateTiles(gc);
-				e.posY = e.totalPosY - (bufferY * 2);
-				e.posX = e.totalPosX - (bufferX * 2);
-				obstacles = s9.getObstacles();
-				dungeon = s9.getD();
-				if (gotItem9) {
-					enemies = s9.getEnemies();
-					gotItem = true;
-					gotItem2 = true;
-					gotItem3 = true;
-					gotItem4 = true;
-					gotItem5 = true;
-					gotItem6 = true;
-					gotItem7 = true;
-					gotItem8 = true;
-					gotItem9 = false;
-				}
-			}
-
 		}
 
 		// Code for Out of Bounds Checking
@@ -370,7 +375,7 @@ class GameLoop extends AnimationTimer implements Serializable {
 			start = System.nanoTime();
 		}
 
-		for (Sprite pokeball : items)
+		for (Item pokeball : items)
 			pokeball.render(gc);
 
 		long end2 = System.nanoTime();
@@ -394,12 +399,13 @@ class GameLoop extends AnimationTimer implements Serializable {
 				} else {
 					pokeballS.direction = enemy.direction;
 				}
-				
+				if (enemy.hollow)
+					pokeballS.hollow = true;
 				pokeballS.setVelocity(10);
 				pokeballS.setPosition(px, py);
 				projectilesE.add(pokeballS);
 
-				//enemy.render(gc);
+				// enemy.render(gc);
 			}
 			start2 = System.nanoTime();
 		}
@@ -428,7 +434,6 @@ class GameLoop extends AnimationTimer implements Serializable {
 			}
 		}
 
-		dcollision();
 		long endCollision = System.nanoTime();
 		elapsedCollision = endCollision - startCollision;
 		enemyCollision();
@@ -436,6 +441,7 @@ class GameLoop extends AnimationTimer implements Serializable {
 		hit();
 		projectileCollision();
 		collision();
+		dcollision();
 		pickUpItem();
 		playerHit();
 
@@ -487,40 +493,40 @@ class GameLoop extends AnimationTimer implements Serializable {
 	}
 
 	/**
-	 * dcollision is a special type of collision that sends the player to the 
-	 * somewhere else (dungeon) if they hit the stair block within the game. 
+	 * dcollision is a special type of collision that sends the player to the
+	 * somewhere else (dungeon) if they hit the stair block within the game.
 	 */
 	private void dcollision() {
 		Rectangle playerRect = new Rectangle(e.posX, e.posY, 48, 48);
 		if (dungeon != null) {
-		for (Rectangle collision : dungeon) {
-			if (collision.intersects(playerRect.getBoundsInLocal())) {
-				if (collision.getX() == 336.0) { // Moves Player on Stage 2-2 to 1-3
-					e.totalPosX = 2060;
-					e.totalPosY = 0;
-					e.posY = 0;
-					e.posX = 660;
-				} else if (collision.getX() == 672.0) { // Moves Player on Stage 1-3 to 2-2
-					e.totalPosX = 1120;
-					e.totalPosY = 626;
-					e.posY = 146;
-					e.posX = 400;
-				} else if (collision.getX() == 0.0) { // Moves Player on Stage 3-1 to 2-3
-					e.totalPosX = 2000;
-					e.totalPosY = 652;
-					e.posY = 172;
-					e.posX = 600;
-				} else if (collision.getX() == 624.0) { // Moves Player on Stage 2-3 to 3-1
-					e.totalPosX = 50;
-					e.totalPosY = 1380;
-					e.posX = 50;
-					e.posY = 420;
+			for (Rectangle collision : dungeon) {
+				if (collision.intersects(playerRect.getBoundsInLocal())) {
+					if (collision.getX() == 336.0) { // Moves Player on Stage 2-2 to 1-3
+						e.totalPosX = 2060;
+						e.totalPosY = 0;
+						e.posY = 0;
+						e.posX = 660;
+					} else if (collision.getX() == 672.0) { // Moves Player on Stage 1-3 to 2-2
+						e.totalPosX = 1120;
+						e.totalPosY = 626;
+						e.posY = 146;
+						e.posX = 400;
+					} else if (collision.getX() == 0.0) { // Moves Player on Stage 3-1 to 2-3
+						e.totalPosX = 2000;
+						e.totalPosY = 652;
+						e.posY = 172;
+						e.posX = 600;
+					} else if (collision.getX() == 624.0) { // Moves Player on Stage 2-3 to 3-1
+						e.totalPosX = 50;
+						e.totalPosY = 1380;
+						e.posX = 50;
+						e.posY = 420;
+					}
+
 				}
-				
+			}
 		}
-		}}}
-	
-			
+	}
 
 	// Removes projectiles that collide into an obstacle
 	private void projectileCollision() {
@@ -536,7 +542,8 @@ class GameLoop extends AnimationTimer implements Serializable {
 				Sprite proj = projectilesE.get(k);
 				Rectangle projectileRect = new Rectangle(proj.positionX, proj.positionY, 48, 48);
 				if (collision.intersects(projectileRect.getBoundsInLocal())) {
-					projectilesE.remove(k);
+					if (!proj.hollow)
+						projectilesE.remove(k);
 				}
 			}
 		}
@@ -594,10 +601,12 @@ class GameLoop extends AnimationTimer implements Serializable {
 	private void pickUpItem() {
 		Rectangle playerRect = new Rectangle(e.posX, e.posY, 48, 48);
 		for (int i = 0; i < items.size(); i++) {
-			Sprite item = items.get(i);
+			Item item = items.get(i);
 			Rectangle rect = new Rectangle(item.positionX, item.positionY, 48, 48);
 
 			if (rect.intersects(playerRect.getBoundsInLocal())) {
+				if (item.type == 1)
+					gotKey = true;
 				items.remove(i);
 				playerItems.add(item);
 			}

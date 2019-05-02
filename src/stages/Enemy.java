@@ -49,7 +49,9 @@ public class Enemy extends Sprite {
 	 * draws enemy image on the canvas based on the type of enemy
 	 */
 	public void render(GraphicsContext gc) {
-		if (type == 1) 
+		if (type == 0) 
+			renderStill(gc);
+		else if (type == 1) 
 			renderOne(gc);
 		else if (type == 2) 
 			renderTwo(gc); 
@@ -61,6 +63,26 @@ public class Enemy extends Sprite {
 			renderAIMove(gc);
 		else 
 			super.render(gc);
+	}
+	
+	private void renderStill(GraphicsContext gc) {
+		if (direction == 1) {
+			image = new Image("file:images/enemy1_up_rest.png");
+			super.setImage(image);
+		}
+		else if (direction == 2) {
+			image = new Image("file:images/enemy1_right_rest.png");
+			super.setImage(image);
+		}
+		else if (direction == 3) {
+			image = new Image("file:images/enemy1_down_rest.png");
+			super.setImage(image);
+		}
+		else if (direction == 4) {
+			image = new Image("file:images/enemy1_left_rest.png");
+			super.setImage(image);
+		}
+		super.render(gc);
 	}
 	
 	/**
@@ -140,6 +162,9 @@ public class Enemy extends Sprite {
 	 * @param gc  javafx.scene.canvas.GraphicsContext
 	 */
 	private void renderThree(GraphicsContext gc) {
+		if (direction == 5) {
+			direction = 1;
+		}
 		if (direction == 1) {
 			image = new Image("file:images/enemy1_up_rest.png");
 			super.setImage(image);
@@ -157,17 +182,12 @@ public class Enemy extends Sprite {
 			super.setImage(image);
 		}
 		if (this.ticks == 300) {
-			if (direction == 5) {
-				direction = 1;
-				ticks = 0;
-			}
-			else {
-				ticks = 0;
-				direction++;
-			}
+			ticks = 0;
+			direction++;
 		}
 		ticks++;
-		gc.drawImage(image, positionX, positionY, 100*.43, 150*.43);
+		//gc.drawImage(image, positionX, positionY, 100*.43, 150*.43);
+		super.render(gc);
 	}
 	
 	/**

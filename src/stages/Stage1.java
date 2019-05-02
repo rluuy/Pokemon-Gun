@@ -53,14 +53,14 @@ public class Stage1 {
 		items.add( pokeballS );
 
 
-		//createEnemies();
-		Enemy boss = new Enemy(5,10,10);
-		boss.direction = 1;
-		boss.setVelocity(1);
-		enemies.add( boss );
-		Enemy enemy = new Enemy(1,200,200);
-		enemy.direction = 1;
-		enemy.setVelocity(1);
+		createEnemies();
+//		Enemy boss = new Enemy(5,10,10);
+//		boss.direction = 1;
+//		boss.setVelocity(1);
+//		enemies.add( boss );
+//		Enemy enemy = new Enemy(1,200,200);
+//		enemy.direction = 1;
+//		enemy.setVelocity(1);
 		//enemies.add( enemy );
 		
 
@@ -105,16 +105,15 @@ public class Stage1 {
 		return null;
 	}
 	
-	// Method for creating the eneimies on the stage 
+	// Method for creating the enemies on the stage 
 	private void createEnemies() {
-//		Enemy enemy = new Enemy(1, 300, 300);
-//		enemy.direction = 1;
-//		enemy.setVelocity(1);
-//		enemies.add( enemy );
-//
-//		Enemy enemy2 = new Enemy(2, 200, 200);
-//		enemy2.direction = 2;
-//		enemy2.setVelocity(1);
-//		enemies.add( enemy2 );
+		Enemy enemy = new Enemy(3, 350, 200);
+		enemy.direction = 1;
+		enemy.setVelocity(1);
+		enemies.add(enemy);
+
+
+		
+
 	}
 }

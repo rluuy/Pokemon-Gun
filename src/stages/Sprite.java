@@ -16,6 +16,8 @@ public class Sprite {
 	protected double velocity;
 	public double width;
 	public double height;
+	
+	public boolean hollow = false;
 
 	public Sprite() {
 		positionX = 0;
