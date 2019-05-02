@@ -118,6 +118,22 @@ public class Sprite {
 			positionY += velocity;
 		else if (direction == 4)
 			positionX -= velocity;
+		else if (direction == 5) {
+			positionY -= velocity;
+			positionY -= velocity;
+		}
+		else if (direction == 6) {
+			positionY -= velocity;
+			positionY -= velocity;
+		}
+		else if (direction == 7) {
+			positionY -= velocity;
+			positionY -= velocity;
+		}
+		else if (direction == 8) {
+			positionY -= velocity;
+			positionY -= velocity;
+		}
 		gc.drawImage(image, positionX, positionY);
 	}
 
