@@ -39,7 +39,8 @@ public class Stage9 {
 		//createEnemies();
 		Enemy boss = new Enemy(4,50,50);
 		boss.direction = 1;
-		boss.setVelocity(1);
+		boss.setVelocity(3);
+		boss.hollow = true;
 		boss.hasProjectileDir = true;
 		enemies.add( boss );
 

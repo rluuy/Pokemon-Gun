@@ -87,11 +87,14 @@ public final class Main extends Application {
 	{
 		try 
 		{
+			Media media = new Media(Paths.get("music/DuelOfFates.mp3").toUri().toString());
+			mediaPlayer = new MediaPlayer(media);
+			mediaPlayer.play();
 			//root is the VBox that contains the canvas where the GamePlay happens.
 			root = new VBox(); 
 
 			scene = new Scene(root,720,480);    
-			p = new PlayerChar(50, 50, 10 , 0.43,3);
+			p = new PlayerChar(50, 50, 10, 0.43,3);
 			canvas = new Canvas(720, 480);
 			root.getChildren().add(canvas);	
 

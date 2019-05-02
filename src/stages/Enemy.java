@@ -37,6 +37,10 @@ public class Enemy extends Sprite {
 			image = new Image("file:images/enemy1_down_rest.png");
 		else if (type == 2)
 			image = new Image("file:images/enemychar2_down_rest.png");
+		else if (type == 4) {
+			health = 20;
+			image = new Image("file:images/enemy1_down_rest.png");
+		}
 		else
 			image = new Image("file:images/enemy1_down_rest.png");
 		super.setImage(image);
