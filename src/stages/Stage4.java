@@ -74,7 +74,7 @@ public class Stage4 {
 		return enemies;
 	}
 	private void createEnemies() {
-		Enemy enemy = new Enemy(4, 300, 300);
+		Enemy enemy = new Enemy(5, 50, 50);
 		enemy.direction = 1;
 		enemy.setVelocity(1);
 		enemies.add( enemy );
