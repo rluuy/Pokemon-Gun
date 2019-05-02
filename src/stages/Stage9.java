@@ -37,6 +37,10 @@ public class Stage9 {
 		int mapWidth = tileMap[0].length;
 
 		//createEnemies();
+		Boss boss = new Boss(1,10,10);
+		boss.direction = 1;
+		boss.setVelocity(1);
+		enemies.add( boss );
 
 		for (int i = 0; i < mapLength; i++) { 
 			for (int j = 0; j < mapWidth; j++) {

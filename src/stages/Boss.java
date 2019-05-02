@@ -21,21 +21,11 @@ public class Boss extends Enemy {
 		
 		if (direction == 1) {
 			positionY -= velocity;
-			deltaY += velocity;
-			if (deltaY == 300) {
-				deltaY = 0;
-				direction = 3;
-			}
 		}
 		else if (direction == 2)
 			positionX += velocity;
 		else if (direction == 3) {
 			positionY += velocity;
-			deltaY += velocity;
-			if (deltaY == 300) {
-				deltaY = 0;
-				direction = 1;
-			}
 		}
 		else if (direction == 4)
 			positionX -= velocity;
@@ -43,14 +33,28 @@ public class Boss extends Enemy {
 	}
 	
 	private void checkBounds() {
-		if (positionY > 470) {
+		if (positionY > 420) {
 			direction = 1;
 		}
-		if (positionY < 10) {
+		if (positionY < 58) {
 			direction = 3;
 		}
-		
+		if (positionX > 420) {
+			direction = 4;
+		}
+		if (positionX < 58) {
+			direction = 2;
+		}
 	}
+	
+//	public void AIDirection(int x, int y) {
+//		int xDiff = (int) (x - this.positionX);
+//		int yDiff = (int) (y - this.positionY);
+//		if (xDiff > yDiff) {
+//			if (xDiff > 0)
+//				direction = 2;
+//		}
+//	}
 
 	public void loseHealth() {
 		health--;

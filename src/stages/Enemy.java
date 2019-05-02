@@ -5,11 +5,12 @@ package stages;
  */
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import java.lang.*;
 
 public class Enemy extends Sprite {
 	private int health = 3;
 
-	private int type;
+	public int type;
 	private int posX;
 	private int posY;
 	private int deltaX = 0;
@@ -19,6 +20,9 @@ public class Enemy extends Sprite {
 	public int projectileDir;
 	public boolean hasBloom = false;
 	public boolean hasProjectileDir = false;
+	
+	
+
 
 	Image emerald_down_rest = new Image("file:images/enemy1_down_rest.png");
 	
@@ -44,11 +48,14 @@ public class Enemy extends Sprite {
 			renderTwo(gc); 
 		else if (type == 3)
 			renderThree(gc);
-		else
+		else if (type == 4)
 			renderFour(gc);
+		else 
+			super.render(gc);
 	}
 	
 	/**
+	 * Up Down Movement
 	 * defines motion for enemy type 1 and draws the enemy on the canvas
 	 * 
 	 * @param gc  javafx.scene.canvas.GraphicsContext
@@ -77,6 +84,7 @@ public class Enemy extends Sprite {
 	}
 	
 	/**
+	 * Left Right Motion
 	 * defines motion for enemy type 2 and draws the enemy on the canvas
 	 * 
 	 * @param gc  javafx.scene.canvas.GraphicsContext
@@ -104,6 +112,7 @@ public class Enemy extends Sprite {
 	}
 	
 	/**
+	 * Stationary, Changes Direction
 	 * defines motion for enemy type 3 and draws the enemy on the canvas
 	 * 
 	 * @param gc  javafx.scene.canvas.GraphicsContext
@@ -124,6 +133,7 @@ public class Enemy extends Sprite {
 	}
 	
 	/**
+	 * Enemy Square Motion
 	 * defines motion for enemy type 4 and draws the enemy on the canvas
 	 * 
 	 * @param gc  javafx.scene.canvas.GraphicsContext
@@ -162,6 +172,26 @@ public class Enemy extends Sprite {
 			}
 		}
 		super.render(gc);
+	}
+	
+	public void AIDirection(int x, int y) {
+		int xDiff = (int) (x - this.positionX);
+		int yDiff = (int) (y - this.positionY);
+		if (java.lang.Math.abs(xDiff) > java.lang.Math.abs(yDiff)) {
+			if (xDiff > 0)
+				direction = 2;
+			else if (xDiff < 0)
+				direction = 4;
+		}
+		else if (java.lang.Math.abs(xDiff) < java.lang.Math.abs(yDiff)) {
+			if (yDiff > 0)
+				direction = 3;
+			if (yDiff < 0)
+				direction = 1;
+		}
+		else 
+			System.out.println("Here");
+		
 	}
 
 	public void loseHealth() {

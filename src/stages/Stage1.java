@@ -54,14 +54,14 @@ public class Stage1 {
 
 
 		//createEnemies();
-		Boss boss = new Boss(1,10,10);
+		Boss boss = new Boss(5,10,10);
 		boss.direction = 1;
 		boss.setVelocity(1);
 		enemies.add( boss );
 		Enemy enemy = new Enemy(1,200,200);
 		enemy.direction = 1;
 		enemy.setVelocity(1);
-		enemies.add( enemy );
+		//enemies.add( enemy );
 		
 
 		int mapLength = tileMap.length;
@@ -97,7 +97,6 @@ public class Stage1 {
 	
 	// Getter for Enemies in Stage 
 	public ArrayList<Enemy> getEnemies() {
-		// TODO Auto-generated method stub
 		return enemies;
 	}
 	
