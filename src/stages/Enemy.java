@@ -21,6 +21,7 @@ public class Enemy extends Sprite {
 	public boolean hasBloom = false;
 	public boolean hasProjectileDir = false;
 	public boolean hasAI = false;
+	public boolean hasKey = false;
 
 	Image image;
 
@@ -120,6 +121,7 @@ public class Enemy extends Sprite {
 	 * @param gc javafx.scene.canvas.GraphicsContext
 	 */
 	private void renderTwo(GraphicsContext gc) {
+		checkBounds();
 		if (direction == 1) {
 			positionY -= velocity;
 		} else if (direction == 2) {
@@ -127,7 +129,7 @@ public class Enemy extends Sprite {
 			super.setImage(image);
 			positionX += velocity;
 			deltaX += velocity;
-			if (deltaX == 100) {
+			if (deltaX == 300) {
 				deltaX = 0;
 				direction = 4;
 			}
@@ -138,7 +140,7 @@ public class Enemy extends Sprite {
 			super.setImage(image);
 			positionX -= velocity;
 			deltaX += velocity;
-			if (deltaX == 100) {
+			if (deltaX == 300) {
 				deltaX = 0;
 				direction = 2;
 			}
@@ -280,7 +282,6 @@ public class Enemy extends Sprite {
 				direction = 1;
 		} else
 			System.out.println("Here");
-
 	}
 
 	public void loseHealth() {

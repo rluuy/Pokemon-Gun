@@ -39,9 +39,11 @@ public class Stage3{
 
 		int mapLength = tileMap.length;
 		int mapWidth = tileMap[0].length;
+		
+		createEnemies();
 
-		Item key = new Item(1, 40, 350);
-		items.add(key);
+//		Item key = new Item(1, 40, 350);
+//		items.add(key);
 
 		for (int i = 0; i < mapLength; i++) { 
 			for (int j = 0; j < mapWidth; j++) {
@@ -79,9 +81,10 @@ public class Stage3{
 		return items;
 	}
 	private void createEnemies() {
-		Enemy enemy = new Enemy(3, 300, 300);
+		Enemy enemy = new Enemy(5, 300, 300);
 		enemy.direction = 1;
 		enemy.setVelocity(1);
-		enemies.add( enemy );
+		enemy.hasKey = true;
+		enemies.add(enemy);
 	}
 }
