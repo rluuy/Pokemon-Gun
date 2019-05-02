@@ -407,8 +407,8 @@ class GameLoop extends AnimationTimer implements Serializable {
 
 			start = System.nanoTime();
 		}
-		//a
 
+		//a 
 		for (Item pokeball : items)
 			pokeball.render(gc);
 
