@@ -178,53 +178,65 @@ public class Enemy extends Sprite {
 	 */
 	private void renderFour(GraphicsContext gc) {
 		if (direction == 1) {
+			image = new Image("file:images/enemyf_up_rest.png");
+			super.setImage(image);
 			positionY -= velocity;
-			deltaY += velocity;
-			if (deltaY == 50) {
-				deltaY = 0;
+			if (positionY == 0) {
 				direction = 4;
 			}
 		}
 		else if (direction == 2) {
+			image = new Image("file:images/enemyf_right_rest.png");
+			super.setImage(image);
 			positionX += velocity;
-			deltaX += velocity;
-			if (deltaX == 50) {
-				deltaX = 0;
+			if ((positionX + image.getWidth() - 1) == gc.getCanvas().getWidth()) {
 				direction = 1;
 			}
 		}
 		else if (direction == 3) {
+			image = new Image("file:images/enemyf_down_rest.png");
+			super.setImage(image);
 			positionY += velocity;
-			deltaY += velocity;
-			if (deltaY == 50) {
-				deltaY = 0;
+			System.out.println(positionY);
+			if ((positionY + image.getHeight() - 1) == gc.getCanvas().getHeight()) {
 				direction = 2;
 			}
 		}
 		else if (direction == 4) {
+			image = new Image("file:images/enemyf_left_rest.png");
+			super.setImage(image);
 			positionX -= velocity;
 			deltaX += velocity;
-			if (deltaX == 50) {
-				deltaX = 0;
+			if (positionX == 0) {
 				direction = 3;
 			}
 		}
-		gc.drawImage(image, positionX, positionY, 100*.43, 150*.43);
+		gc.drawImage(image, positionX, positionY);
 	}
 	
 	public void renderAIMove(GraphicsContext gc) {
 		checkBounds();
 		
 		if (direction == 1) {
+			image = new Image("file:images/enemy1_up_rest.png");
+			super.setImage(image);
 			positionY -= velocity;
 		}
-		else if (direction == 2)
+		else if (direction == 2) {
+			image = new Image("file:images/enemy1_right_rest.png");
+			super.setImage(image);
 			positionX += velocity;
+		}
 		else if (direction == 3) {
+			image = new Image("file:images/enemy1_down_rest.png");
+			super.setImage(image);
 			positionY += velocity;
 		}
-		else if (direction == 4)
+		else if (direction == 4) {
+			image = new Image("file:images/enemy1_left_rest.png");
+			super.setImage(image);
 			positionX -= velocity;
+		}
 		super.render(gc);
 	}
 	

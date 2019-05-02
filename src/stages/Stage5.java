@@ -90,9 +90,9 @@ public class Stage5 {
 		return enemies;
 	}
 	private void createEnemies() {
-		Enemy enemy = new Enemy(4, 300, 300);
-		enemy.direction = 1;
-		enemy.setVelocity(1);
+		Enemy enemy = new Enemy(4, 0, 0);
+		enemy.direction = 3;
+		enemy.setVelocity(5);
 		enemies.add( enemy );
 	}
 }

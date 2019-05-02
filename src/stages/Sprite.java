@@ -34,6 +34,14 @@ public class Sprite {
 		height = i.getHeight();
 	}
 	
+	public double getWidth() {
+		return this.width;
+	}
+	
+	public double getHeight() {
+		return this.height;
+	}
+	
 	/**
 	 * sets image from a file path
 	 * 

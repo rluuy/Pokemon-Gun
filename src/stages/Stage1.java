@@ -54,9 +54,10 @@ public class Stage1 {
 
 
 		//createEnemies();
-		Enemy boss = new Enemy(5,10,10);
-		boss.direction = 1;
-		boss.setVelocity(1);
+		Enemy boss = new Enemy(4, 0, 0);
+		//boss.setPosition(720-(2*boss.getWidth()), 480-(2*boss.getHeight()));
+		boss.direction = 3;
+		boss.setVelocity(5);
 		enemies.add( boss );
 		Enemy enemy = new Enemy(1,200,200);
 		enemy.direction = 1;
