@@ -1,4 +1,7 @@
 package stages;
+/**
+ * Class that represents stage 3 of the game
+ */
 
 import java.util.ArrayList;
 
@@ -66,10 +69,18 @@ public class Stage3{
 			}
 		}
 	}
-
+	
+	/**
+	 * Populates the stage with obstacles that the player cannot move through
+	 * @return  ArrayList of rectangle objects
+	 */
 	public ArrayList<Rectangle> getObstacles(){
 		return obstalces;
 	}
+	/**
+	 * returns the dungeons if the map contains one
+	 * @return
+	 */
 	public ArrayList<Rectangle> getD() {
 		return duengon;
 	}

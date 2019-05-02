@@ -1,4 +1,7 @@
 package stages;
+/**
+ * Class that represents stage 1 of the game
+ */
 
 import java.util.ArrayList;
 
@@ -52,7 +55,6 @@ public class Stage1 {
 		pokeballS.setPosition(100,300);
 		items.add( pokeballS );
 
-
 		createEnemies();
 //		Enemy boss = new Enemy(5,10,10);
 //		boss.direction = 1;
@@ -91,7 +93,6 @@ public class Stage1 {
 	
 	// Getter for Items in Stage 
 	public ArrayList<Sprite> getItems() {
-		// TODO Auto-generated method stub
 		return items;
 	}
 	

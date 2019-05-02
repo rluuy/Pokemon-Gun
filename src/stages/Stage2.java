@@ -1,4 +1,7 @@
 package stages;
+/**
+ * Class that represents stage 2 of the game
+ */
 
 import java.util.ArrayList;
 
@@ -63,18 +66,37 @@ public class Stage2 {
 			}
 		}
 	}
+	/**
+	 * Populates the stage with obstacles that the player cannot move through
+	 * @return  ArrayList of rectangle objects
+	 */
 	public ArrayList<Rectangle> getObstacles(){
 		return obstalces;
 	}
+	/**
+	 * returns the dungeons if the map contains one
+	 * @return
+	 */
 	public ArrayList<Rectangle> getD() {
 		return null;
 	}
+	/**
+	 * returns ArrayList of enemy objects that populate the stage
+	 * @return
+	 */
 	public ArrayList<Enemy> getEnemies() {
 		return enemies;
 	}
+	/**
+	 * returns ArrayList of item objects that occur on the stage
+	 * @return
+	 */
 	public ArrayList<Item> getItems() {
 		return items;
 	}
+	/**
+	 * creates enemies that will populate the stage
+	 */
 	private void createEnemies() {
 		Enemy boss = new Enemy(1,620,460);
 		boss.direction = 1;
