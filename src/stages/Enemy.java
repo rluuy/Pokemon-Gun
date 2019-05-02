@@ -57,6 +57,8 @@ public class Enemy extends Sprite {
 			renderThree(gc);
 		else if (type == 4)
 			renderFour(gc);
+		else if (type == 5)
+			renderAIMove(gc);
 		else 
 			super.render(gc);
 	}
@@ -208,6 +210,37 @@ public class Enemy extends Sprite {
 			}
 		}
 		gc.drawImage(image, positionX, positionY, 100*.43, 150*.43);
+	}
+	
+	public void renderAIMove(GraphicsContext gc) {
+		checkBounds();
+		
+		if (direction == 1) {
+			positionY -= velocity;
+		}
+		else if (direction == 2)
+			positionX += velocity;
+		else if (direction == 3) {
+			positionY += velocity;
+		}
+		else if (direction == 4)
+			positionX -= velocity;
+		super.render(gc);
+	}
+	
+	private void checkBounds() {
+		if (positionY > 420) {
+			direction = 1;
+		}
+		if (positionY < 58) {
+			direction = 3;
+		}
+		if (positionX > 420) {
+			direction = 4;
+		}
+		if (positionX < 58) {
+			direction = 2;
+		}
 	}
 	
 	public void AIDirection(int x, int y) {
