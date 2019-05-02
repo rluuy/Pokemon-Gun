@@ -193,44 +193,40 @@ public class Enemy extends Sprite {
 	 */
 	private void renderFour(GraphicsContext gc) {
 		if (direction == 1) {
-			image = new Image("file:images/enemyf_up_rest.png");
-			super.setImage(image);
-			positionY -= velocity;
-			System.out.println("UP");
-			System.out.println(positionY);
-			if (positionY == 0) {
-				direction = 4;
-			}
+		    image = new Image("file:images/enemyf_up_rest.png");
+		    super.setImage(image);
+		    positionY -= velocity;
+		    if (positionY - (image.getHeight() / 2) <= 0 - (image.getHeight() / 2)) {
+		        positionY = 0;
+		        direction = 4;
+		    }
 		}
 		else if (direction == 2) {
-			image = new Image("file:images/enemyf_right_rest.png");
-			super.setImage(image);
-			positionX += velocity;
-			System.out.println("RIGHT");
-			System.out.println(positionX);
-			if ((positionX + image.getWidth() - 1) == gc.getCanvas().getWidth()) {
-				direction = 1;
-			}
+		    image = new Image("file:images/enemyf_right_rest.png");
+		    super.setImage(image);
+		    positionX += velocity;
+		    if (positionX + (image.getWidth() / 2) >= gc.getCanvas().getWidth()) {
+		        positionX = gc.getCanvas().getWidth() - (image.getWidth() / 2);
+		        direction = 1;
+		    }
 		}
 		else if (direction == 3) {
-			image = new Image("file:images/enemyf_down_rest.png");
-			super.setImage(image); 
-			positionY += velocity;
-			System.out.println("DOWN");
-			System.out.println(positionY);
-			if ((positionY + image.getHeight() - 1) == gc.getCanvas().getHeight()) {
-				direction = 2;
-			}
+		    image = new Image("file:images/enemyf_down_rest.png");
+		    super.setImage(image); 
+		    positionY += velocity;
+		    if (positionY + (image.getHeight() / 2) >= gc.getCanvas().getHeight()) {
+		        positionY = gc.getCanvas().getHeight() - (image.getHeight() / 2);
+		        direction = 2;
+		    }
 		}
 		else if (direction == 4) {
-			image = new Image("file:images/enemyf_left_rest.png");
-			super.setImage(image);
-			positionX -= velocity;
-			System.out.println("LEFT");
-			System.out.println(positionX);
-			if (positionX == 0) {
-				direction = 3;
-			}
+		    image = new Image("file:images/enemyf_left_rest.png");
+		    super.setImage(image);
+		    positionX -= velocity;
+		    if (positionX - (image.getWidth() / 2) <= 0 - (image.getWidth() / 2)) {
+		        positionX = 0;
+		        direction = 3;
+		    }
 		}
 
 		gc.drawImage(image, positionX, positionY);
@@ -240,22 +236,22 @@ public class Enemy extends Sprite {
 		checkBounds();
 
 		if (direction == 1) {
-			image = new Image("file:images/enemy1_up_rest.png");
+			image = new Image("file:images/enemyf2_up_rest.png");
 			super.setImage(image);
 			positionY -= velocity;
 		}
 		else if (direction == 2) {
-			image = new Image("file:images/enemy1_right_rest.png");
+			image = new Image("file:images/enemyf2_right_rest.png");
 			super.setImage(image);
 			positionX += velocity;
 		}
 		else if (direction == 3) {
-			image = new Image("file:images/enemy1_down_rest.png");
+			image = new Image("file:images/enemyf2_down_rest.png");
 			super.setImage(image);
 			positionY += velocity;
 		}
 		else if (direction == 4) {
-			image = new Image("file:images/enemy1_left_rest.png");
+			image = new Image("file:images/enemyf2_left_rest.png");
 			super.setImage(image);
 			positionX -= velocity;
 		}
