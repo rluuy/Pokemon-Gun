@@ -1,9 +1,16 @@
 package main;
 import javafx.scene.image.Image;
 
+
+
 import java.util.function.Consumer;
 import java.util.function.Function;
 
+/**
+ * Enum Class that holds the images based on the the direction that is 
+ * inputted into the keyboard
+ *
+ */
 public enum Direction {
 
 	UP(e -> e.emerald_up_rest, e -> e.emerald_up_1, e -> e.emerald_up_2, PlayerChar::moveUp),

@@ -92,6 +92,11 @@ class GameLoop extends AnimationTimer implements Serializable {
 	public GameLoopModel gm;
 
 	
+	/**
+	 * GameLoop is meant to run the gameloop based off of the save data 
+	 * @param x is the Model we use to update the data
+	 * @param inGC is the GraphicsContext that we will use henceforth
+	 */
 	public GameLoop(GameLoopModel x, GraphicsContext inGC)
 	{
 		t1 = x.t1; // Gets total time elapsed in nanoseconds, so early value
@@ -126,6 +131,13 @@ class GameLoop extends AnimationTimer implements Serializable {
 		enemyHitSound = new AudioClip("file:music/enemy_hit.mp3");
 	}
 	
+	/**
+	 * Constructor for GameLoop based off of a passed in PlayerChar along 
+	 * with Save Data from the model 
+	 * @param x is the Model Save Data
+	 * @param inGC is the Graphics Context 
+	 * @param p is the new PlayerChar with their saved Position
+	 */
 	public GameLoop(GameLoopModel x, GraphicsContext inGC, PlayerChar p )
 	{
 		t1 = x.t1; // Gets total time elapsed in nanoseconds, so early value
@@ -305,7 +317,7 @@ class GameLoop extends AnimationTimer implements Serializable {
 					keyflag = true;
 				}
 			}
-			if (keyflag == true) {
+			if (keyflag == true) { // Generates the Path to BossRoom is Key is Present
 					Stage62 s62 = new Stage62();
 					s62.generateTiles(gc);
 					e.posY = e.totalPosY - bufferY;
@@ -653,7 +665,9 @@ class GameLoop extends AnimationTimer implements Serializable {
 		}
 	}
 
-	// Removes projectiles that collide into an obstacle
+	/**
+	 * ProjectileCollision is meant to detect collisions with Projectiles. 
+	 */
 	private void projectileCollision() {
 		for (Rectangle collision : obstacles) {
 			for (int j = 0; j < projectilesP.size(); j++) {
@@ -674,7 +688,9 @@ class GameLoop extends AnimationTimer implements Serializable {
 		}
 	}
 
-	// Player loses health when colliding with an enemy
+	/**
+	 * Player loses health when colliding with the Enemy
+	 */
 	private void enemyCollision() {
 		Rectangle playerRect = new Rectangle(e.posX, e.posY, 48, 48);
 		for (int i = 0; i < enemies.size(); i++) {
@@ -703,7 +719,9 @@ class GameLoop extends AnimationTimer implements Serializable {
 		}
 	}
 
-	// Player hit an enemy with a projectile
+	/**
+	 * Player Hits Enemy with a projectile 
+	 */
 	private void hit() {
 		for (int i = 0; i < enemies.size(); i++) {
 			Enemy enemy = enemies.get(i);
@@ -733,7 +751,9 @@ class GameLoop extends AnimationTimer implements Serializable {
 		}
 	}
 
-	// Player picks up an item
+	/**
+	 * Player Picks up An Item
+	 */
 	private void pickUpItem() {
 		Rectangle playerRect = new Rectangle(e.posX, e.posY, 48, 48);
 		for (int i = 0; i < items.size(); i++) {
@@ -756,6 +776,10 @@ class GameLoop extends AnimationTimer implements Serializable {
 			}
 		}
 	}
+	/**
+	 * Getter for getting the current representation of the player
+	 * @return PlayerChar that we use to serialize
+	 */
 	public PlayerChar getPlayer()
 	{
 		return e;
