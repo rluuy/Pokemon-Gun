@@ -44,23 +44,15 @@ public class Stage9 {
 
 		for (int i = 0; i < mapLength; i++) { 
 			for (int j = 0; j < mapWidth; j++) {
-
 				if (tileMap[i][j] == 0) {
 					gc.setFill(Color.BLACK);
 					gc.fillRect(j * tileLength, i * tileWidth, tileLength, tileWidth);
-
-					//	gc.drawImage(regTile, j * tileWidth, i * tileLength);
 				}
 				if (tileMap[i][j] == 1) {
 					gc.setFill(Color.BLACK);
 					gc.fillRect(j * tileLength, i * tileWidth, tileLength, tileWidth);
 					gc.drawImage(torchTile, j * tileWidth, i * tileLength);
 					obstalces.add( new Rectangle(j * tileLength, i * tileWidth, tileLength, tileWidth));
-				}
-				if (tileMap[i][j] == 7) {
-					//	gc.setFill(Color.AQUAMARINE);
-					//	gc.fillRect(j * tileLength, i * tileWidth, tileLength, tileWidth);
-					//	gc.drawImage(flowerTile, j * tileWidth, i * tileLength);
 				}
 			}
 		}
