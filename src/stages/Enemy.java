@@ -21,6 +21,7 @@ public class Enemy extends Sprite {
 	public boolean hasBloom = false;
 	public boolean hasProjectileDir = false;
 	public boolean hasAI = false;
+	public boolean hasKey = false;
 
 	Image image;
 
@@ -120,6 +121,7 @@ public class Enemy extends Sprite {
 	 * @param gc javafx.scene.canvas.GraphicsContext
 	 */
 	private void renderTwo(GraphicsContext gc) {
+		checkBounds();
 		if (direction == 1) {
 			positionY -= velocity;
 		} else if (direction == 2) {
@@ -127,7 +129,7 @@ public class Enemy extends Sprite {
 			super.setImage(image);
 			positionX += velocity;
 			deltaX += velocity;
-			if (deltaX == 100) {
+			if (deltaX == 300) {
 				deltaX = 0;
 				direction = 4;
 			}
@@ -138,7 +140,7 @@ public class Enemy extends Sprite {
 			super.setImage(image);
 			positionX -= velocity;
 			deltaX += velocity;
-			if (deltaX == 100) {
+			if (deltaX == 300) {
 				deltaX = 0;
 				direction = 2;
 			}
@@ -190,6 +192,8 @@ public class Enemy extends Sprite {
 			image = new Image("file:images/enemyf_up_rest.png");
 			super.setImage(image);
 			positionY -= velocity;
+			System.out.println("UP");
+			System.out.println(positionY);
 			if (positionY == 0) {
 				direction = 4;
 			}
@@ -198,6 +202,8 @@ public class Enemy extends Sprite {
 			image = new Image("file:images/enemyf_right_rest.png");
 			super.setImage(image);
 			positionX += velocity;
+			System.out.println("RIGHT");
+			System.out.println(positionX);
 			if ((positionX + image.getWidth() - 1) == gc.getCanvas().getWidth()) {
 				direction = 1;
 			}
@@ -206,6 +212,7 @@ public class Enemy extends Sprite {
 			image = new Image("file:images/enemyf_down_rest.png");
 			super.setImage(image); 
 			positionY += velocity;
+			System.out.println("DOWN");
 			System.out.println(positionY);
 			if ((positionY + image.getHeight() - 1) == gc.getCanvas().getHeight()) {
 				direction = 2;
@@ -215,13 +222,14 @@ public class Enemy extends Sprite {
 			image = new Image("file:images/enemyf_left_rest.png");
 			super.setImage(image);
 			positionX -= velocity;
-			deltaX += velocity;
+			System.out.println("LEFT");
+			System.out.println(positionX);
 			if (positionX == 0) {
 				direction = 3;
 			}
 		}
 
-		gc.drawImage(image, positionX, positionY, 100 * .43, 150 * .43);
+		gc.drawImage(image, positionX, positionY);
 	}
 
 	public void renderAIMove(GraphicsContext gc) {
@@ -278,6 +286,23 @@ public class Enemy extends Sprite {
 				direction = 3;
 			if (yDiff < 0)
 				direction = 1;
+		} else
+			System.out.println("Here");
+	}
+	
+	public void AIProjectileDirection(int x, int y) {
+		int xDiff = (int) (x - this.positionX);
+		int yDiff = (int) (y - this.positionY);
+		if (java.lang.Math.abs(xDiff) > java.lang.Math.abs(yDiff)) {
+			if (xDiff > 0)
+				projectileDir = 2;
+			else if (xDiff < 0)
+				projectileDir = 4;
+		} else if (java.lang.Math.abs(xDiff) < java.lang.Math.abs(yDiff)) {
+			if (yDiff > 0)
+				projectileDir = 3;
+			if (yDiff < 0)
+				projectileDir = 1;
 		} else
 			System.out.println("Here");
 

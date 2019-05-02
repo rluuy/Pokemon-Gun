@@ -12,18 +12,19 @@ public class Stage4 {
 	private ArrayList<Rectangle> obstalces = new ArrayList<Rectangle>() ;
 	private ArrayList<Enemy> enemies = new ArrayList<Enemy>() ;
 
+ 
 	int[][] tileMap = {
 
 			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0},
+			{0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0},
 			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-			{0, 0, 2, 0, 0, 2, 0, 0, 2, 0, 0, 2, 0, 0, 0},
+			{0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-			{0, 0, 0, 0, 0, 2, 0, 0, 2, 0, 0, 0, 0, 0, 0},
-			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-			{0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0},
-			{0, 0, 0, 0, 0, 0, 7, 7, 7, 0, 0, 0, 0, 0, 1},
+			{0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0},
+			{0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 7, 7, 7, 0, 0, 2, 0, 0, 1},
 	}; //tileMap - may move on to text reading method instead
 
 	Image regTile = new Image("file:images/reg_tile_scaled.png");
@@ -74,9 +75,10 @@ public class Stage4 {
 		return enemies;
 	}
 	private void createEnemies() {
-		Enemy enemy = new Enemy(4, 300, 300);
+		Enemy enemy = new Enemy(5, 300, 300);
 		enemy.direction = 1;
 		enemy.setVelocity(1);
-		enemies.add( enemy );
+		enemy.hollow = true;
+		enemies.add(enemy);
 	}
 }

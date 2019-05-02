@@ -4,6 +4,7 @@ import javafx.animation.AnimationTimer;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import javafx.scene.media.AudioClip;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
@@ -62,6 +63,8 @@ class GameLoop extends AnimationTimer implements Serializable {
 	private ArrayList<Sprite> projectilesP = new ArrayList<Sprite>();
 	private ArrayList<Sprite> projectilesE = new ArrayList<Sprite>();
 	Image pokeball = new Image("file:images/pokeball.png");
+	private Image masterball = new Image("file:images/masterball.png");
+
 	private boolean gotKey = false;
 	private boolean gotBoots = false;
 	private boolean gotItem = true;
@@ -80,6 +83,12 @@ class GameLoop extends AnimationTimer implements Serializable {
 	long start2 = System.nanoTime();
 	long startCollision = System.nanoTime();
 	long elapsedCollision;
+	
+	private AudioClip playerShootSound;
+	private AudioClip obstacleCollisionSound;
+	private AudioClip playerHitSound;
+	private AudioClip enemyHitSound;
+
 	public GameLoopModel gm;
 
 	
@@ -110,6 +119,11 @@ class GameLoop extends AnimationTimer implements Serializable {
 		start = x.start;
 		start2 = x.start2;
 		gm=x;
+		
+		playerShootSound = new AudioClip("file:music/player_shoot.mp3");
+		obstacleCollisionSound = new AudioClip("file:music/obstacle_collision2.mp3");
+		playerHitSound = new AudioClip("file:music/player_hit.mp3");
+		enemyHitSound = new AudioClip("file:music/enemy_hit.mp3");
 	}
 	
 	public GameLoop(GameLoopModel x, GraphicsContext inGC, PlayerChar p )
@@ -161,7 +175,7 @@ class GameLoop extends AnimationTimer implements Serializable {
 			
 			
 		// Stage 1-1 (Going Left and Right)
-		if (e.totalPosX < 720) {
+		if (e.totalPosX < 720 && e.totalPosY < 480) {
 			bufferScalarX = 0;
 			bufferScalarY = 0;
 			Stage1 s1 = new Stage1();
@@ -170,6 +184,7 @@ class GameLoop extends AnimationTimer implements Serializable {
 			obstacles = s1.getObstacles();
 			if (gotItem) { // Code for checking Items and Enemies
 				enemies = s1.getEnemies();
+				items = new ArrayList<Item>();
 				gotItem = false;
 				gotItem2 = true;
 				gotItem3 = true;
@@ -194,6 +209,7 @@ class GameLoop extends AnimationTimer implements Serializable {
 		}
 		// Stage 1-2
 		if (e.totalPosX > 720 && e.totalPosX < 1440 && e.totalPosY < 480) {
+			items = new ArrayList<Item>();
 			bufferScalarX = 1;
 			bufferScalarY = 0;
 			Stage2 s2 = new Stage2();
@@ -203,6 +219,7 @@ class GameLoop extends AnimationTimer implements Serializable {
 			e.posX = e.totalPosX - bufferX;
 			if (gotItem2) {
 				enemies = s2.getEnemies();
+				items = new ArrayList<Item>();
 				gotItem = true;
 				gotItem2 = false;
 				gotItem3 = true;
@@ -225,6 +242,7 @@ class GameLoop extends AnimationTimer implements Serializable {
 			dungeon = s3.getD();
 			if (gotItem3) {
 				enemies = s3.getEnemies();
+				items = new ArrayList<Item>();
 				gotItem = true;
 				gotItem2 = true;
 				gotItem3 = false;
@@ -245,11 +263,13 @@ class GameLoop extends AnimationTimer implements Serializable {
 			bufferScalarY = 1;
 			Stage4 s4 = new Stage4();
 			s4.generateTiles(gc);
+			e.posX = e.totalPosX - (bufferX * bufferScalarX);
 			e.posY = e.totalPosY - bufferY;
 			obstacles = s4.getObstacles();
 			dungeon = s4.getD();
 			if (gotItem4) {
 				enemies = s4.getEnemies();
+				items = new ArrayList<Item>();
 				gotItem = true;
 				gotItem2 = true;
 				gotItem3 = true;
@@ -262,7 +282,6 @@ class GameLoop extends AnimationTimer implements Serializable {
 			}
 		}
 		if (e.totalPosY > 480 && e.totalPosY < 960 && e.totalPosX > 720 && e.totalPosX < 1440 && dflag == false) { // Stage
-																													// 2-2
 			bufferScalarX = 1;
 			bufferScalarY = 1;
 			Stage5 s5 = new Stage5();
@@ -273,6 +292,7 @@ class GameLoop extends AnimationTimer implements Serializable {
 			dungeon = s5.getD();
 			if (gotItem5) {
 				enemies = s5.getEnemies();
+				items = new ArrayList<Item>();
 				gotItem = true;
 				gotItem2 = true;
 				gotItem3 = true;
@@ -302,6 +322,7 @@ class GameLoop extends AnimationTimer implements Serializable {
 					dungeon = s62.getD();
 					if (gotItem6) {
 						enemies = s62.getEnemies();
+						items = new ArrayList<Item>();
 						gotItem = true;
 						gotItem2 = true;
 						gotItem3 = true;
@@ -323,6 +344,7 @@ class GameLoop extends AnimationTimer implements Serializable {
 					dungeon = s6.getD();
 					if (gotItem6) {
 						enemies = s6.getEnemies();
+						items = new ArrayList<Item>();
 						gotItem = true;
 						gotItem2 = true;
 						gotItem3 = true;
@@ -332,22 +354,23 @@ class GameLoop extends AnimationTimer implements Serializable {
 						gotItem7 = true;
 						gotItem8 = true;
 						gotItem9 = true;
+						return;
 					}
 				}
-		
-		
-			
 		}
 		if (e.totalPosY > 960 && e.totalPosX < 720) { // Stage 3-1
 			bufferScalarX = 0;
 			bufferScalarY = 2;
 			Stage7 s7 = new Stage7();
 			s7.generateTiles(gc);
+			e.posX = e.totalPosX - (bufferX * 0);
+
 			e.posY = e.totalPosY - (bufferY * 2);
 			obstacles = s7.getObstacles();
 			dungeon = s7.getD();
 			if (gotItem7) {
 				enemies = s7.getEnemies();
+				items = new ArrayList<Item>();
 				gotItem = true;
 				gotItem2 = true;
 				gotItem3 = true;
@@ -380,6 +403,9 @@ class GameLoop extends AnimationTimer implements Serializable {
 				gotItem7 = true;
 				gotItem8 = false;
 				gotItem9 = true;
+				items = new ArrayList<Item>();
+				if (!gotBoots)
+					items = s8.getItems();
 			}
 		}
 		if (e.totalPosY > 960 && e.totalPosX > 1440) { // Stage 3-3
@@ -393,6 +419,7 @@ class GameLoop extends AnimationTimer implements Serializable {
 			dungeon = s9.getD();
 			if (gotItem9) {
 				enemies = s9.getEnemies();
+				items = new ArrayList<Item>();
 				gotItem = true;
 				gotItem2 = true;
 				gotItem3 = true;
@@ -452,6 +479,7 @@ class GameLoop extends AnimationTimer implements Serializable {
 
 		// Draws the Animation for shooting a pokeball
 		if (input.contains("SPACE") && elapsed > 200000000) {
+			playerShootSound.play();
 			Sprite pokeballS = new Sprite();
 			pokeballS.setImage(pokeball);
 			double px = e.posX;
@@ -493,12 +521,18 @@ class GameLoop extends AnimationTimer implements Serializable {
 				double px = enemy.positionX;
 				double py = enemy.positionY;
 				if (enemy.hasProjectileDir) {
+					if (enemy.type == 4) {
+						enemy.AIProjectileDirection(e.posX, e.posY);
+					}
 					pokeballS.direction = enemy.projectileDir;
 				} else {
 					pokeballS.direction = enemy.direction;
 				}
-				if (enemy.hollow)
+				if (enemy.hollow) {
 					pokeballS.hollow = true;
+					pokeballS.setImage(masterball);
+				}
+				
 				pokeballS.setVelocity(10);
 				pokeballS.setPosition(px, py);
 				projectilesE.add(pokeballS);
@@ -557,6 +591,7 @@ class GameLoop extends AnimationTimer implements Serializable {
 			Rectangle rect = new Rectangle(projectile.positionX, projectile.positionY, 48, 48);
 
 			if (rect.intersects(playerRect.getBoundsInLocal())) {
+				playerHitSound.play();
 				e.loseHealth();
 				projectilesE.remove(i);
 			}
@@ -571,6 +606,7 @@ class GameLoop extends AnimationTimer implements Serializable {
 		Rectangle playerRect = new Rectangle(e.posX, e.posY, 48, 48);
 		for (Rectangle collision : obstacles) {
 			if (collision.intersects(playerRect.getBoundsInLocal())) {
+				obstacleCollisionSound.play();
 				if (e.direction.toString().equals("UP")) {
 					e.totalPosY = (int) collision.getY() + (bufferY * bufferScalarY) + 50;
 					continue;
@@ -653,7 +689,7 @@ class GameLoop extends AnimationTimer implements Serializable {
 			Sprite enemy = enemies.get(i);
 			Rectangle enemyRect = new Rectangle(enemy.positionX, enemy.positionY, 30, 30);
 			if (enemyRect.intersects(playerRect.getBoundsInLocal())) {
-				System.out.print("1");
+				playerHitSound.play();
 				if (elapsedCollision > 1000000000) {
 					e.loseHealth();
 					startCollision = System.nanoTime();
@@ -684,14 +720,22 @@ class GameLoop extends AnimationTimer implements Serializable {
 				Sprite projectile = projectilesP.get(j);
 				Rectangle proj = new Rectangle(projectile.positionX, projectile.positionX, 48, 48);
 				if (projectile.intersects(enemy)) {
+					enemyHitSound.play();
 					gc.drawImage(new Image("file:images/enemy1_down_rest copy.png"), enemy.positionX, enemy.positionY);
 					projectilesP.remove(j);
 					enemy.loseHealth();
 					if (enemy.getHealth() == 0) {
-						enemies.remove(i);
 						if (enemy.type == 4) {
 							isGameOver=2;
 						}
+
+						if (enemy.type == 5) {
+							if (enemy.hasKey && !gotKey)
+								items.add(new Item(1, (int) enemy.positionX, (int) enemy.positionY));
+							else 
+								items.add(new Item(3, (int) enemy.positionX, (int) enemy.positionY));
+						}
+						enemies.remove(i);
 					}
 				}
 			}
@@ -708,8 +752,15 @@ class GameLoop extends AnimationTimer implements Serializable {
 			if (rect.intersects(playerRect.getBoundsInLocal())) {
 				if (item.type == 1)
 					gotKey = true;
-				System.out.print(gotKey);
+				if (item.type == 2) {
+					gotBoots = true;
+					e.increaseSpeed();
+				}
+				if (item.type == 3) {
+					e.increaseHealth();
+				}
 				items.remove(i);
+		
 				playerItems.add(item);
 			}
 		}

@@ -10,6 +10,8 @@ import javafx.scene.shape.Rectangle;
 public class Stage8 {
 	private ArrayList<Rectangle> obstalces = new ArrayList<Rectangle>() ;
 	private ArrayList<Enemy> enemies = new ArrayList<Enemy>() ;
+	private ArrayList<Item> items = new ArrayList<Item>() ;
+
 	
 	int[][] tileMap = {
 			{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
@@ -37,6 +39,8 @@ public class Stage8 {
 		int mapWidth = tileMap[0].length;
 
 		createEnemies();
+		Item boots = new Item(2, 40, 400);
+		items.add(boots);
 
 		for (int i = 0; i < mapLength; i++) { 
 			for (int j = 0; j < mapWidth; j++) {
@@ -64,10 +68,15 @@ public class Stage8 {
 	public ArrayList<Enemy> getEnemies() {
 		return enemies;
 	}
+	public ArrayList<Item> getItems() {
+		return items;
+	}
 	private void createEnemies() {
-		Enemy enemy = new Enemy(1, 300, 300);
+		Enemy enemy = new Enemy(2, 600, 400);
 		enemy.direction = 1;
-		enemy.setVelocity(1);
+		enemy.hasProjectileDir = true;
+		enemy.projectileDir = 4;
+		enemy.setVelocity(2);
 		enemies.add( enemy );
 	}
 }

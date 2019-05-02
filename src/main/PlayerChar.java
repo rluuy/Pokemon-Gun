@@ -92,5 +92,15 @@ public class PlayerChar extends Movement implements Serializable
 		health =0;
 	}
 
+	public void increaseSpeed() {
+		xSpeed += 5;
+		ySpeed += 5;
+		
+	}
+
+	public void increaseHealth() {
+		health++;
+	}
+
 
 }
