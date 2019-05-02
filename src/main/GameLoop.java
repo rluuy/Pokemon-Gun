@@ -504,13 +504,14 @@ class GameLoop extends AnimationTimer implements Serializable {
 			start = System.nanoTime();
 		}
 
-		//a 
+		// Code to render the items on the Screen 
 		for (Item pokeball : items)
 			pokeball.render(gc);
 
 		long end2 = System.nanoTime();
 		long elapsed2 = end2 - start2;
 
+		// Code to Spawn the enemies
 		for (Enemy enemy : enemies) {
 			if (enemy.type == 5 || (enemy.type == 3 && enemy.hasAI))
 				enemy.AIDirection(e.posX, e.posY);
@@ -544,6 +545,7 @@ class GameLoop extends AnimationTimer implements Serializable {
 			start2 = System.nanoTime();
 		}
 
+		// For Loop to make Projectiles 
 		for (int i = 0; i < projectilesP.size(); i++) {
 			if (projectilesP.get(i).positionX > 720 || projectilesP.get(i).positionY > 480
 					|| projectilesP.get(i).positionY < 0 || projectilesP.get(i).positionX < 0) {
@@ -555,6 +557,7 @@ class GameLoop extends AnimationTimer implements Serializable {
 			}
 		}
 
+		// For Loop to Get the Projectile positions as they are shooting
 		for (int i = 0; i < projectilesE.size(); i++) {
 			if (projectilesE.get(i).positionX > 720 || projectilesE.get(i).positionY > 480
 					|| projectilesE.get(i).positionY < 0 || projectilesE.get(i).positionX < 0) {
