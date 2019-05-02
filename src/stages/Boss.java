@@ -3,19 +3,31 @@ package stages;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
+/**
+ * Boss is the main enemy in the game at the final stage. 
+ */
 public class Boss extends Enemy {
-	private int health = 20;
+	private int health = 20;//represents the health of the enemy
 	Image emerald_down_rest = new Image("file:images/enemy1_down_rest.png");
 	
 	private int deltaY = 0;
+	
+	/**
+	 * Parameterised constructor for the Boss class that sets the location and the type of the enemy.
+	 * @param type the type of the enemy 
+	 * @param x the x-coordinate of the Enemy
+	 * @param y the y-coordinate of the Enemy 
+	 */
 	public Boss(int type, int x, int y) {
 		super(type, x, y);
 		this.hasProjectileDir = true;
 		this.projectileDir = 2;
 		super.setImage(emerald_down_rest);
-		//super.setPosition(10, 10);
 	}
 	
+	/**
+	 * renders the image of the Boss Enemy.
+	 */
 	public void render(GraphicsContext gc) {
 		checkBounds();
 		
@@ -56,19 +68,17 @@ public class Boss extends Enemy {
 			direction = 2;
 		}
 	}
-	
-//	public void AIDirection(int x, int y) {
-//		int xDiff = (int) (x - this.positionX);
-//		int yDiff = (int) (y - this.positionY);
-//		if (xDiff > yDiff) {
-//			if (xDiff > 0)
-//				direction = 2;
-//		}
-//	}
 
+	/**
+	 * This method is called each time Boss gets hit by the player.
+	 */
 	public void loseHealth() {
 		health--;
 	}
+	
+	/**
+	 * This method is an accessor method that returns the Boss' health.
+	 */
 	public int getHealth() {
 		return health;
 	}

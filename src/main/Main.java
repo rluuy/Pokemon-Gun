@@ -43,8 +43,8 @@ public final class Main extends Application {
 	private GameLoop gl;  //an instance of GameLoop class
 	private GameLoopModel gm; //an instance of the GameLoopModel class
 	private Canvas canvas;  //an instance of the canvas
-	private GraphicsContext gc;
-	private PlayerChar p;
+	private GraphicsContext gc; 
+	private PlayerChar p; //an instance of the Player
 	private Scene scene;
 	private int stageN = 0;
 	Label label;
@@ -82,6 +82,9 @@ public final class Main extends Application {
 		return -1;
 	}	
 
+	/**
+	 * Overriding start method from Application.
+	 */
 	@Override
 	public void start(Stage primaryStage) 
 	{
@@ -141,6 +144,7 @@ public final class Main extends Application {
 
 			//track movements of the player according to the user input.
 			scene.setOnKeyPressed(e -> {
+				//checks if the game is over
 				if(gl.isGameOver==1)
 				{
 					System.out.println("YOU DIED");
@@ -155,7 +159,7 @@ public final class Main extends Application {
 						primaryStage.setScene(PauseMenu);
 					}
 					gl.isGameOver=0;
-				}
+				}//checks if the Player has won the game
 				else if(gl.isGameOver==2)
 				{
 					Alert alert = new Alert(AlertType.CONFIRMATION);
@@ -182,7 +186,6 @@ public final class Main extends Application {
 				}
 				else if (!gm.input.contains(code))
 					gm.input.add(code);
-
 			});
 
 			scene.setOnKeyReleased(e -> {
@@ -191,11 +194,6 @@ public final class Main extends Application {
 				gm.input.remove(code);
 				System.out.println(input.toString());
 			});
-
-			//			GraphicsContext gc = canvas.getGraphicsContext2D(); 
-			//			gl = new GameLoop(input, gc, p);
-			//			gl.start();
-
 			gl.start();
 
 			primaryStage.show();
@@ -221,6 +219,7 @@ public final class Main extends Application {
 					scene.setOnKeyPressed(e -> {
 						if(gl.isGameOver==1)
 						{
+							//checks if the game is over.
 							System.out.println("YOU DIED");
 							Alert alert = new Alert(AlertType.CONFIRMATION);
 							alert.setTitle("You Died!");
@@ -233,7 +232,7 @@ public final class Main extends Application {
 								primaryStage.setScene(PauseMenu);
 							}
 							gl.isGameOver=0;
-						}
+						}//checks if the player has won the game
 						else if(gl.isGameOver==2)
 						{
 							Alert alert = new Alert(AlertType.CONFIRMATION);
@@ -403,7 +402,6 @@ public final class Main extends Application {
 			});
 
 			//When the Game is Over, show Game Over and revert to the Main Menu
-
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -412,7 +410,7 @@ public final class Main extends Application {
 
 	/**
 	 * This function returns the model that was saved by the player.
-	 * @return
+	 * @return the GameLoopModel that was saved by the player.
 	 */
 	public GameLoopModel Load()
 	{
