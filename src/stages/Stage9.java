@@ -9,6 +9,8 @@ import javafx.scene.shape.Rectangle;
 
 public class Stage9 {
 	private ArrayList<Rectangle> obstalces = new ArrayList<Rectangle>() ;
+	private ArrayList<Enemy> enemies = new ArrayList<Enemy>() ;
+	
 	int[][] tileMap = {
 			{1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1},
 			{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
@@ -34,15 +36,17 @@ public class Stage9 {
 		int mapLength = tileMap.length;
 		int mapWidth = tileMap[0].length;
 
+		//createEnemies();
+		Boss boss = new Boss(1,10,10);
+		boss.direction = 1;
+		boss.setVelocity(1);
+		enemies.add( boss );
 
 		for (int i = 0; i < mapLength; i++) { 
 			for (int j = 0; j < mapWidth; j++) {
-
 				if (tileMap[i][j] == 0) {
 					gc.setFill(Color.BLACK);
 					gc.fillRect(j * tileLength, i * tileWidth, tileLength, tileWidth);
-
-				//	gc.drawImage(regTile, j * tileWidth, i * tileLength);
 				}
 				if (tileMap[i][j] == 1) {
 					gc.setFill(Color.BLACK);
@@ -50,16 +54,23 @@ public class Stage9 {
 					gc.drawImage(torchTile, j * tileWidth, i * tileLength);
 					obstalces.add( new Rectangle(j * tileLength, i * tileWidth, tileLength, tileWidth));
 				}
-				if (tileMap[i][j] == 7) {
-				//	gc.setFill(Color.AQUAMARINE);
-				//	gc.fillRect(j * tileLength, i * tileWidth, tileLength, tileWidth);
-				//	gc.drawImage(flowerTile, j * tileWidth, i * tileLength);
-				}
 			}
 		}
 	}
-	
+
 	public ArrayList<Rectangle> getObstacles(){
 		return obstalces;
 	}
+	public ArrayList<Rectangle> getD() {
+		return null;
+	}
+	public ArrayList<Enemy> getEnemies() {
+		return enemies;
+	}
+//	private void createEnemies() {
+//		Enemy enemy = new Enemy(1, 300, 300);
+//		enemy.direction = 1;
+//		enemy.setVelocity(1);
+//		enemies.add( enemy );
+//	}
 }

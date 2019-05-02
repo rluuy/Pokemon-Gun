@@ -89,10 +89,12 @@ public final class Main extends Application {
 		{
 			//root is the VBox that contains the canvas where the GamePlay happens.
 			root = new VBox(); 
+
 			scene = new Scene(root,720,480);    
 			p = new PlayerChar(50, 50, 10 , 0.43,3);
 			canvas = new Canvas(720, 480);
 			root.getChildren().add(canvas);	
+
 			primaryStage.setTitle("Pokemon Gun");
 			primaryStage.setScene(scene);
 

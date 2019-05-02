@@ -9,6 +9,8 @@ import javafx.scene.shape.Rectangle;
 
 public class Stage8 {
 	private ArrayList<Rectangle> obstalces = new ArrayList<Rectangle>() ;
+	private ArrayList<Enemy> enemies = new ArrayList<Enemy>() ;
+	
 	int[][] tileMap = {
 			{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
 			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
@@ -34,10 +36,11 @@ public class Stage8 {
 		int mapLength = tileMap.length;
 		int mapWidth = tileMap[0].length;
 
+		createEnemies();
 
 		for (int i = 0; i < mapLength; i++) { 
 			for (int j = 0; j < mapWidth; j++) {
-			
+
 				if (tileMap[i][j] == 0) {
 					gc.drawImage(regTile, j * tileWidth, i * tileLength);
 				}
@@ -54,5 +57,17 @@ public class Stage8 {
 	public ArrayList<Rectangle> getObstacles(){
 		return obstalces;
 	}
-
+	public ArrayList<Rectangle> getD() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	public ArrayList<Enemy> getEnemies() {
+		return enemies;
+	}
+	private void createEnemies() {
+		Enemy enemy = new Enemy(1, 300, 300);
+		enemy.direction = 1;
+		enemy.setVelocity(1);
+		enemies.add( enemy );
+	}
 }

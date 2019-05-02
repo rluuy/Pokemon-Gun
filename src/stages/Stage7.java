@@ -8,25 +8,27 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 public class Stage7 {
-	
 	private ArrayList<Rectangle> obstalces = new ArrayList<Rectangle>() ;
+	private ArrayList<Rectangle> duengon = new ArrayList<Rectangle>() ;
+	private ArrayList<Enemy> enemies = new ArrayList<Enemy>() ;
+	
 	int[][] tileMap = {
 			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
 			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 0, 0, 0},
-			{0, 1, 7, 0, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+			{0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 7, 0, 0, 0},
+			{0, 1, 0, 0, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
 			{0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 0, 0, 0, 0, 1},
-			{0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1},
-			{0, 0, 0, 0, 0, 0, 0, 0, 7, 0, 0, 0, 0, 0, 1},
-			{0, 0, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-			{0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 7, 0, 0, 0, 1},
-			{2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 7, 0, 0, 1},
+			{1, 1, 1, 1, 0, 0, 0, 0, 7, 0, 0, 0, 0, 0, 1},
+			{1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+			{0, 0, 0, 0, 7, 0, 0, 0, 0, 0, 7, 0, 0, 0, 1},
+			{2, 0, 0, 0, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
 	}; //tileMap - may move on to text reading method instead
 
 	Image regTile = new Image("file:images/oceantile.png");
 	Image grassTile = new Image("file:images/oceantile_grass.png");
 	Image cactusTile = new Image("file:images/cactus.png");
-	Image caveTile = new Image("file:images/cave.png");
+	Image stairTile = new Image("file:images/stairs.png");
 	int tileLength = 48;
 	int tileWidth = 48;
 
@@ -35,11 +37,12 @@ public class Stage7 {
 		int mapLength = tileMap.length;
 		int mapWidth = tileMap[0].length;
 
+		createEnemies();
 
 		for (int i = 0; i < mapLength; i++) { 
 			for (int j = 0; j < mapWidth; j++) {
 				//gc.fillRect(j * tileLength, i * tileWidth, 48, 48);
-			
+
 				if (tileMap[i][j] == 0) {
 					gc.drawImage(regTile, j * tileWidth, i * tileLength);
 				}
@@ -47,22 +50,32 @@ public class Stage7 {
 					gc.drawImage(regTile, j * tileWidth, i * tileLength);
 					gc.drawImage(cactusTile, j * tileWidth, i * tileLength);
 					obstalces.add( new Rectangle(j * tileLength, i * tileWidth, tileLength, tileWidth));
-				
+
 				}
 				if (tileMap[i][j] == 2) {
-					gc.drawImage(regTile, j * tileWidth, i * tileLength);
-					gc.drawImage(caveTile, j * tileWidth, i * tileLength);
-					obstalces.add( new Rectangle(j * tileLength, i * tileWidth, tileLength, tileWidth));
+					gc.drawImage(stairTile, j * tileWidth, i * tileLength);
+					duengon.add( new Rectangle(j * tileLength, i * tileWidth, tileLength, tileWidth));
 				}
 				if (tileMap[i][j] == 7) {
 					gc.drawImage(regTile, j * tileWidth, i * tileLength);
 					gc.drawImage(grassTile, j * tileWidth, i * tileLength);
-				
-			}
+
+				}
 			}}
 	}
 	public ArrayList<Rectangle> getObstacles(){
 		return obstalces;
 	}
-
+	public ArrayList<Rectangle> getD() {
+		return duengon;
+	}
+	public ArrayList<Enemy> getEnemies() {
+		return enemies;
+	}
+	private void createEnemies() {
+		Enemy enemy = new Enemy(1, 300, 300);
+		enemy.direction = 1;
+		enemy.setVelocity(1);
+		enemies.add( enemy );
+	}
 }
