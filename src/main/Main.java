@@ -211,7 +211,7 @@ public final class Main extends Application {
 				{
 					root = new VBox(); 
 					scene = new Scene(root,720,480);    
-					p = new PlayerChar(50, 50, 10 , 0.43,3);
+					p = new PlayerChar(50, 50, 3 , 0.43,3);
 					canvas = new Canvas(720, 480);
 					root.getChildren().add(canvas);	
 					gc = canvas.getGraphicsContext2D(); 

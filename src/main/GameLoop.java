@@ -104,7 +104,7 @@ class GameLoop extends AnimationTimer implements Serializable {
 		bufferScalarY = x.bufferScalarY;
 		isBattle = x.isBattle;
 		gc = inGC;
-		e = new PlayerChar(10 , 0.43, x.PlayerCharHealth,x.posX,x.posY,x.totalPosX,x.totalPosY);
+		e = new PlayerChar(7 , 0.43, x.PlayerCharHealth,x.posX,x.posY,x.totalPosX,x.totalPosY);
 		input=x.input;
 		obstacles=x.obstacles;
 		playerItems = new ArrayList<Item>();
@@ -163,13 +163,7 @@ class GameLoop extends AnimationTimer implements Serializable {
 	 * 2-3] [3-1, 3-2, 3-3]}
 	 */
 	public void handle(long currentNanoTime) {
-		
-		// code of start, handle called by .start())
-		
-		
-		if (!isBattle) {
-			//System.out.println("y = " + e.totalPosY + " x = " + e.totalPosX );
-		
+				
 		if(e.getHealth()==0)
 			isGameOver=1;
 			
@@ -577,7 +571,7 @@ class GameLoop extends AnimationTimer implements Serializable {
 		gc.fillText("AMMO: UNLIMITED ", 20, 40);
 
 	}
-		}
+		
 
 	/**
 	 * playerHit's purpose is to detect when a player is hit and update the values

@@ -34,7 +34,7 @@ public class GameLoopModel implements Serializable
 		t1 = System.nanoTime();
 		t2 = System.nanoTime();
 		input = new ArrayList<>(); 
-		PlayerCharHealth=3;
+		PlayerCharHealth = 5;
 		obstacles = new ArrayList<Rectangle>();
 		start = System.nanoTime();
 		start2 = System.nanoTime(); 
@@ -59,7 +59,7 @@ public class GameLoopModel implements Serializable
 		t1 = System.nanoTime();
 		t2 = System.nanoTime();
 		input = new ArrayList<>(); 
-		PlayerCharHealth=3;
+		PlayerCharHealth = 10;
 		obstacles = new ArrayList<Rectangle>();
 //		playerItems = new ArrayList<Sprite>();
 		start = System.nanoTime();
