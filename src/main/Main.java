@@ -141,10 +141,33 @@ public final class Main extends Application {
 
 			//track movements of the player according to the user input.
 			scene.setOnKeyPressed(e -> {
-				if(gl.isGameOver==true)
+				if(gl.isGameOver==1)
 				{
 					System.out.println("YOU DIED");
-					primaryStage.setScene(PauseMenu);
+					Alert alert = new Alert(AlertType.CONFIRMATION);
+					alert.setTitle("You Died!");
+					alert.setHeaderText("You are about to quit");
+					alert.setContentText("Do you want to go to the Menu?");
+
+					Optional<ButtonType> result = alert.showAndWait();
+					if (result.get() == ButtonType.OK)
+					{
+						primaryStage.setScene(PauseMenu);
+					}
+					gl.isGameOver=0;
+				}
+				else if(gl.isGameOver==2)
+				{
+					Alert alert = new Alert(AlertType.CONFIRMATION);
+					alert.setTitle("You WON!");
+					alert.setHeaderText("Congratulations");
+					alert.setContentText("Do you want to go to the Menu?");
+					Optional<ButtonType> result = alert.showAndWait();
+					if (result.get() == ButtonType.OK)
+					{
+						primaryStage.setScene(PauseMenu);
+					}
+					gl.isGameOver=0;
 				}
 				String code = e.getCode().toString();
 				if(code.equals("ESCAPE"))
@@ -196,6 +219,34 @@ public final class Main extends Application {
 					primaryStage.setScene(scene);
 					primaryStage.show();
 					scene.setOnKeyPressed(e -> {
+						if(gl.isGameOver==1)
+						{
+							System.out.println("YOU DIED");
+							Alert alert = new Alert(AlertType.CONFIRMATION);
+							alert.setTitle("You Died!");
+							alert.setHeaderText("You are about to quit");
+							alert.setContentText("Do you want to go to the Menu?");
+
+							Optional<ButtonType> result = alert.showAndWait();
+							if (result.get() == ButtonType.OK)
+							{
+								primaryStage.setScene(PauseMenu);
+							}
+							gl.isGameOver=0;
+						}
+						else if(gl.isGameOver==2)
+						{
+							Alert alert = new Alert(AlertType.CONFIRMATION);
+							alert.setTitle("You WON!");
+							alert.setHeaderText("Congratulations");
+							alert.setContentText("Do you want to go to the Menu?");
+							Optional<ButtonType> result = alert.showAndWait();
+							if (result.get() == ButtonType.OK)
+							{
+								primaryStage.setScene(PauseMenu);
+							}
+							gl.isGameOver=0;
+						}
 						String code = e.getCode().toString();
 						if(code.equals("ESCAPE"))
 						{
@@ -302,6 +353,34 @@ public final class Main extends Application {
 					primaryStage.setScene(scene);
 					primaryStage.show();
 					scene.setOnKeyPressed(e -> {
+						if(gl.isGameOver==1)
+						{
+							System.out.println("YOU DIED");
+							Alert alert = new Alert(AlertType.CONFIRMATION);
+							alert.setTitle("You Died!");
+							alert.setHeaderText("You are about to quit");
+							alert.setContentText("Do you want to go to the Menu?");
+
+							Optional<ButtonType> result = alert.showAndWait();
+							if (result.get() == ButtonType.OK)
+							{
+								primaryStage.setScene(PauseMenu);
+							}
+							gl.isGameOver=0;
+						}
+						else if(gl.isGameOver==2)
+						{
+							Alert alert = new Alert(AlertType.CONFIRMATION);
+							alert.setTitle("You WON!");
+							alert.setHeaderText("Congratulations");
+							alert.setContentText("Do you want to go to the Menu?");
+							Optional<ButtonType> result = alert.showAndWait();
+							if (result.get() == ButtonType.OK)
+							{
+								primaryStage.setScene(PauseMenu);
+							}
+							gl.isGameOver=0;
+						}
 						String code = e.getCode().toString();
 						if(code.equals("ESCAPE"))
 						{

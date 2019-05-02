@@ -75,7 +75,7 @@ class GameLoop extends AnimationTimer implements Serializable {
 	private boolean gotItem8 = true;
 	private boolean gotItem9 = true;
 
-	public boolean isGameOver=false;
+	public int isGameOver=0;
 	long start = System.nanoTime();
 	long start2 = System.nanoTime();
 	long startCollision = System.nanoTime();
@@ -157,7 +157,7 @@ class GameLoop extends AnimationTimer implements Serializable {
 			//System.out.println("y = " + e.totalPosY + " x = " + e.totalPosX );
 		
 		if(e.getHealth()==0)
-			isGameOver=true;
+			isGameOver=1;
 			
 			
 		// Stage 1-1 (Going Left and Right)
@@ -687,8 +687,12 @@ class GameLoop extends AnimationTimer implements Serializable {
 					gc.drawImage(new Image("file:images/enemy1_down_rest copy.png"), enemy.positionX, enemy.positionY);
 					projectilesP.remove(j);
 					enemy.loseHealth();
-					if (enemy.getHealth() == 0)
+					if (enemy.getHealth() == 0) {
 						enemies.remove(i);
+						if (enemy.type == 4) {
+							isGameOver=2;
+						}
+					}
 				}
 			}
 		}
