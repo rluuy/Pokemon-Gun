@@ -31,47 +31,83 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import java.util.concurrent.TimeUnit;
 
+/**
+ * This class contains the main method to launch the application and run the game.
+ */
 public final class Main extends Application {
 
 	private static MediaPlayer mediaPlayer;
-	VBox root;
-	HBox layout;
-	GameLoop gl;
-	GameLoopModel gm;
-	Canvas canvas;
-	GraphicsContext gc;
-	PlayerChar p;
-	Scene scene;
-	int filecount=0;
+	private VBox root;
+	private GameLoop gl;  //an instance of GameLoop class
+	private GameLoopModel gm; //an instance of the GameLoopModel class
+	private Canvas canvas;  //an instance of the canvas
+	private GraphicsContext gc;
+	private PlayerChar p;
+	private Scene scene;
+	private int stageN = 0;
+	Label label;
 
 	public static void main(String[] args) {
 		launch(args);
 	}
-	
+
+	/**
+	 * This function takes in the coordinates of the player and returns what stage the player is on.
+	 * @param inX the X-Coordinate of the player
+	 * @param inY the Y-Coordinate of the player
+	 * @return the stage on which the player is currently on.
+	 */
+	public int getStage(int inX, int inY)
+	{
+		if(inX==0 && inY==0)
+			return 1;
+			else if(inX==0 && inY==1)
+				return 4;
+				else if(inX==0 && inY==2)
+					return 7;
+					else if(inX==1 && inY==0)
+						return 2;
+						else if(inX==1 && inY==1)
+							return 5;
+							else if(inX==1 && inY==2)
+								return 8;
+								else if(inX==2 && inY==0)
+									return 3;
+									else if(inX==2 && inY==1)
+										return 6;
+										else if(inX==2 && inY==2)
+											return 9;
+		return -1;
+	}	
+
 	@Override
 	public void start(Stage primaryStage) 
 	{
 		try 
 		{
+			//root is the VBox that contains the canvas where the GamePlay happens.
 			root = new VBox(); 
 			scene = new Scene(root,720,480);    
 			p = new PlayerChar(50, 50, 10 , 0.43,3);
-
 			canvas = new Canvas(720, 480);
 			root.getChildren().add(canvas);	
 			primaryStage.setTitle("Pokemon Gun");
 			primaryStage.setScene(scene);
-			
+
+			//creating a new GameLoopModel and a GameLoop based on that model.
 			gc = canvas.getGraphicsContext2D(); 
 			gm = new GameLoopModel(p);
 			gl = new GameLoop(gm,gc);
-			
+
+			//The PauseBox contains all the buttons required for the Pause Menu.
+			HBox MainPauseBox = new HBox();
 			VBox PauseBox = new VBox();
-			PauseBox.setAlignment(Pos.CENTER);
+			PauseBox.setAlignment(Pos.TOP_LEFT);
 			PauseBox.setPadding(new Insets(10));
 			PauseBox.setSpacing(10);
-			Scene PauseMenu = new Scene(PauseBox,720,480);
+			Scene PauseMenu = new Scene(MainPauseBox,720,480);
 			Button btn1 = new Button("New");
 			Button btn2 = new Button("Save");
 			Button btn3 = new Button("Load");
@@ -79,42 +115,64 @@ public final class Main extends Application {
 			Button btn5 = new Button("Cancel");
 			PauseBox.getChildren().addAll(btn1, btn2, btn3, btn4, btn5);
 			
+			//ImageBox is the VBox that contains the image of the map and tells the player what stage
+			// they are on.
+			VBox ImageBox = new VBox();
+			ImageBox.setAlignment(Pos.TOP_LEFT);
+			ImageBox.setPadding(new Insets(10));
+			ImageBox.setSpacing(10);
+			Image mapImage = new Image("file:images/game_map.png");
+			ImageView mapView = new ImageView();
+			mapView.setFitHeight(400);
+			mapView.setFitWidth(600);
+			mapView.setImage(mapImage);
+			ImageBox.getChildren().add(mapView);
+			MainPauseBox.getChildren().add(PauseBox);
+			MainPauseBox.getChildren().add(ImageBox);
+
+			//if the user presses cancel on the Pause/Main menu
 			btn5.setOnAction(e -> {
 				primaryStage.setScene(scene);
 			});
 			
 			ArrayList<String> input = new ArrayList<>(); 
-			
+
+			//track movements of the player according to the user input.
 			scene.setOnKeyPressed(e -> {
 				String code = e.getCode().toString();
 				if(code.equals("ESCAPE"))
-                {
-                	primaryStage.setScene(PauseMenu);
-                }
+				{
+					stageN = getStage((gl.getPlayer().totalPosX)/720,(gl.getPlayer().totalPosY)/480);
+					ImageBox.getChildren().clear();
+					ImageBox.getChildren().add(mapView);
+					label = new Label("You are in Stage "+stageN);
+					ImageBox.getChildren().add(label);
+					primaryStage.setScene(PauseMenu);
+				}
 				else if (!gm.input.contains(code))
 					gm.input.add(code);
 			});
-			
+
 			scene.setOnKeyReleased(e -> {
 				String code = e.getCode().toString();
 				gm.input.remove(code);
 				System.out.println(input.toString());
 			});
-			
-//			GraphicsContext gc = canvas.getGraphicsContext2D(); 
-//			gl = new GameLoop(input, gc, p);
-//			gl.start();
-			
+
+			//			GraphicsContext gc = canvas.getGraphicsContext2D(); 
+			//			gl = new GameLoop(input, gc, p);
+			//			gl.start();
+
 			gl.start();
-			
+
 			primaryStage.show();
-			
+
+			//Event Handler for when "New Game" Button is pressed
 			btn1.setOnAction(new EventHandler<ActionEvent>() 
 			{
 				@Override
 				public void handle(ActionEvent event)
 				{
-					
 					root = new VBox(); 
 					scene = new Scene(root,720,480);    
 					p = new PlayerChar(50, 50, 10 , 0.43,3);
@@ -130,13 +188,17 @@ public final class Main extends Application {
 					scene.setOnKeyPressed(e -> {
 						String code = e.getCode().toString();
 						if(code.equals("ESCAPE"))
-		                {
-		                	primaryStage.setScene(PauseMenu);
-		                }
+						{
+							stageN = getStage((gl.getPlayer().totalPosX)/720,(gl.getPlayer().totalPosY)/480);
+							ImageBox.getChildren().clear();
+							ImageBox.getChildren().add(mapView);
+							label = new Label("You are in Stage "+stageN);
+							ImageBox.getChildren().add(label);
+							primaryStage.setScene(PauseMenu);
+						}
 						else if (!gm.input.contains(code))
 							gm.input.add(code);
 					});
-					
 					scene.setOnKeyReleased(e -> {
 						String code = e.getCode().toString();
 						gm.input.remove(code);
@@ -144,7 +206,8 @@ public final class Main extends Application {
 					});
 				}
 			});
-			
+
+			//Event Handler for when "Quit" button is pushed
 			btn4.setOnAction(new EventHandler<ActionEvent>() {
 				@Override
 				public void handle(ActionEvent event)
@@ -162,61 +225,44 @@ public final class Main extends Application {
 					}
 				}
 			});
-			
+
+			//Event Handler for when "Save" button is pushed
 			btn2.setOnAction(new EventHandler<ActionEvent>() 
-					{
-						@Override
-						public void handle(ActionEvent event)
-						{
-							String d = (String)"data/save_game"+(filecount++)+".dat";
-							System.out.println("here");
-							ObjectOutputStream objectOutputStream = null;
-							try {
-								objectOutputStream = new ObjectOutputStream(new FileOutputStream(d));
-							} catch (IOException e1) {
-								// TODO Auto-generated catch block
-								e1.printStackTrace();
-							}   
-							try {
-									gm.posX = gl.getPlayer().posX;
-									gm.posY = gl.getPlayer().posY;
-									gm.totalPosX = gl.getPlayer().totalPosX;
-									gm.totalPosY=gl.getPlayer().totalPosY;
-									objectOutputStream.writeObject(gl.gm);
-									System.out.println("Saving"+ gm.totalPosX);
-									primaryStage.setScene(scene);
-								} catch (IOException e) {
-									// TODO Auto-generated catch block
-									e.printStackTrace();
-								}
-						        try {
-									objectOutputStream.close();
-								} catch (IOException e) {
-									// TODO Auto-generated catch block
-									e.printStackTrace();
-								}
-						}
-					});
-			
-			VBox LoadBox = new VBox();
-			LoadBox.setAlignment(Pos.CENTER);
-			LoadBox.setPadding(new Insets(10));
-			LoadBox.setSpacing(10);
-			Scene LoadMenu = new Scene(LoadBox,720,480);
-			Button ld1 = new Button("Load 1");
-			ld1.setOnAction(e -> { filecount=1; });
-			Button ld2 = new Button("Load 2");
-			ld2.setOnAction(e -> { filecount=2; });
-			Button ld3 = new Button("Load 3");
-			ld3.setOnAction(e -> { filecount=3; });
-			Button ld4 = new Button("Load 4");
-			ld4.setOnAction(e -> { filecount=4; });
-			Button ld5 = new Button("Load 5");
-			ld5.setOnAction(e -> { filecount=5; });
-			Button ld6 = new Button("< Back");
-			LoadBox.getChildren().addAll(ld1, ld2, ld3, ld4, ld5, ld6);
-			ld6.setOnAction(e -> {  primaryStage.setScene(PauseMenu); });
-			
+			{
+				@Override
+				public void handle(ActionEvent event)
+				{
+					String d = (String)"data/save_game.dat";
+					System.out.println("here");
+					ObjectOutputStream objectOutputStream = null;
+					try {
+						objectOutputStream = new ObjectOutputStream(new FileOutputStream(d));
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}   
+					try {
+						gm.posX = gl.getPlayer().posX;
+						gm.posY = gl.getPlayer().posY;
+						gm.totalPosX = gl.getPlayer().totalPosX;
+						gm.totalPosY=gl.getPlayer().totalPosY;
+						objectOutputStream.writeObject(gl.gm);
+						System.out.println("Saving"+ gm.totalPosX);
+						primaryStage.setScene(scene);
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					try {
+						objectOutputStream.close();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			});
+
+			//Event Handler for when "Load" button is pushed
 			btn3.setOnAction(new EventHandler<ActionEvent>() 
 			{
 				@Override
@@ -227,11 +273,19 @@ public final class Main extends Application {
 					canvas = new Canvas(720, 480);
 					root.getChildren().add(canvas);	
 					gc = canvas.getGraphicsContext2D(); 
-					gm = Load(filecount-1);
-					System.out.println("Loading"+ gm.totalPosX);
+					GameLoopModel glm = Load();
+					if(glm==null)
+					{
+						Alert alert = new Alert(AlertType.CONFIRMATION);
+						alert.setTitle("Pokemon Gun");
+						alert.setHeaderText("You haven't saved anything yet!");
+						
+						Optional<ButtonType> result = alert.showAndWait();
+					}
+					else
+						gm=glm;
 					p = new PlayerChar(10 , 0.43, gm.PlayerCharHealth,gm.posX,gm.posY,gm.totalPosX,gm.totalPosY);
 					System.out.println(gm.toString());
-					
 					gl.stop();
 					gl = new GameLoop(gm,gc,p);
 					gl.start();
@@ -240,9 +294,14 @@ public final class Main extends Application {
 					scene.setOnKeyPressed(e -> {
 						String code = e.getCode().toString();
 						if(code.equals("ESCAPE"))
-		                {
-		                	primaryStage.setScene(PauseMenu);
-		                }
+						{
+							stageN = getStage((gl.getPlayer().totalPosX)/720,(gl.getPlayer().totalPosY)/480);
+							ImageBox.getChildren().clear();
+							ImageBox.getChildren().add(mapView);
+							label = new Label("You are in Stage "+stageN);
+							ImageBox.getChildren().add(label);
+							primaryStage.setScene(PauseMenu);
+						}
 						else if (!gm.input.contains(code))
 							gm.input.add(code);
 					});
@@ -253,27 +312,44 @@ public final class Main extends Application {
 					});
 				}
 			});
-			
+
+
+			//When the Game is Over, show Game Over and revert to the Main Menu
 			if(gl.getPlayer().getHealth()==0)
 			{
 				System.out.println("GAME OVER");
+				VBox goBox = new VBox();
+				goBox.setPadding(new Insets(10));
+				Scene GOverScene = new Scene(goBox,720,480);
+				Image goImage = new Image("images/game_over.png");
+				ImageView gOver = new ImageView(goImage);
+				goBox.getChildren().add(gOver);
+				primaryStage.setScene(GOverScene);
+				TimeUnit.SECONDS.sleep(2);
+				primaryStage.setScene(PauseMenu);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
-	public GameLoopModel Load(int load)
+
+	/**
+	 * This function returns the model that was saved by the player.
+	 * @return
+	 */
+	public GameLoopModel Load()
 	{
 		GameLoopModel gm=null;
-		String d = (String)"data/save_game"+(load)+".dat";
+		String d = (String)"data/save_game.dat";
 		ObjectInputStream objectInputStream = null;
 		try {
 			objectInputStream = new ObjectInputStream(new FileInputStream(d));
-		} catch (IOException e1) {
+		}
+		catch(IOException e)
+		{
 			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} 
+			e.printStackTrace();
+		}
 		try {
 			gm = (GameLoopModel)objectInputStream.readObject();
 		} catch (Exception e) {

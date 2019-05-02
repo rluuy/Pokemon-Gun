@@ -1,12 +1,9 @@
 package main;
 import javafx.scene.canvas.GraphicsContext;
-
 import javafx.scene.image.Image;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-
 
 public class PlayerChar extends Movement implements Serializable
 {
