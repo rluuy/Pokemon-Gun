@@ -152,8 +152,7 @@ class GameLoop extends AnimationTimer implements Serializable {
 
 	public void handle(long currentNanoTime) { // code of start, handle called by .start()
 		if (!isBattle) {
-//			System.out.println("y = " + e.totalPosY + " x = " + e.totalPosX );
-			
+			//System.out.println("y = " + e.totalPosY + " x = " + e.totalPosX );
 			
 			if (e.totalPosX < 720) { // Stage 1-1 (Going Left and Right)
 				bufferScalarX = 0;
@@ -456,6 +455,10 @@ class GameLoop extends AnimationTimer implements Serializable {
 				playerItems.add(collision);
 			}
 		}
+	}
+	public PlayerChar getPlayer()
+	{
+		return e;
 	}
 
 }

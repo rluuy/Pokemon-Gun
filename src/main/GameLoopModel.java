@@ -91,4 +91,12 @@ public class GameLoopModel implements Serializable
 		totalPosX = p.totalPosX;
 		totalPosY = p.totalPosY;
 	}
+
+	public void setValues(int totalPosX,int totalPosY)
+	{
+		this.totalPosX = totalPosX;
+		this.totalPosY = totalPosY;
+		System.out.println(this.totalPosX+"   "+totalPosY);
+	}
 }
+

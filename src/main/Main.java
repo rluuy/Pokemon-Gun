@@ -114,6 +114,7 @@ public final class Main extends Application {
 				@Override
 				public void handle(ActionEvent event)
 				{
+					
 					root = new VBox(); 
 					scene = new Scene(root,720,480);    
 					p = new PlayerChar(50, 50, 10 , 0.43,3);
@@ -121,6 +122,7 @@ public final class Main extends Application {
 					root.getChildren().add(canvas);	
 					gc = canvas.getGraphicsContext2D(); 
 					gm = new GameLoopModel(p);
+					gl.stop();
 					gl = new GameLoop(gm,gc);
 					gl.start();
 					primaryStage.setScene(scene);
@@ -176,7 +178,11 @@ public final class Main extends Application {
 								e1.printStackTrace();
 							}   
 							try {
-									objectOutputStream.writeObject(gm);
+									gm.posX = gl.getPlayer().posX;
+									gm.posY = gl.getPlayer().posY;
+									gm.totalPosX = gl.getPlayer().totalPosX;
+									gm.totalPosY=gl.getPlayer().totalPosY;
+									objectOutputStream.writeObject(gl.gm);
 									System.out.println("Saving"+ gm.totalPosX);
 									primaryStage.setScene(scene);
 								} catch (IOException e) {
@@ -225,6 +231,8 @@ public final class Main extends Application {
 					System.out.println("Loading"+ gm.totalPosX);
 					p = new PlayerChar(10 , 0.43, gm.PlayerCharHealth,gm.posX,gm.posY,gm.totalPosX,gm.totalPosY);
 					System.out.println(gm.toString());
+					
+					gl.stop();
 					gl = new GameLoop(gm,gc,p);
 					gl.start();
 					primaryStage.setScene(scene);
@@ -246,6 +254,10 @@ public final class Main extends Application {
 				}
 			});
 			
+			if(gl.getPlayer().getHealth()==0)
+			{
+				System.out.println("GAME OVER");
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -263,8 +275,7 @@ public final class Main extends Application {
 			e1.printStackTrace();
 		} 
 		try {
-			gm = (GameLoopModel) objectInputStream.readObject();
-			
+			gm = (GameLoopModel)objectInputStream.readObject();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

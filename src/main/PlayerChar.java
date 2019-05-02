@@ -86,6 +86,9 @@ public class PlayerChar extends Movement implements Serializable
 	public int getHealth() {
 		return health;
 	}
+	public void setHealth() {
+		health =0;
+	}
 
 
 }
